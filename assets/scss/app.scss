@@ -1,0 +1,70 @@
+@import "~bootstrap/scss/bootstrap";
+@import url('https://fonts.googleapis.com/css?family=Courgette|Open+Sans&display=swap');
+
+$font-family1: 'Courgette', cursive;
+$font-family2: 'Open Sans', sans-serif;
+
+body {
+    background-color: #ffffff;
+    font-family: $font-family2;
+}
+
+h1, h2, h3, h4 {
+    font-family: $font-family1;
+}
+
+.btn-all, .btn-all:hover{
+    border-radius:12px 0 12px 0;
+    background: rgba(255, 255, 255, 0.5);
+    border:none;
+    color: #ffffff;
+    font:24px $font-family2;
+    padding:10px 15px 10px 15px;
+    box-shadow:1px 1px 3px #999;
+    text-decoration: none;
+}
+
+/**********************************NAVBAR******************************/
+.nav-top{
+    position: absolute;
+    width: 100%;
+}
+
+.nav-item{
+    margin: 10px 20px;
+}
+
+.nav-link{
+    color: white;
+    font-size: 24px;
+}
+
+.nav-link:hover{
+    color: white;
+    text-shadow: 1px 1px 2px #082b34;
+    border-bottom: 2px solid white;
+}
+
+/***********************************HOME*******************************/
+.container-home{
+    width: 100vw;
+    height: 100vh;
+    background-image: linear-gradient(rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.2)), url("/img/olive-tree-962908_640.jpg");
+    background-size: cover;
+    text-align: center;
+}
+
+.div-h1{
+    padding-top: 40vh;
+    margin-bottom: 40px;
+}
+
+.h1-home{
+    color: white;
+    font-size: 96px;
+    text-shadow: 1px 1px 2px #082b34;
+    border-bottom: 4px solid white;
+    border-top: 4px solid white;
+    margin: auto;
+    width: fit-content;
+}
