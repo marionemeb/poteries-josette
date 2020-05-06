@@ -125,3 +125,24 @@ h1, h2, h3, h4 {
     background-color:#4E5E30;
     border-color:#4E5E30;
 }
+
+/********************** WORK *************************************/
+
+.work{
+    background-position: bottom;
+    background-image: linear-gradient(rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.9)), url("/img/hands.jpg");
+    background-size: cover;
+    text-align: left;
+    height: 100vh;
+}
+
+.wrapper {
+    margin: auto;
+    width: 90vw;
+    height: 500px;
+    overflow: auto;
+}
+
+.p-work{
+    font-size: 24px;
+}
