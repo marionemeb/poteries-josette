@@ -1,0 +1,32 @@
+easy_admin:
+  site_name: 'Les poteries de Josette'
+  design:
+    menu:
+      - {label: 'Catégories'}
+      - {entity: 'Product', icon: 'user'}
+#      - {entity: 'Event', icon: 'user'}
+#      - {entity: 'Blog', icon: 'user'}
+#      - {entity: 'Recipe', icon: 'user'}
+#      - {label: 'Configuration'}
+#      - {entity: 'BlogType', icon: 'user'}
+      - { label: 'Retour au site web', route: 'home', icon: 'reply'}
+  list:
+    max_results: 20
+  entities:
+    Product:
+      class: App\Entity\Product
+      label: 'Mes poteries'
+      list:
+        title: 'Les poteries de Josette'
+        fields:
+          - {property: 'title', type: 'text'}
+          - {property: 'description', type: 'text'}
+          - {property: 'imageFile', template: 'vich_uploader_image.html.twig'}
+      form:
+        title: 'Les poteries de Josette'
+        fields:
+          - {property: 'title', type: 'text'}
+          - {property: 'description', type: 'text'}
+          - {property: 'imageFile', type: 'vich_image'}
+
+

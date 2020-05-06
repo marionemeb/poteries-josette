@@ -10,6 +10,7 @@
 /var/
 /vendor/
 /public/img/
+/public/uploads/
 ###< symfony/framework-bundle ###
 
 ###> symfony/phpunit-bridge ###

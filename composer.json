@@ -6,6 +6,7 @@
         "ext-ctype": "*",
         "ext-iconv": "*",
         "doctrine/doctrine-bundle": "^2.0",
+        "easycorp/easyadmin-bundle": "^2.3",
         "sensio/framework-extra-bundle": "^5.5",
         "symfony/asset": "4.4.*",
         "symfony/console": "4.4.*",
@@ -28,7 +29,8 @@
         "symfony/validator": "4.4.*",
         "symfony/web-link": "4.4.*",
         "symfony/webpack-encore-bundle": "^1.7",
-        "symfony/yaml": "4.4.*"
+        "symfony/yaml": "4.4.*",
+        "vich/uploader-bundle": "^1.13"
     },
     "require-dev": {
         "symfony/debug-pack": "*",
