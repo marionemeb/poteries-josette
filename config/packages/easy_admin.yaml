@@ -4,10 +4,10 @@ easy_admin:
     menu:
       - {label: 'Catégories'}
       - {entity: 'Product', icon: 'user'}
-#      - {entity: 'Event', icon: 'user'}
+      - {entity: 'Event', icon: 'user'}
 #      - {entity: 'Blog', icon: 'user'}
 #      - {entity: 'Recipe', icon: 'user'}
-#      - {label: 'Configuration'}
+      - {label: 'Configuration'}
 #      - {entity: 'BlogType', icon: 'user'}
       - { label: 'Retour au site web', route: 'home', icon: 'reply'}
   list:
@@ -27,6 +27,30 @@ easy_admin:
         fields:
           - {property: 'title', type: 'text'}
           - {property: 'description', type: 'text'}
+          - {property: 'imageFile', type: 'vich_image'}
+
+    Event:
+      class: App\Entity\Event
+      label: 'Mes évènements'
+      list:
+        title: 'Les évènements de Josette'
+        fields:
+          - {property: 'title', type: 'text'}
+          - {property: 'description', type: 'text'}
+          - {property: 'location', type: 'text'}
+          - {property: 'link', type: 'text'}
+          - {property: 'dateStart', type: 'date'}
+          - {property: 'dateEnd', type: 'date'}
+          - {property: 'imageFile', template: 'vich_uploader_image.html.twig'}
+      form:
+        title: 'Les poteries de Josette'
+        fields:
+          - {property: 'title', type: 'text'}
+          - {property: 'description', type: 'text'}
+          - {property: 'location', type: 'text'}
+          - {property: 'link', type: 'text'}
+          - {property: 'dateStart', type: 'date'}
+          - {property: 'dateEnd', type: 'date'}
           - {property: 'imageFile', type: 'vich_image'}
 
 

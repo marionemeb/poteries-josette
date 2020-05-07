@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mes évènements{% endblock %}
+
+{% block body %}
+    <div class="container-fluid event">
+        <div class="articles-title">Les évènements de Josette</div>
+        <div class='blog-posts'>
+            {% for event in events %}
+                <div class='post featured'>
+                    <a class="a-events" href='{{event.link}}'>
+                        <div class='image' style='background-image: url({{ ('/uploads/images/products/'~event.imageName) }})'>
+                            <div class='time'>
+                                <div class='date'>{{event.dateStart|date("d")}}</div>
+                                <div class='month'>{{event.dateStart|date("M")}}</div>
+                            </div>
+                        </div>
+                        <div class='content'>
+                            <h1>{{event.title}}</h1>
+                            <p>{{event.description}}</p>
+                            <p>Lieux : {{event.location}}</p>
+                            <div class='meta'>
+                                <div class='icon-comment'>Dates</div>
+                                <ul class='tags'>
+                                    <li>Du {{event.dateStart|date("d/m/Y")}}</li>
+                                    <li>Au {{event.dateEnd|date("d/m/Y")}}</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
