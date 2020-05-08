@@ -6,7 +6,7 @@ easy_admin:
       - {entity: 'Product', icon: 'user'}
       - {entity: 'Event', icon: 'user'}
 #      - {entity: 'Blog', icon: 'user'}
-#      - {entity: 'Recipe', icon: 'user'}
+      - {entity: 'Recipe', icon: 'user'}
       - {label: 'Configuration'}
 #      - {entity: 'BlogType', icon: 'user'}
       - { label: 'Retour au site web', route: 'home', icon: 'reply'}
@@ -26,7 +26,7 @@ easy_admin:
         title: 'Les poteries de Josette'
         fields:
           - {property: 'title', type: 'text'}
-          - {property: 'description', type: 'text'}
+          - {property: 'description'}
           - {property: 'imageFile', type: 'vich_image'}
 
     Event:
@@ -46,11 +46,29 @@ easy_admin:
         title: 'Les poteries de Josette'
         fields:
           - {property: 'title', type: 'text'}
-          - {property: 'description', type: 'text'}
+          - {property: 'description'}
           - {property: 'location', type: 'text'}
           - {property: 'link', type: 'text'}
           - {property: 'dateStart', type: 'date'}
           - {property: 'dateEnd', type: 'date'}
+          - {property: 'imageFile', type: 'vich_image'}
+
+    Recipe:
+      class: App\Entity\Recipe
+      label: 'Mes recettes'
+      list:
+        title: 'Les recettes de Josette'
+        fields:
+          - {property: 'name', type: 'text'}
+          - {property: 'description', type: 'text'}
+          - {property: 'ingredient', type: 'text'}
+          - {property: 'imageFile', template: 'vich_uploader_image.html.twig'}
+      form:
+        title: 'Les poteries de Josette'
+        fields:
+          - {property: 'name', type: 'text'}
+          - {property: 'description'}
+          - {property: 'ingredient'}
           - {property: 'imageFile', type: 'vich_image'}
 
 

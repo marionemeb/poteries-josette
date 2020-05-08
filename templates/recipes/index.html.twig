@@ -4,35 +4,43 @@
 
 {% block body %}
     <div class="container-fluid recipes">
-        <div class="articles-title">Les recettes de Josette</div>
-        <div class="container-recipes">
-            <nav class="menu" tabindex="0">
-                <div class="smartphone-menu-trigger"></div>
-                <header class="avatar">
-                    <img src="https://s3.amazonaws.com/uifaces/faces/twitter/kolage/128.jpg"/>
-                    <h2>Liste des recettes</h2>
-                </header>
-                <ul>
+        <div class="container">
+            <div class="articles-title">Les recettes de Josette</div>
+            <div class="container-recipes">
+                <nav class="menu" tabindex="0">
+                    <div class="smartphone-menu-trigger"></div>
+                    <header class="avatar">
+                        <h2>Liste des recettes</h2>
+                    </header>
+                    <ul>
+                        {% for recipe in recipes %}
+                            <li tabindex="0" class="icon-dashboard"><i
+                                        class="fas fa-utensils"><span>  {{ recipe.name }}</span></i></li>
+                        {% endfor %}
+                    </ul>
+                </nav>
+                <main class="card-columns">
                     {% for recipe in recipes %}
-                    <li tabindex="0" class="icon-dashboard"><i class="fas fa-utensils"><span>Dashboard</span></i></li>
-                    {% endfor %}
-                </ul>
-            </nav>
-
-            <main>
-                <div class="row">
-                    <div class="col-md-3 col-sm-6 container-recipe">
-                        <div class="card card-block">
-                            <h1 class="card-title text-right"><i class="fas fa-eye"></i></h1>
-                            <img src="https://static.pexels.com/photos/7096/people-woman-coffee-meeting.jpg"
-                                 alt="Photo of sunset">
-                            <h5 class="card-title mt-3 mb-3">Sierra Web Development • Owner</h5>
-                            <p class="card-text">This is a company that builds websites, web apps and e-commerce
-                                solutions.</p>
+                        <div class="container-recipe">
+                            <div class="card card-block">
+                                <div class="card-title">
+                                    {# Pop-up #}
+                                    <div class="react"
+                                         data-name="{{ recipe.name }}"
+                                         data-description="{{ recipe.description }}"
+                                         data-ingredient="{{ recipe.ingredient }}"
+                                         data-image-name="{{ recipe.imageName }}"
+                                    ></div>
+                                </div>
+                                <img src="{{ ('/uploads/images/products/'~recipe.imageName) }}"
+                                     alt="Photo of sunset">
+                                <h1 class="card-title mt-3 mb-3">{{ recipe.name }}</h1>
+                            </div>
                         </div>
-                    </div>
-                </div>
-            </main>
+                    {% endfor %}
+                </main>
+
+            </div>
         </div>
     </div>
 

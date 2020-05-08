@@ -36,6 +36,7 @@ h1, h2, h3, h4 {
 
 .nav-item{
     margin: 10px 20px;
+    font-weight: bold;
 }
 
 .nav-link{
@@ -76,10 +77,14 @@ h1, h2, h3, h4 {
 /****************************ARTICLES****************/
 .card-columns{
     column-count: 3;
+
+    .card{
+        border: 2px solid #f8f9fa;
+    }
 }
 .articles{
     min-height: 100vh;
-    background-image: linear-gradient(rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.9)), url("/img/olive-tree-962908_640.jpg");
+    background-image: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.9)), url("/img/olive-tree-962908_640.jpg");
     background-size: cover;
     text-align: center;
 }
@@ -94,54 +99,18 @@ h1, h2, h3, h4 {
     margin-bottom: 100px;
 }
 
-.profile-card-5{
-    margin-top:20px;
-}
-.profile-card-5 .btn{
-    border-radius:2px;
-    text-transform:uppercase;
-    font-size:12px;
-    padding:7px 20px;
-}
-
-.profile-card-5 .card-img-block {
-    width: 91%;
-    margin: 0 auto;
-    position: relative;
-    top: -20px;
-
-}
-.profile-card-5 .card-img-block img{
-    border-radius:5px;
-    box-shadow:0 0 10px rgba(0,0,0,0.63);
-}
-.profile-card-5 h5{
-    color:#4E5E30;
-    font-weight:600;
-}
-.profile-card-5 p{
-    font-size:14px;
-    font-weight:300;
-}
-.profile-card-5 .btn-primary{
-    background-color:#4E5E30;
-    border-color:#4E5E30;
-}
-
 /********************** WORK *************************************/
 
 .work{
     background-position: bottom;
-    background-image: linear-gradient(rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.9)), url("/img/hands.jpg");
+    background-image: linear-gradient(rgba(7, 7, 7, 0.4), rgba(0, 0, 0, 0.9)), url("/img/hands.jpg");
     background-size: cover;
     text-align: left;
-    height: 100vh;
+    color: whitesmoke;
 }
 
 .wrapper {
     margin: auto;
-    width: 90vw;
-    height: 500px;
     overflow: auto;
 }
 
@@ -152,16 +121,17 @@ h1, h2, h3, h4 {
 /**************************** SHOP *******************************/
 .shop{
     background-position: bottom;
-    background-image: linear-gradient(rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.9)), url("/img/Oingt.jpg");
+    background: linear-gradient(rgba(0, 0, 0, 0.28), rgba(0, 0, 0, 0.9)), url("/img/Oingt.jpg");
     background-size: cover;
     text-align: left;
     height: 100vh;
+    color: whitesmoke;
 }
 
 /***************************** EVENTS ******************************/
 .event{
     background-position: center;
-    background-image: linear-gradient(rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.9)), url("/img/jarnioux.jpg");
+    background-image: linear-gradient(rgba(255, 255, 255, 0), rgba(0, 0, 0, 0.9)), url("/img/jarnioux.jpg");
     background-size: cover;
     text-align: left;
     height: 100vh;
@@ -291,21 +261,17 @@ h1, h2, h3, h4 {
 }
 
 /****************************** RECIPES *************************************/
+
 .recipes{
     background-position: center;
-    background-image: linear-gradient(rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.9)), url("/img/cook.jpg");
+    background-image: linear-gradient(rgba(255, 255, 255, 0), rgba(0, 0, 0, 0.9)), url("/img/cook.jpg");
     background-size: cover;
     text-align: left;
-    height: 100vh;
-}
-
-.container-recipes{
-    padding-left: 260px;
 }
 
 main{
     position:relative;
-    height:100vh;
+    height:100%;
 }
 
 .menu{
@@ -314,19 +280,13 @@ main{
     left:0;
     z-index:5;
     outline:none;
+    margin-top: 2rem;
 
     .avatar{
-        background:rgba(0,0,0,0.1);
+        background: rgba(0, 0, 0, 0.39);
         padding:2em 0.5em;
         text-align:center;
-
-        img{
-            width:100px;
-            border-radius:50%;
-            overflow:hidden;
-            border:4px solid;
-            box-shadow:0 0 0 4px rgba(255,255,255,0.2);
-        }
+        color: whitesmoke;
 
         h2{
             font-weight:normal;
@@ -338,11 +298,12 @@ main{
         list-style:none;
         padding:0.5em 0;
         margin:0;
+        color: whitesmoke;
 
         li{
             padding:0.5em 1em 0.5em 3em;
-            font-size:0.95em;
-            font-weight:regular;
+            font-size:1.2em;
+            font-weight:normal;
             background-repeat:no-repeat;
             background-position:left 15px center;
             background-size:auto 20px;
@@ -353,8 +314,8 @@ main{
 }
 
 .container-recipe img{
-    height:150px;
     width:100%;
+    padding: 20px;
 }
 
 .container-recipe div [class^="col-"]{
@@ -362,53 +323,128 @@ main{
     padding-right:5px;
 }
 .container-recipe .card{
+    position: initial !important;
     transition:0.5s;
     cursor:pointer;
+    margin-bottom: 2rem;
+    margin-top: 2rem;
 }
 .container-recipe .card-title{
-    font-size:15px;
+    margin: 10px;
     transition:1s;
     cursor:pointer;
 }
 .container-recipe .card-title i{
-    font-size:15px;
+    font-size:20px;
     transition:1s;
     cursor:pointer;
     color:#ffa710
 }
 .container-recipe .card-title i:hover{
-    transform: scale(1.25) rotate(100deg);
-    color:#18d4ca;
+    transform: scale(1.25);
+    color: #d41818;
 
 }
 .container-recipe .card:hover{
-    transform: scale(1.05);
-    box-shadow: 10px 10px 15px rgba(0,0,0,0.3);
+    //transform: scale(1.05);
+    box-shadow: 10px 10px 15px rgba(0, 0, 0, 0.38);
 }
 .container-recipe .card-text{
     height:80px;
+    overflow: hidden;
+    padding: 10px 10px;
 }
 
-.container-recipe .card::before, .container-recipe .card::after {
-    position: absolute;
+/********************* POP-UP RECIPES ******************************/
+.recipes-visibility{
+    position: fixed;
     top: 0;
-    right: 0;
     bottom: 0;
     left: 0;
-    transform: scale3d(0, 0, 1);
-    transition: transform .3s ease-out 0s;
-    background: rgba(255, 255, 255, 0.1);
-    content: '';
-    pointer-events: none;
-}
-.container-recipe .card::before {
-    transform-origin: left top;
-}
-.container-recipe .card::after {
-    transform-origin: right bottom;
-}
-.container-recipe .card:hover::before, .container-recipe .card:hover::after, .container-recipe .card:focus::before, .container-recipe .card:focus::after {
-    transform: scale3d(1, 1, 1);
+    right: 0;
+    background: rgba(0, 0, 0, 0.7);
+    transition: opacity 500ms;
+    opacity: 1;
 }
 
+.visible{
+    visibility: visible;
+}
+
+.hidden{
+    visibility: hidden;
+}
+
+.popup{
+    margin: 150px auto;
+    padding: 20px;
+    background: whitesmoke;
+    border-radius: 5px;
+    width: 50%;
+    position: relative;
+    transition: all 0s ease-in-out;
+
+    .close{
+        position: absolute;
+        top:10px;
+        right: 10px;
+        transition: all 0ms;
+        font-size: 30px;
+        font-weight: bold;
+        text-decoration: none;
+        color: #333;
+    }
+
+}
+
+.popup .close:hover{
+    color: #de750d;
+}
+
+.recipe-card {
+    background: #fff;
+    margin: 4em auto;
+    width: 90%;
+    max-width: 496px;
+    @include border-top-radius(5px);
+    @include border-bottom-radius(5px);
+
+    aside {
+        position: relative;
+
+        img {
+            max-width: 100%;
+            height: auto;
+            vertical-align: bottom;
+            @include border-top-radius(5px);
+        }
+    }
+
+    article {
+        padding: 1.25em 1.5em;
+    }
+
+    h2{
+        font-size: em(28);
+        color: #222222;
+        margin: 0;
+        font-weight: 300;
+    }
+
+    p {
+        margin: 1.25em 0;
+        font-size: em(13);
+        font-weight: 400;
+        color: #222222;
+
+        span {
+            font-weight: 700;
+            color: #000000;
+        }
+    }
+
+    .ingredients {
+        margin: 2em 0 0.5em;
+    }
+}
 
