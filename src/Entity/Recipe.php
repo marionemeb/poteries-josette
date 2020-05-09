@@ -42,7 +42,7 @@ class Recipe
 
     /**
      * @Vich\UploadableField(mapping="product_images", fileNameProperty="imageName")
-     * @var File
+     * @var ?File
      */
     private $imageFile;
 
@@ -105,7 +105,7 @@ class Recipe
         return $this;
     }
 
-    public function setImageFile(File $imageName = null)
+    public function setImageFile(?File $imageName = null)
     {
         $this->imageFile = $imageName;
 

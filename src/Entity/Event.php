@@ -21,7 +21,7 @@ class Event
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="string", length=255)
      */
     private $title;
 
@@ -46,7 +46,7 @@ class Event
     private $location;
 
     /**
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="text", nullable=true)
      */
     private $link = "#";
 
@@ -57,7 +57,7 @@ class Event
 
     /**
      * @Vich\UploadableField(mapping="product_images", fileNameProperty="imageName")
-     * @var File
+     * @var ?File
      */
     private $imageFile;
 
@@ -101,7 +101,7 @@ class Event
         return $this->link;
     }
 
-    public function setLink(string $link): self
+    public function setLink(?string $link): self
     {
         $this->link = $link;
 
@@ -156,7 +156,7 @@ class Event
         return $this;
     }
 
-    public function setImageFile(File $imageName = null)
+    public function setImageFile(?File $imageName = null)
     {
         $this->imageFile = $imageName;
 

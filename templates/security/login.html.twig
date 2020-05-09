@@ -3,7 +3,6 @@
 {% block title %}Connecte-toi{% endblock %}
 
 {% block body %}
-<form method="post">
     {% if error %}
         <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
     {% endif %}
@@ -13,30 +12,44 @@
             Tu es connecté en tant que : {{ app.user.username }}, <a href="{{ path('app_logout') }}">Logout</a>
         </div>
     {% endif %}
+    <form method="post">
+        <div class="limiter">
+            <div class="container-login100" style="background-image: url(/img/olive-tree-962908_640.jpg);">
+                <div class="wrap-login100">
+                    <div class="login100-form">
+                    <span class="login100-form-title p-b-34 p-t-27">
+						Connecte-toi !
+					</span>
 
-    <h1 class="h3 mb-3 font-weight-normal">Connecte-toi !</h1>
-    <label for="inputEmail">Email</label>
-    <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" required autofocus>
-    <label for="inputPassword">Mot de passe</label>
-    <input type="password" name="password" id="inputPassword" class="form-control" required>
+                        <div class="wrap-input100 validate-input" data-validate="Enter username">
+                            <input type="email" value="{{ last_username }}" name="email" id="inputEmail"
+                                   class="input100"
+                                   required
+                                   placeholder="exemple@email.com" autofocus>
+                            <span class="focus-input100" data-placeholder="&#xf207;"></span>
+                        </div>
 
-    <input type="hidden" name="_csrf_token"
-           value="{{ csrf_token('authenticate') }}"
-    >
+                        <div class="wrap-input100 validate-input" data-validate="Enter password">
+                            <input type="password" name="password" id="inputPassword" class="input100"
+                                   placeholder="Mot de passe" required>
+                            <span class="focus-input100" data-placeholder="&#xf191;"></span>
+                        </div>
+                        <input type="hidden" name="_csrf_token"
+                               value="{{ csrf_token('authenticate') }}"
+                        >
+                        <div class="container-login100-form-btn">
+                            <button class="login100-form-btn" type="submit">
+                                Connexion
+                            </button>
+                        </div>
 
-    {#
-        Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
-        See https://symfony.com/doc/current/security/remember_me.html
-
-        <div class="checkbox mb-3">
-            <label>
-                <input type="checkbox" name="_remember_me"> Remember me
-            </label>
-        </div>
-    #}
-
-    <button class="btn btn-lg btn-primary" type="submit">
-        Connexion
-    </button>
-</form>
+                        <div class="text-center p-t-90">
+                            <a class="txt1" href="#">
+                                Mot de passe oublié?
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </form>
 {% endblock %}

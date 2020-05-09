@@ -38,7 +38,7 @@ class Product
 
     /**
      * @Vich\UploadableField(mapping="product_images", fileNameProperty="name")
-     * @var File
+     * @var ?File
      */
     private $imageFile;
 
@@ -70,7 +70,7 @@ class Product
         return $this->name;
     }
 
-    public function setName(string $name): self
+    public function setName(?string $name): self
     {
         $this->name = $name;
 
@@ -89,7 +89,7 @@ class Product
         return $this;
     }
 
-    public function setImageFile(File $name = null)
+    public function setImageFile(?File $name = null)
     {
         $this->imageFile = $name;
 
@@ -102,7 +102,7 @@ class Product
         }
     }
 
-    public function getImageFile()
+    public function getImageFile(): ?File
     {
         return $this->imageFile;
     }
