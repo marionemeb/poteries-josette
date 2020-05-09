@@ -1,14 +1,14 @@
 easy_admin:
-  site_name: 'Les poteries de Josette'
+  site_name: 'Les Poteries de Josette'
   design:
     menu:
       - {label: 'Catégories'}
       - {entity: 'Product', icon: 'user'}
-      - {entity: 'Event', icon: 'user'}
-#      - {entity: 'Blog', icon: 'user'}
-      - {entity: 'Recipe', icon: 'user'}
+      - {entity: 'Event', icon: 'calendar'}
+      - {entity: 'Blog', icon: 'heart'}
+      - {entity: 'Recipe', icon: 'utensils'}
       - {label: 'Configuration'}
-#      - {entity: 'BlogType', icon: 'user'}
+      - {entity: 'BlogType', icon: 'cog'}
       - { label: 'Retour au site web', route: 'home', icon: 'reply'}
   list:
     max_results: 20
@@ -65,10 +65,43 @@ easy_admin:
           - {property: 'imageFile', template: 'vich_uploader_image.html.twig'}
       form:
         title: 'Les poteries de Josette'
+        help: 'Attention, les ingrédients doivent être séparés par une virgule'
         fields:
           - {property: 'name', type: 'text'}
           - {property: 'description'}
           - {property: 'ingredient'}
           - {property: 'imageFile', type: 'vich_image'}
+
+    Blog:
+      class: App\Entity\Blog
+      label: 'Coups de coeur'
+      list:
+        title: 'Mes coups de coeur'
+        fields:
+          - {property: 'name', type: 'text'}
+          - {property: 'description', type: 'text'}
+          - {property: 'location', type: 'text'}
+          - {property: 'url', type: 'text'}
+          - type
+      form:
+        title: 'Mes coups de coeur'
+        fields:
+          - {property: 'name', type: 'text'}
+          - description
+          - {property: 'location', type: 'text'}
+          - {property: 'url', type: 'text'}
+          - type
+
+    BlogType:
+      class: App\Entity\BlogType
+      label: 'Types de coups de coeur'
+      list:
+        title: 'Types'
+        fields:
+          - {property: 'name', type: 'text'}
+      form:
+        title: 'Types'
+        fields:
+          - {property: 'name', type: 'text'}
 
 

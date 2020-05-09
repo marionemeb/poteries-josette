@@ -28,6 +28,14 @@ class BlogType
      */
     private $blog;
 
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return strval($this->getName());
+    }
+
     public function __construct()
     {
         $this->blog = new ArrayCollection();

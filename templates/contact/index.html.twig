@@ -1,0 +1,57 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Contactez-moi{% endblock %}
+
+{% block body %}
+    <div class="container-fluid contact">
+        <div class="container">
+            <div class="articles-title">Contactez-moi!</div>
+            <div class="wrap-contact100">
+                <form class="contact100-form validate-form">
+{#				<span class="contact100-form-title">#}
+{#					Contact Us#}
+{#				</span>#}
+                    <label class="label-input100" for="first-name">Nom / Prénom *</label>
+                    <div class="wrap-input100 rs1 validate-input">
+                        <input id="first-name" class="input100" type="text" name="first-name"
+                               placeholder="Prénom">
+                        <span class="focus-input100"></span>
+                    </div>
+                    <div class="wrap-input100 rs1 validate-input">
+                        <input class="input100" type="text" name="last-name" placeholder="Nom">
+                        <span class="focus-input100"></span>
+                    </div>
+
+                    <label class="label-input100" for="email">Email *</label>
+                    <div class="wrap-input100 validate-input">
+                        <input id="email" class="input100" type="text" name="email"
+                               placeholder="example@email.com">
+                        <span class="focus-input100"></span>
+                    </div>
+
+                    <label class="label-input100" for="phone">Téléphone</label>
+                    <div class="wrap-input100">
+                        <input id="phone" class="input100" type="text" name="phone" placeholder="0474711173">
+                        <span class="focus-input100"></span>
+                    </div>
+
+                    <label class="label-input100" for="message">Message *</label>
+                    <div class="wrap-input100 validate-input">
+                            <textarea id="message" class="input100" name="message"
+                                      placeholder="Laissez moi un message..."></textarea>
+                        <span class="focus-input100"></span>
+                    </div>
+
+                    <div class="container-contact100-form-btn">
+                        <button class="contact100-form-btn">
+						<span>
+							Envoyer
+							<i class="zmdi zmdi-arrow-right m-l-8"></i>
+						</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

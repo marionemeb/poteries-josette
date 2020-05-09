@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Coups de coeur{% endblock %}
+
+{% block body %}
+    <div class="container-fluid blog">
+        <div class="container">
+            <div class="articles-title">Mes coups de coeur</div>
+            <section class="card-columns blog-articles">
+                {% for blogArticle in blogArticles %}
+                    <div class="card">
+                        <a href="{{ blogArticle.url }}">
+                            {#                            <img class="card-img-top" src="{{ ('/uploads/images/products/'~blogArticle.name) }}"#}
+                            {#                                 alt="{{ blogArticle.name }}">#}
+                            <div class="card-body">
+                                <h5 class="card-title">{{ blogArticle.name }}</h5>
+                                <p class="card-text">
+                                    {{ blogArticle.description }}
+                                </p>
+                                <p class="card-text"><small class="text-muted">
+                                        <i class="fas fa-map-marker-alt"></i>{{ blogArticle.location }}
+                                        <i class="fas fa-heart"></i>{{ blogArticle.type }}</small></p>
+                            </div>
+                        </a>
+                    </div>
+
+                {% endfor %}
+            </section>
+        </div>
+    </div>
+{% endblock %}
