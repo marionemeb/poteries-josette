@@ -2,6 +2,9 @@
 
 namespace App\Controller;
 
+use App\Entity\Contact;
+use App\Form\ContactType;
+use App\Notification\Notification;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -12,20 +15,20 @@ class ContactController extends AbstractController
     /**
      * @Route("/contact", name="contact")
      * @param Request $request
-     * @param ContactNotification $notification
+     * @param Notification $notification
      * @return Response
      */
-    public function index(Request $request ): Response
+    public function index(Request $request, Notification $notification): Response
     {
-//        $contact = new Contact();
-//        $form = $this->createForm(ContactType::class, $contact);
-//        $form->handleRequest($request);
-//        if ($form->isSubmitted() && $form->isValid()) {
-//            $notification->notify($contact);
-//            return $this->redirectToRoute('contact');
-//        }
-//        return $this->render('contact/index.html.twig', [
-//            'form' => $form->createView()
-//        ]);
+        $contact = new Contact();
+        $form = $this->createForm(ContactType::class, $contact);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $notification->notify($contact);
+            return $this->redirectToRoute('contact');
+        }
+        return $this->render('contact/index.html.twig', [
+            'form' => $form->createView()
+        ]);
     }
 }

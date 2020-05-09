@@ -14,11 +14,11 @@ class Notification
      * @var Swift_Mailer
      */
     private $mailer;
-
     /**
      * @var Environment
      */
     private $renderer;
+
 
     public function __construct(Swift_Mailer $mailer, Environment $renderer)
     {
@@ -34,11 +34,11 @@ class Notification
             $sentTo = $contact->getEmail();
         }
 
-        $message = (new Swift_Message('Nouvel email de ' . $contact->getLastname()))
+        $message = (new Swift_Message('Nouvel email de ' . $contact->getFirstName() . $contact->getLastName()))
             ->setFrom($sentTo)
-            ->setTo('plongeurmasquetrevoux@gmail.com')
+            ->setTo('josette.bourgogne@wanadoo.fr')
             ->setReplyTo($contact->getEmail())
-            ->setBody($this->renderer->render('emails/contact.html.twig', [
+            ->setBody($this->renderer->render('emails/registration.html.twig', [
                 'contact' => $contact
             ]), 'text/html');
         $this->mailer->send($message);
