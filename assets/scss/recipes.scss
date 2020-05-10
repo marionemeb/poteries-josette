@@ -1,0 +1,190 @@
+@import "app.scss";
+/****************************** RECIPES *************************************/
+
+.recipes{
+  background-position: center;
+  background-image: linear-gradient(rgba(255, 255, 255, 0), rgba(0, 0, 0, 0.9)), url("/img/cook.jpg");
+  background-size: cover;
+  text-align: left;
+  min-height: 100vh;
+  padding-bottom: 100px;
+}
+
+main{
+  position:relative;
+  height:100%;
+}
+
+.menu{
+  height:100vh;
+  position:fixed;
+  left:0;
+  z-index:5;
+  outline:none;
+  margin-top: 2rem;
+
+  .avatar{
+    background: rgba(0, 0, 0, 0.39);
+    padding:2em 0.5em;
+    text-align:center;
+    color: whitesmoke;
+
+    h2{
+      font-weight:normal;
+      margin-bottom:0;
+    }
+  }
+
+  ul{
+    list-style:none;
+    padding:0.5em 0;
+    margin:0;
+    color: whitesmoke;
+
+    li{
+      padding:0.5em 1em 0.5em 3em;
+      font-size:1.2em;
+      font-weight:normal;
+      background-repeat:no-repeat;
+      background-position:left 15px center;
+      background-size:auto 20px;
+      transition:all 0.15s linear;
+      cursor:pointer;
+    }
+  }
+}
+
+.container-recipe img{
+  width:100%;
+  padding: 20px;
+}
+
+.container-recipe div [class^="col-"]{
+  padding-left:5px;
+  padding-right:5px;
+}
+.container-recipe .card{
+  position: initial !important;
+  transition:0.5s;
+  cursor:pointer;
+  margin-bottom: 2rem;
+  margin-top: 2rem;
+}
+.container-recipe .card-title{
+  margin: 10px;
+  transition:1s;
+  cursor:pointer;
+}
+.container-recipe .card-title i{
+  font-size:20px;
+  transition:1s;
+  cursor:pointer;
+  color:#ffa710
+}
+.container-recipe .card-title i:hover{
+  transform: scale(1.25);
+  color: #d41818;
+
+}
+.container-recipe .card:hover{
+  //transform: scale(1.05);
+  box-shadow: 10px 10px 15px rgba(0, 0, 0, 0.38);
+}
+.container-recipe .card-text{
+  height:80px;
+  overflow: hidden;
+  padding: 10px 10px;
+}
+
+/********************* POP-UP RECIPES ******************************/
+.recipes-visibility{
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.7);
+  transition: opacity 500ms;
+  opacity: 1;
+}
+
+.visible{
+  visibility: visible;
+}
+
+.hidden{
+  visibility: hidden;
+}
+
+.popup{
+  margin: 150px auto;
+  padding: 20px;
+  background: whitesmoke;
+  border-radius: 5px;
+  width: 50%;
+  position: relative;
+  transition: all 0s ease-in-out;
+
+  .close{
+    position: absolute;
+    top:10px;
+    right: 10px;
+    transition: all 0ms;
+    font-size: 30px;
+    font-weight: bold;
+    text-decoration: none;
+    color: #333;
+  }
+
+}
+
+.popup .close:hover{
+  color: #de750d;
+}
+
+.recipe-card {
+  background: #fff;
+  margin: 4em auto;
+  width: 90%;
+  max-width: 496px;
+  @include border-top-radius(5px);
+  @include border-bottom-radius(5px);
+
+  aside {
+    position: relative;
+
+    img {
+      max-width: 100%;
+      height: auto;
+      vertical-align: bottom;
+      @include border-top-radius(5px);
+    }
+  }
+
+  article {
+    padding: 1.25em 1.5em;
+  }
+
+  h2{
+    font-size: em(28);
+    color: #222222;
+    margin: 0;
+    font-weight: 300;
+  }
+
+  p {
+    margin: 1.25em 0;
+    font-size: em(13);
+    font-weight: 400;
+    color: #222222;
+
+    span {
+      font-weight: 700;
+      color: #000000;
+    }
+  }
+
+  .ingredients {
+    margin: 2em 0 0.5em;
+  }
+}

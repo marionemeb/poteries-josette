@@ -25,6 +25,12 @@ Encore
      */
     .addEntry('app', './assets/js/app.js')
     .addEntry('index', './assets/js/index.js')
+    .addEntry('navbar', './assets/scss/navbar.scss')
+    .addEntry('articles', './assets/scss/articles.scss')
+    .addEntry('event', './assets/scss/event.scss')
+    .addEntry('recipes', './assets/scss/recipes.scss')
+    .addEntry('contact', './assets/scss/contact.scss')
+    .addEntry('login', './assets/scss/login.scss')
     //.addEntry('page2', './assets/js/page2.js')
 
     // When enabled, Webpack "splits" your files into smaller pieces for greater optimization.

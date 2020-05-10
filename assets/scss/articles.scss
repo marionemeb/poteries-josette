@@ -1,0 +1,26 @@
+@import "app.scss";
+/****************************ARTICLES****************/
+.card-columns{
+  column-count: 3;
+
+  .card{
+    border: 2px solid #f8f9fa;
+  }
+}
+.articles{
+  min-height: 100vh;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.1)), url("/img/poterie2.jpg");
+  background-size: cover;
+  text-align: center;
+  padding-bottom: 100px;
+}
+.articles-title{
+  font-family: $font-family1;
+  color: white;
+  font-size: 96px;
+  text-shadow: 1px 1px 2px #082b34;
+  border-bottom: 4px solid white;
+  padding-top: 100px;
+  width: fit-content;
+  margin-bottom: 100px;
+}
