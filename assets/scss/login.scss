@@ -50,9 +50,15 @@
   background: linear-gradient(top, #34472f, #81a864);
 }
 
+.wrap-login100 a{
+  color: #fff;
+}
 
-/*------------------------------------------------------------------
-[ Form ]*/
+.wrap-login100 a:hover{
+  color: #d41818;
+}
+  /*------------------------------------------------------------------
+  [ Form ]*/
 
 .login100-form {
   width: 100%;
@@ -77,13 +83,11 @@
 }
 
 .login100-form-title {
+  height: 60px;
   font-family: $font-family1;
-  font-size: 30px;
   color: #fff;
   line-height: 1.2;
   text-align: center;
-  text-transform: uppercase;
-
   display: block;
 }
 
@@ -94,7 +98,6 @@
 .login100-form .wrap-input100 {
   width: 100%;
   position: relative;
-  border-bottom: 2px solid rgba(255,255,255,0.24);
   margin-bottom: 30px;
 }
 
@@ -123,6 +126,7 @@ login100-form .input100 {
 }
 
 .login100-form-btn {
+  margin: 30px auto 0 auto ;
   font-family: $font-family2;
   font-size: 16px;
   color: #555555;

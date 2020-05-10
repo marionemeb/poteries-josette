@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Réinitialise ton mot de passe{% endblock %}
+
+{% block body %}
+
+    {{ form_start(resetForm) }}
+<div class="limiter">
+    <div class="container-login100" style="background-image: url(/img/olive-tree-962908_640.jpg);">
+        <div class="wrap-login100">
+            <div class="login100-form">
+                    <span class="login100-form-title">
+						<h2>Réinitialises ton mot de passe</h2>
+					</span>
+                <div class="wrap-input100" data-validate="Enter username">
+                    {{ form_row(resetForm.plainPassword, {'attr':{'class': 'input100', 'placeholder': 'Mot de passe'}}) }}
+                </div>
+                <div class="container-login100-form-btn">
+                    <button class="login100-form-btn">Réinitialise ton mot de passe</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{ form_end(resetForm) }}
+    {% endblock %}
