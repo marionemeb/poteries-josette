@@ -6,6 +6,7 @@ use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\EventRepository")
@@ -58,6 +59,9 @@ class Event
     /**
      * @Vich\UploadableField(mapping="product_images", fileNameProperty="imageName")
      * @var ?File
+     * @Assert\File(
+     *     maxSize = "1000k",
+     * )
      */
     private $imageFile;
 

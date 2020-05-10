@@ -31,7 +31,6 @@ Encore
     .addEntry('recipes', './assets/scss/recipes.scss')
     .addEntry('contact', './assets/scss/contact.scss')
     .addEntry('login', './assets/scss/login.scss')
-    //.addEntry('page2', './assets/js/page2.js')
 
     // When enabled, Webpack "splits" your files into smaller pieces for greater optimization.
     .splitEntryChunks()
