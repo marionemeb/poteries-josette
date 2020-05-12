@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Blog;
+use App\Entity\BlogType;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 
@@ -17,6 +18,18 @@ class BlogRepository extends ServiceEntityRepository
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Blog::class);
+    }
+
+    public function findByType($type = [])
+    {
+        $qb = $this->createQueryBuilder('h');
+        if (isset($type['name']) && !empty($type['name'])) {
+            $qb->andWhere('h.type = :type')
+                ->setParameters([
+                    'type' => $type['name'],
+                ]);
+        }
+        return $qb->getQuery()->getResult();
     }
 
     // /**

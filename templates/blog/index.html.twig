@@ -6,12 +6,18 @@
     <div class="container-fluid blog">
         <div class="container">
             <div class="articles-title">Mes coups de coeur</div>
+            <div class="wrap">
+                {{ form_start(searchForm, {'attr':{'class': 'search'}}) }}
+                {{ form_widget(searchForm.name, {'attr':{'class': 'searchTerm', 'placeholder': "Filter par catégorie"}}) }}
+                <button type="submit" class="searchButton">
+                    <i class="fa fa-search"></i>
+                </button>
+                {{ form_end(searchForm) }}
+            </div>
             <section class="card-columns blog-articles">
                 {% for blogArticle in blogArticles %}
                     <div class="card">
                         <a href="{{ blogArticle.url }}">
-                            {#                            <img class="card-img-top" src="{{ ('/uploads/images/products/'~blogArticle.name) }}"#}
-                            {#                                 alt="{{ blogArticle.name }}">#}
                             <div class="card-body">
                                 <h5 class="card-title">{{ blogArticle.name }}</h5>
                                 <p class="card-text">

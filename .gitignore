@@ -11,6 +11,7 @@
 /vendor/
 /public/img/
 /public/uploads/
+/src/Migrations/
 ###< symfony/framework-bundle ###
 
 ###> symfony/phpunit-bridge ###
