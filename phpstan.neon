@@ -1,0 +1,11 @@
+parameters:
+	level: 3
+	paths:
+		- src/Controller
+		- src/Entity
+		- src/Form
+		- src/Notification
+		- src/Repository
+		- src/Security
+		- templates
+
