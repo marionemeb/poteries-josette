@@ -1,13 +1,18 @@
 <div class="nav-top">
+{#    <nav class="navbar navbar-dark ">#}
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"><i class="fas fa-ellipsis-h" style="color: #fff; font-size: 40px"></i></span>
+        </button>
+{#    </nav>#}
     <nav class="navbar navbar-expand-lg bg-transparent rounded">
-        <div class="collapse navbar-collapse justify-content-md-center">
+        <div class="collapse navbar-collapse justify-content-md-center" id="navbarToggleExternalContent">
             <ul class="navbar-nav">
                 <li class="nav-item"><a class="nav-link" href="{{ path('articles') }}">Poteries</a></li>
                 <li class="nav-item"><a class="nav-link" href="{{ path('work') }}">Argile et émaux</a></li>
                 <li class="nav-item"><a class="nav-link" href="{{ path('shop') }}">Atelier</a></li>
                 <li class="nav-item"><a class="nav-link" href="{{ path('events') }}">Evènements</a></li>
                 <li class="nav-item"><a class="nav-link" href="{{ path('recipes') }}">Recettes de Josette</a></li>
-                <li class="nav-item"><a class="nav-link" href="{{ path('blog') }}">Coup de coeur</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ path('blog') }}">Coups de coeur</a></li>
                 <li class="nav-item"><a class="nav-link" href="{{ path('contact') }}">Contact</a></li>
             </ul>
         </div>

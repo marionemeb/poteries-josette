@@ -2,6 +2,11 @@
 .nav-top{
   position: absolute;
   width: 100%;
+  text-align: center;
+
+  button{
+    display: none;
+  }
 }
 
 .nav-item{
@@ -19,4 +24,50 @@
   color: white;
   text-shadow: 1px 1px 2px #082b34;
   border-bottom: 2px solid white;
+}
+
+/**************************** RESPONSIVE *********************************************/
+
+@media (max-width: 575.98px) {
+  .nav-top{
+    button{
+      display: unset !important;
+    }
+    .navbar-nav{
+      background-color: #222424;
+      line-height: 0.6rem;
+    }
+  }
+}
+
+@media (min-width: 576px) and (max-width: 767.98px) {
+  .nav-top{
+    button{
+      display: unset !important;
+    }
+    .navbar-nav{
+      background-color: #222424;
+      line-height: 0.6rem;
+    }
+  }
+}
+
+@media (min-width: 768px) and (max-width: 991.98px) {
+  .nav-top{
+    button{
+      display: unset !important;
+    }
+    .navbar-nav{
+      background-color: #222424;
+      line-height: 0.6rem;
+    }
+  }
+}
+
+@media (min-width: 992px) and (max-width: 1199.98px) {
+
+}
+
+@media (min-width: 1200px) {
+
 }

@@ -12,7 +12,7 @@ class PdfController extends AbstractController
 {
     /**
      * @Route("/pdf/{id}", name="pdf")
-     * @param $id
+     * @param int $id
      */
     public function generate_pdf($id){
         $recipe = new Recipe();
