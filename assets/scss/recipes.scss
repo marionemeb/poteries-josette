@@ -1,5 +1,8 @@
 @import "app.scss";
 /****************************** RECIPES *************************************/
+.print{
+  margin-left: auto;
+}
 
 .recipes{
   background-position: center;
@@ -32,6 +35,8 @@ main{
   margin-top: 2rem;
 }
 .container-recipe .card-title{
+  display: flex;
+  flex-direction: row;
   margin: 10px;
   transition:1s;
   cursor:pointer;

@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<body>
+<main class="card-columns">
+    <div class="popup recipe-card">
+        <article>
+            <h1>{{ recipe.name }}</h1>
+            <p>{{ recipe.description }}</p>
+            <p class="ingredients"><span>Ingredients:&nbsp;</span>{{ recipe.ingredient }}</p>
+        </article>
+    </div>
+</main>
+{% block javascripts %}
+    {{ encore_entry_script_tags('app') }}
+    {{ encore_entry_script_tags('index') }}
+{% endblock %}
+</body>
+
+

@@ -27,6 +27,9 @@
                                          data-ingredient="{{ recipe.ingredient }}"
                                          data-image-name="{{ recipe.imageName }}"
                                     ></div>
+                                    <div class="print">
+                                        <a href="{{ path('pdf', { 'id': recipe.id }) }}'"><i class="fas fa-print"></i></a>
+                                    </div>
                                 </div>
                                 <img src="{{ ('/uploads/images/products/'~recipe.imageName) }}"
                                      alt="{{ recipe.imageName }}">
