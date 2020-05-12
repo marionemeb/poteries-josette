@@ -7,18 +7,14 @@
         <div class="container">
             <div class="articles-title">Les recettes de Josette</div>
             <div class="container-recipes">
-                <nav class="menu" tabindex="0">
-                    <div class="smartphone-menu-trigger"></div>
-                    <header class="avatar">
-                        <h2>Liste des recettes</h2>
-                    </header>
-                    <ul>
-                        {% for recipe in recipes %}
-                            <li tabindex="0" class="icon-dashboard"><i
-                                        class="fas fa-utensils"><span>  {{ recipe.name }}</span></i></li>
-                        {% endfor %}
-                    </ul>
-                </nav>
+                <div class="wrap">
+                    {{ form_start(searchForm, {'attr':{'class': 'search'}}) }}
+                    {{ form_widget(searchForm.name, {'attr':{'class': 'searchTerm', 'placeholder': "Filter par catégorie"}}) }}
+                    <button type="submit" class="searchButton">
+                        <i class="fa fa-search"></i>
+                    </button>
+                    {{ form_end(searchForm) }}
+                </div>
                 <main class="card-columns">
                     {% for recipe in recipes %}
                         <div class="container-recipe">

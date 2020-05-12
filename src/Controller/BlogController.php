@@ -21,9 +21,6 @@ class BlogController extends AbstractController
      */
     public function index(Request $request)
     {
-        //All articles of Blog
-//        $blogArticles = $repoBlog->findAll();
-
         $searchForm = $this->createForm(SearchType::class, null, [
             'method' => 'GET',
         ]);

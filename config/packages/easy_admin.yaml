@@ -9,6 +9,7 @@ easy_admin:
       - {entity: 'Recipe', icon: 'utensils'}
       - {label: 'Configuration'}
       - {entity: 'BlogType', icon: 'cog'}
+      - {entity: 'RecipeCategory', icon: 'cog'}
       - { label: 'Retour au site web', route: 'home', icon: 'reply'}
   list:
     max_results: 20
@@ -60,6 +61,7 @@ easy_admin:
         title: 'Les recettes de Josette'
         fields:
           - {property: 'name', type: 'text'}
+          - category
           - {property: 'description', type: 'text'}
           - {property: 'ingredient', type: 'text'}
           - {property: 'imageFile', template: 'vich_uploader_image.html.twig'}
@@ -68,6 +70,7 @@ easy_admin:
         help: 'Attention, les ingrédients doivent être séparés par une virgule'
         fields:
           - {property: 'name', type: 'text'}
+          - category
           - {property: 'description'}
           - {property: 'ingredient'}
           - {property: 'imageFile', type: 'vich_image'}
@@ -101,6 +104,18 @@ easy_admin:
           - {property: 'name', type: 'text'}
       form:
         title: 'Types'
+        fields:
+          - {property: 'name', type: 'text'}
+
+    RecipeCategory:
+      class: App\Entity\RecipeCategory
+      label: 'Catégories de recettes'
+      list:
+        title: 'Catégories'
+        fields:
+          - {property: 'name', type: 'text'}
+      form:
+        title: 'Catégories'
         fields:
           - {property: 'name', type: 'text'}
 

@@ -15,45 +15,6 @@ main{
   height:100%;
 }
 
-.menu{
-  height:100vh;
-  position:fixed;
-  left:0;
-  z-index:5;
-  outline:none;
-  margin-top: 2rem;
-
-  .avatar{
-    background: rgba(0, 0, 0, 0.39);
-    padding:2em 0.5em;
-    text-align:center;
-    color: whitesmoke;
-
-    h2{
-      font-weight:normal;
-      margin-bottom:0;
-    }
-  }
-
-  ul{
-    list-style:none;
-    padding:0.5em 0;
-    margin:0;
-    color: whitesmoke;
-
-    li{
-      padding:0.5em 1em 0.5em 3em;
-      font-size:1.2em;
-      font-weight:normal;
-      background-repeat:no-repeat;
-      background-position:left 15px center;
-      background-size:auto 20px;
-      transition:all 0.15s linear;
-      cursor:pointer;
-    }
-  }
-}
-
 .container-recipe img{
   width:100%;
   padding: 20px;

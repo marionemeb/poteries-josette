@@ -19,6 +19,18 @@ class RecipeRepository extends ServiceEntityRepository
         parent::__construct($registry, Recipe::class);
     }
 
+    public function findByType($category = [])
+    {
+        $qb = $this->createQueryBuilder('h');
+        if (isset($category['name']) && !empty($category['name'])) {
+            $qb->andWhere('h.category = :category')
+                ->setParameters([
+                    'category' => $category['name'],
+                ]);
+        }
+        return $qb->getQuery()->getResult();
+    }
+
     // /**
     //  * @return Recipe[] Returns an array of Recipe objects
     //  */
