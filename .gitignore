@@ -10,8 +10,9 @@
 /var/
 /vendor/
 /public/img/
-/public/uploads/
+/public/uploads/images/products/
 /src/Migrations/
+/.php-version
 ###< symfony/framework-bundle ###
 
 ###> symfony/phpunit-bridge ###
