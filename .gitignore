@@ -9,10 +9,10 @@
 /public/bundles/
 /var/
 /vendor/
-/public/img/
 /public/uploads/images/products/
 /src/Migrations/
 /.php-version
+/.htaccess
 ###< symfony/framework-bundle ###
 
 ###> symfony/phpunit-bridge ###
