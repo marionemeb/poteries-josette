@@ -203,11 +203,17 @@ h1, h2, h3, h4 {
     .articles-title {
         font-size: 50px;
     }
+    .h1-home {
+        font-size: 40px !important;
+    }
 }
 
 @media (min-width: 576px) and (max-width: 767.98px) {
     .articles-title {
         font-size: 50px;
+    }
+    .h1-home {
+        font-size: 40px !important;
     }
 }
 

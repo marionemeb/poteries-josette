@@ -1,3 +1,11 @@
 swiftmailer:
     url: '%env(MAILER_URL)%'
     spool: { type: 'memory' }
+
+#    transport: sendmail
+#        auth_mode: login
+#        port: 465
+#        host: smtp.orange.fr
+#        username: josette.bourgogne@wanadoo.fr
+#        password: Bilou2411
+#        spool: { type: 'memory' }

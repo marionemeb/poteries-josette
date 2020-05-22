@@ -6,6 +6,7 @@ use App\Entity\Recipe;
 use Dompdf\Dompdf;
 use Dompdf\Options;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class PdfController extends AbstractController
@@ -13,8 +14,10 @@ class PdfController extends AbstractController
     /**
      * @Route("/pdf/{id}", name="pdf")
      * @param int $id
+     * @return Response
      */
-    public function generate_pdf($id){
+    public function generate_pdf($id)
+    {
         $recipe = new Recipe();
         $recipe = $this->getDoctrine()->getRepository(Recipe::class)->find($id);
 
@@ -30,12 +33,12 @@ class PdfController extends AbstractController
             'recipe' => $recipe
         ]);
 
-
         $dompdf->loadHtml($html);
         $dompdf->setPaper('A4', 'portrait');
         $dompdf->render();
-        $dompdf->stream("recette_josette.pdf", [
+
+        return new Response ($dompdf->stream("recette_josette.pdf", [
             "Attachment" => true
-        ]);
+        ]));
     }
 }
