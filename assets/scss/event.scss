@@ -9,10 +9,10 @@
   padding-bottom: 100px;
 }
 
-.a-events, .a-events:visited {
+.a-events, .a-events:visited, .a-events:hover {
   display: block;
   text-decoration: inherit;
-  color: inherit;
+  color: rgba(0, 0, 0, 0.73);
 }
 
 .blog-posts {
@@ -92,6 +92,7 @@
   -webkit-box-shadow: -2px 0 2px -1px rgba(0, 0, 0, 0.1);
   box-shadow: -2px 0 2px -1px rgba(0, 0, 0, 0.1);
   height: 200px;
+  overflow: scroll;
 }
 .blog-posts .post .content:before {
   content: '';
