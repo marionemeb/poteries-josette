@@ -62,8 +62,8 @@ easy_admin:
         fields:
           - {property: 'name', type: 'text'}
           - category
-          - {property: 'description', type: 'text'}
           - {property: 'ingredient', type: 'text'}
+          - {property: 'description', type: 'text'}
           - {property: 'imageFile', template: 'vich_uploader_image.html.twig'}
       form:
         title: 'Les poteries de Josette'
@@ -71,8 +71,8 @@ easy_admin:
         fields:
           - {property: 'name', type: 'text'}
           - category
-          - {property: 'description'}
           - {property: 'ingredient'}
+          - {property: 'description'}
           - {property: 'imageFile', type: 'vich_image'}
 
     Blog:

@@ -36,8 +36,8 @@ export default class Recipes extends React.Component {
                         </aside>
                         <article>
                             <h2>{this.state.name}</h2>
-                            <p>{this.state.description}</p>
                             <p className="ingredients"><span>Ingredients:&nbsp;</span>{this.state.ingredient}</p>
+                            <p>{this.state.description}</p>
                         </article>
                     </div>
                 </div>

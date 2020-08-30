@@ -24,6 +24,7 @@ class RecipeRepository extends ServiceEntityRepository
         $qb = $this->createQueryBuilder('h');
         if (isset($category['name']) && !empty($category['name'])) {
             $qb->andWhere('h.category = :category')
+                ->orderBy('h.name', 'ASC')
                 ->setParameters([
                     'category' => $category['name'],
                 ]);

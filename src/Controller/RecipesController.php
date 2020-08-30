@@ -33,7 +33,7 @@ class RecipesController extends AbstractController
         } else {
             $recipes = $this->getDoctrine()
                 ->getRepository(Recipe::class)
-                ->findBy([], null);
+                ->findBy([], ['name' => 'ASC']);
         }
 
         $types = $this->getDoctrine()

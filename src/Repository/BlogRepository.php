@@ -25,6 +25,7 @@ class BlogRepository extends ServiceEntityRepository
         $qb = $this->createQueryBuilder('h');
         if (isset($type['name']) && !empty($type['name'])) {
             $qb->andWhere('h.type = :type')
+                ->orderBy('h.name', 'ASC')
                 ->setParameters([
                     'type' => $type['name'],
                 ]);

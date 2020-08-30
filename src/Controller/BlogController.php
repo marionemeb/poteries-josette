@@ -33,7 +33,7 @@ class BlogController extends AbstractController
         } else {
             $blogArticles = $this->getDoctrine()
                 ->getRepository(Blog::class)
-                ->findBy([], null);
+                ->findBy([], ['name' => 'ASC']);
         }
 
         $types = $this->getDoctrine()
