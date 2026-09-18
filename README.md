@@ -72,3 +72,15 @@ Le fichier `.env` (non commité, `cp .env.dist .env` — voir "Installation" ci-
 ```bash
 docker compose run --rm php vendor/bin/phpstan analyse
 ```
+
+## Déploiement
+
+`.github/workflows/deploy.yml` déploie sur l'hébergement OVH par FTP — build des assets (Node 12, requis pour `node-sass`) + `composer install --no-dev`, puis synchronisation FTP en excluant les fichiers de dev (`.git`, `.github`, `tests/`, `docker/`, `.env*`...).
+
+**Déclenchement manuel uniquement** (`workflow_dispatch`, onglet Actions → "Deploy to OVH" → "Run workflow") — c'est le site de production réel, pas de déploiement automatique à chaque push pour l'instant.
+
+Secrets GitHub à configurer une fois (Settings → Secrets and variables → Actions) avant de pouvoir lancer le workflow :
+- `OVH_FTP_HOST`
+- `OVH_FTP_USERNAME`
+- `OVH_FTP_PASSWORD`
+- `OVH_FTP_REMOTE_DIR` (dossier racine du site sur l'hébergement, ex. `www/`)
