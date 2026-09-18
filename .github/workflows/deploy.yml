@@ -23,7 +23,7 @@ jobs:
         run: APP_ENV=prod composer install --no-dev --optimize-autoloader --no-interaction
 
       - name: Set up Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7
         with:
           node-version: '12'
 
