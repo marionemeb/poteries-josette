@@ -18,7 +18,6 @@ class PdfController extends AbstractController
      */
     public function generate_pdf($id)
     {
-        $recipe = new Recipe();
         $recipe = $this->getDoctrine()->getRepository(Recipe::class)->find($id);
 
         $options = new Options();
@@ -26,9 +25,6 @@ class PdfController extends AbstractController
 
         $dompdf = new Dompdf($options);
 
-        $data = array(
-            'headline' => 'my headline'
-        );
         $html = $this->renderView('pdf/index.html.twig', [
             'recipe' => $recipe
         ]);
@@ -37,8 +33,12 @@ class PdfController extends AbstractController
         $dompdf->setPaper('A4', 'portrait');
         $dompdf->render();
 
-        return new Response ($dompdf->stream("recette_josette.pdf", [
-            "Attachment" => true
-        ]));
+        // dompdf's stream() sends headers and echoes the PDF directly, bypassing
+        // Symfony's Response entirely — output() instead returns the PDF bytes so
+        // they can go through a normal Response, which Symfony then sends once.
+        return new Response($dompdf->output(), 200, [
+            'Content-Type' => 'application/pdf',
+            'Content-Disposition' => 'attachment; filename="recette_josette.pdf"',
+        ]);
     }
 }

@@ -53,6 +53,9 @@ La machine de dev n'a pas forcément PHP 7.x installé : un environnement Docker
 docker compose build php
 docker compose run --rm php composer install
 
+# La base de test doit exister et être à jour avant de lancer les tests
+docker compose run --rm -e APP_ENV=test php php bin/console doctrine:schema:update --force
+
 # PHPUnit 7.5 (composer.lock étant lui-même en Composer 1, la
 # récupération dynamique via symfony/phpunit-bridge ne fonctionne
 # plus depuis l'arrêt du support Composer 1 par Packagist — un phar
@@ -61,6 +64,8 @@ docker compose run --rm php php .phpunit/phpunit.phar
 ```
 
 Le fichier `.env` (non commité) doit exister pour que le kernel démarre — voir "Installation" ci-dessus ; `.env.test` (commité) surcharge `DATABASE_URL` pour pointer vers le service `db` du `docker-compose.yml`.
+
+**Attention** : `doctrine:schema:update` sert ici uniquement à préparer la base de **test**, isolée dans le conteneur Docker — ne jamais l'utiliser sur la base de production. `src/Migrations/` n'est de toute façon plus à jour avec le mapping actuel (voir le skill du projet), donc `doctrine:migrations:migrate` seul ne suffit pas pour retrouver un schéma de test cohérent avec le code.
 
 ## Qualité
 

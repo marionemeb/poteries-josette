@@ -65,7 +65,7 @@ Mise en place le 18/09/2026 :
 
 - **Git** : identité locale scopée sur ce repo (`user.name`/`user.email` en config `--local`, distincts de la config globale), remote `origin` repointé vers l'alias SSH `github-marionemeb` (force la clé `~/.ssh/id_ed25519_marionemeb`) pour garantir que push/pull passent toujours par le compte GitHub `marionemeb`.
 - **Claude Code** : pas de scoping natif par projet côté Claude Code (credentials globales à la machine dans `~/.claude/.credentials.json`). Contournement mis en place : `.envrc` à la racine du repo (exclu du repo via `.git/info/exclude`, jamais commité) qui exporte `CLAUDE_CONFIG_DIR=~/.claude-profiles/poteries-josette-gmail`, activé via `direnv`. Le hook direnv dans `~/.zshrc` a été corrigé au passage (il était câblé pour bash au lieu de zsh).
-- Le compte associé à ce repo (Git et Claude Code) est `marion.emeric@gmail.com` / compte GitHub `marionemeb`.
+- **Email des commits** : `marion.emeric@laposte.net` (config locale `user.email` de ce repo). **Important** : la clé SSH `github-marionemeb` ne contrôle que le droit de *push* — GitHub attribue un commit à un compte en fonction de l'email de l'auteur (`user.email` git), pas de la clé SSH utilisée. Le 18/09/2026, deux commits faits avec `marion.emeric@gmail.com` (email de session Claude Code, mais vérifié sur un *autre* compte GitHub perso, `marion-emeric`) ont été attribués à ce mauvais compte dans le graphe de contributions GitHub — corrigé en réécrivant ces 2 commits (author réécrit + `push --force-with-lease`, nécessitant une désactivation temporaire de la protection anti-force-push sur `master`). Toujours utiliser `marion.emeric@laposte.net` pour les commits sur ce repo, jamais l'email de session par défaut.
 
 ## Ce skill
 
@@ -86,7 +86,7 @@ Ce skill (`.claude/skills/poteries-josette/`) est versionné avec le repo — co
 - [ ] Voir avec Josette pour supprimer la page "événements"
 - [ ] Idem : voir avec Josette pour les pages "recettes", "coups de cœur" et "contact" (+ vérifier si la partie back-office correspondante serait aussi à retirer)
 - [ ] Revoir tout le plan du site (sitemap/architecture des pages) — englobe probablement les décisions au cas par cas ci-dessus sur événements/recettes/coups de cœur/contact
-- [x] Ajouter des tests unitaires / fonctionnels — démarré le 18/09/2026 : 10 tests passants (`tests/Entity/UserTest.php` + `tests/Controller/PublicPagesTest.php`, smoke tests sur les pages sans dépendance BDD). Reste à faire : couvrir les pages avec repository (articles/blog/recipes/events) une fois une BDD de test seedée, et les formulaires (contact, recherche).
+- [x] Ajouter des tests unitaires / fonctionnels — 19 tests passants au 18/09/2026 (`tests/Entity/UserTest.php`, `tests/Controller/PublicPagesTest.php`, `EventsControllerTest`, `ArticlesControllerTest`, `BlogControllerTest`, `RecipesControllerTest`, base commune `tests/DatabaseWebTestCase.php` pour les fixtures faites main, pas de bundle de fixtures installé). Bug réel trouvé et corrigé au passage : `PdfController` utilisait `$dompdf->stream()` (envoie les headers/le contenu directement, incompatible avec un `Response` Symfony) au lieu de `$dompdf->output()` — corrigé, `/pdf/{id}` est maintenant testé aussi. Reste à faire : formulaires de recherche/filtre (blog/recipes), soumission du formulaire de contact, back-office EasyAdmin.
 - [ ] Ajouter un CI/CD (voir aussi "Pistes d'amélioration" ci-dessous : pas de `.github/workflows` actuellement, déploiement manuel)
 - [ ] Revoir le footer
 - [ ] Revoir les mentions légales
@@ -99,6 +99,7 @@ Ce skill (`.claude/skills/poteries-josette/`) est versionné avec le repo — co
 
 **Technique**
 - Premiers tests ajoutés le 18/09/2026 (voir TODO ci-dessus) — encore un filet de sécurité limité, à étoffer.
+- `phpstan` (config par défaut, niveau 0) remonte 78 erreurs préexistantes (typehints manquants surtout) — pas corrigées, hors scope de l'ajout des tests ; à traiter séparément si on veut un vrai niveau de qualité statique.
 - Pas de CI/CD (pas de `.github/workflows`) — chaque déploiement se fait manuellement.
 - EasyAdmin 2.3 est aussi une version ancienne (la 4 existe, mais liée à la montée de version Symfony).
 - **Environnement de test** : la machine de dev n'a que PHP 8.1 avec très peu d'extensions (pas de mbstring/xml/pdo_mysql...) — inadapté au projet (PHP ^7.1.3). Un environnement Docker a été mis en place (`docker-compose.yml` + `docker/php/Dockerfile`, image `php:7.4-cli`) : `docker compose run --rm php <commande>`. Points à connaître :
@@ -115,4 +116,5 @@ Ce skill (`.claude/skills/poteries-josette/`) est versionné avec le repo — co
 **Autre**
 - Pas de sauvegarde de la BDD OVH confirmée — à vérifier que l'hébergeur en fait une automatiquement.
 - Pas de monitoring/alerting (site down, erreurs 500) en place.
+- **Migrations en retard sur le schéma réel** (découvert le 18/09/2026 en montant une BDD de test à partir de `src/Migrations/`) : `doctrine:schema:validate` échoue — colonnes manquantes/à renommer sur `event`/`recipe`/`product` (ex. `event.name` devrait être `event.title`, `updated_at` absent partout, `recipe.category_id` absent), et les tables `user`, `recipe_category`, `reset_password_request` n'ont aucune migration alors qu'elles existent en prod (vues dans phpMyAdmin). Schéma prod probablement modifié à la main ou via `schema:update` sans générer les migrations correspondantes — risque pour toute reprise après sinistre à partir des migrations seules. À régulariser : générer les migrations manquantes (`doctrine:migrations:diff`) en comparant au schéma réel de prod, pas juste à celui obtenu en local.
 
