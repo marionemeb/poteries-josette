@@ -82,7 +82,7 @@ Ce skill (`.claude/skills/poteries-josette/`) est versionné avec le repo — co
 - [ ] Ajouter Instagram (lien/flux/intégration — à préciser : simple lien vers le compte, ou affichage des posts sur le site)
 - [ ] Reprendre l'UI/UX (voir `assets/design-poteries-josette.md` pour l'état actuel du design avant toute refonte)
 - [ ] Vérifier la responsivité du site sur différents supports (PC, tablette, mobile)
-- [ ] Ajouter un bouton "remonter en haut" sur les pages
+- [x] Ajouter un bouton "remonter en haut" sur les pages — fait le 18/09/2026 (`templates/base.html.twig`, `assets/scss/app.scss`, `assets/js/app.js`), bouton circulaire fixe en bas à droite, apparaît après 400px de scroll. **Non testé dans un vrai navigateur** (Claude in Chrome pas connecté sur cette machine) — juste vérifié que le HTML/CSS/JS sont bien générés. À confirmer visuellement.
 - [ ] Reprendre les images de mauvaise qualité
 - [ ] Voir avec Josette pour supprimer la page "événements"
 - [ ] Idem : voir avec Josette pour les pages "recettes", "coups de cœur" et "contact" (+ vérifier si la partie back-office correspondante serait aussi à retirer)
