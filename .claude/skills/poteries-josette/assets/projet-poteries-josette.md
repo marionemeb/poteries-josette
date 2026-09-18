@@ -22,7 +22,8 @@ Remote GitHub : `git@github.com:marionemeb/poteries-josette.git` (SSH via l'alia
 - **Backend** : Symfony 4.4. `composer.json` exige `PHP ^7.1.3` (minimum), mais la **version PHP réellement déployée sur OVH est 7.3** (vérifiée le 18/09/2026 dans l'espace client OVH, marquée d'un avertissement — probablement signalée EOL par OVH lui-même). Offre d'hébergement : **PERSO**. D'après la doc officielle OVH, la version PHP n'est PAS limitée par l'offre (Perso/Pro/Performance) : OVH propose PHP 5.4 à 8.5 sur tout hébergement mutualisé, configurable par site (espace client → Hébergements → Multisite → domaine → Configuration → "Version PHP globale"). PHP 7.3 est donc probablement un réglage jamais mis à jour, pas une contrainte d'offre — mais Symfony 4.4 lui-même ne supporte officiellement que jusqu'à PHP 7.4, donc une vraie modernisation nécessite aussi de monter Symfony, pas seulement de changer la version PHP dans le manager OVH.
 - **ORM** : Doctrine (avec migrations, `src/Migrations`)
 - **Back-office** : EasyAdmin ^2.3
-- **Front** : Webpack Encore + Sass, Bootstrap 4, jQuery, un peu de React (16) et animejs pour certaines parties interactives
+- **Front** : Webpack Encore + Sass, Bootstrap 4, jQuery, un peu de React (16) et animejs pour certaines parties interactives. **`yarn` n'est pas installé sur cette machine** (README à corriger un jour) — utiliser `npm` à la place (`npm install`, `npx encore ...`). `yarn.lock` et `package-lock.json` coexistent dans le repo alors que seul npm est utilisable ici ; une commande npm a tendance à modifier `yarn.lock` en plus (changements d'URL de registry uniquement, pas de vraies versions) — vérifier `git diff yarn.lock` et le `checkout` si ce n'est pas voulu.
+- **`node-sass` 4.x cassé sur Node 22** (constaté le 18/09/2026) : `encore dev`/`build` échouent (`Unsupported runtime`), aucun binaire précompilé pour cette version de Node. Migration vers `sass` (dart-sass) nécessaire pour rebuilder les assets sur une machine avec un Node récent — voir aussi le point UI/UX du TODO, ça pourrait se faire en même temps.
 - **PDF** : dompdf (génération de documents, ex. factures/mentions)
 - **Emails** : Symfony Mailer + SwiftMailer bundle
 - **Sécurité** : symfony/security-bundle + symfonycasts/reset-password-bundle
@@ -91,11 +92,14 @@ Ce skill (`.claude/skills/poteries-josette/`) est versionné avec le repo — co
 - [ ] Revoir le footer
 - [ ] Revoir les mentions légales
 - [ ] Automatiser le déploiement vers OVH (actuellement manuel)
-- [ ] Mettre à jour `composer.lock` et `package-lock.json`
+- [x] Mettre à jour `package-lock.json` — fait le 18/09/2026 via `npm update` (respecte les bornes semver de `package.json`, pas de montée majeure). Découverte au passage : le build front (`encore dev`) était déjà cassé sur cette machine (Node 22) *avant* la mise à jour, à cause d'une incompatibilité OpenSSL 3 avec l'ancien webpack 4 — la mise à jour n'a rien cassé de plus, elle a même réglé ce point-là. Reste un blocage résiduel : `node-sass` 4.x (obsolète, abandonné) n'a aucun binaire précompilé pour Node 22 (`Unsupported runtime`) — nécessiterait de migrer vers `sass` (dart-sass), un vrai chantier front séparé, pas juste une mise à jour de lockfile.
+- [ ] Mettre à jour `composer.lock` — **bloqué**, voir "Pistes d'amélioration" ci-dessous : équivaut en fait au chantier de modernisation Symfony/PHP, pas une mise à jour de routine.
 
 ## Pistes d'amélioration identifiées (18/09/2026)
 
 **Priorité — sécurité/risque** : PHP ^7.1.3 et Symfony 4.4 sont tous les deux hors support depuis longtemps (PHP 7.1 EOL fin 2019, Symfony 4.4 EOL nov. 2023), sur un site public avec un back-office/login exposé. À traiter avant le reste. Bonne nouvelle : ce n'est PAS bloqué par l'offre OVH (PHP jusqu'à 8.5 disponible sur toute offre mutualisée, voir "Stack technique" ci-dessus) — le vrai chantier est de monter Symfony (4.4 ne supporte officiellement que jusqu'à PHP 7.4) et ses dépendances avant de pouvoir changer la version PHP côté OVH.
+
+**`composer update`/`require` définitivement impossible en l'état** (vérifié le 18/09/2026) : l'ancien protocole Composer 1 (`repo.packagist.org/p/%package%.json`) renvoie désormais une **403 Forbidden** — pas juste un avertissement de dépréciation, un vrai blocage. `symfony/flex` (v1.6.3, verrouillé dans le lock) appelle en plus `flex.symfony.com`, un nom de domaine qui **ne résout même plus du tout** (service disparu). Résultat : le seul moyen de faire évoluer `composer.lock` est de migrer vers Composer 2, ce qui implique de remplacer `symfony/flex` et `ocramius/package-versions` (verrouillés sur des versions qui exigent l'API de plugin Composer 1) — et vu l'ampleur des écarts de version déjà constatés (ex. `doctrine/doctrine-bundle` verrouillé en 2.0.8, la 3.3.2 actuelle exige PHP 8.4), cette migration ne peut pas être découplée de la montée Symfony/PHP ci-dessus : **c'est le même chantier**, pas une tâche de routine séparée.
 
 **Technique**
 - Premiers tests ajoutés le 18/09/2026 (voir TODO ci-dessus) — encore un filet de sécurité limité, à étoffer.
