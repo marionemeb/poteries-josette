@@ -40,6 +40,11 @@ jobs:
         run: npm run build
 
       - name: Deploy over FTP
+        # var/** matters here, not just tidiness: var/cache alone can contain
+        # tens of thousands of near-empty directories (Symfony's filesystem
+        # cache pools), and uploading that one file at a time over FTP is
+        # what made the first real run effectively hang. The server
+        # regenerates its own cache on first request — never ship it.
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
           server: ${{ secrets.OVH_FTP_HOST }}
@@ -59,3 +64,4 @@ jobs:
             .env.test
             .envrc
             .phpunit/**
+            var/**
