@@ -1,0 +1,16 @@
+services:
+  php:
+    build: docker/php
+    volumes:
+      - .:/var/www
+    working_dir: /var/www
+    depends_on:
+      - db
+
+  db:
+    image: mysql:5.7
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+      MYSQL_DATABASE: josette_test
+      MYSQL_USER: josette
+      MYSQL_PASSWORD: josette

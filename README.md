@@ -45,9 +45,25 @@ symfony server:start     # ou php -S 127.0.0.1:8000 -t public
 yarn watch                # rebuild les assets à chaque changement
 ```
 
+## Tests
+
+La machine de dev n'a pas forcément PHP 7.x installé : un environnement Docker (PHP 7.4 + MySQL) est fourni pour lancer les tests de façon reproductible, proche de la prod (OVH tourne en PHP 7.3).
+
+```bash
+docker compose build php
+docker compose run --rm php composer install
+
+# PHPUnit 7.5 (composer.lock étant lui-même en Composer 1, la
+# récupération dynamique via symfony/phpunit-bridge ne fonctionne
+# plus depuis l'arrêt du support Composer 1 par Packagist — un phar
+# autonome est utilisé à la place, voir .phpunit/phpunit.phar)
+docker compose run --rm php php .phpunit/phpunit.phar
+```
+
+Le fichier `.env` (non commité) doit exister pour que le kernel démarre — voir "Installation" ci-dessus ; `.env.test` (commité) surcharge `DATABASE_URL` pour pointer vers le service `db` du `docker-compose.yml`.
+
 ## Qualité
 
 ```bash
-vendor/bin/phpstan analyse
-vendor/bin/phpunit
+docker compose run --rm php vendor/bin/phpstan analyse
 ```

@@ -8,6 +8,8 @@ Dernière mise à jour le 18/09/2026.
 - Les identifiants de connexion, noms d'hôte et URL d'accès ne sont volontairement pas stockés dans ce skill versionné (donnée critique) — se référer à un gestionnaire de secrets ou demander à l'utilisateur si besoin.
 - Schéma en base cohérent avec les entités Doctrine listées ci-dessous (pas de table dédiée à `Contact`, le formulaire de contact n'est probablement pas persisté en base).
 - **Services OVH associés** : hébergement web (renouvellement manuel), nom de domaine (renouvellement manuel), zones DNS (renouvellement automatique), e-mails (aucun service actif constaté). Pas de dates précises stockées ici (vues lors d'un contrôle le 18/09/2026, potentiellement obsolètes/à revérifier directement sur l'espace client OVH plutôt que de se fier à ce résumé).
+- **Abonnement hébergement** (vérifié le 18/09/2026) : offre PERSO, expire le 30/03/2027, compte créé le 22/07/2009. Quota bases de données : 1/5 utilisées.
+- **Multisite** : 3 entrées configurées — `poterie-josette.com` et `www.poterie-josette.com` (dossier racine `www/public`, DNS actif A/AAAA) + `poteriej.cluster014.ovh.net` (sous-domaine technique OVH, dossier racine `www`). Git/Logs séparés/Firewall désactivés sur les trois.
 
 ## Résumé
 
@@ -17,7 +19,7 @@ Remote GitHub : `git@github.com:marionemeb/poteries-josette.git` (SSH via l'alia
 
 ## Stack technique
 
-- **Backend** : Symfony 4.4, PHP ^7.1.3 — version probablement contrainte par l'offre d'hébergement mutualisé OVH, pas un choix délibéré du projet ; à vérifier/relâcher si l'hébergement change un jour
+- **Backend** : Symfony 4.4. `composer.json` exige `PHP ^7.1.3` (minimum), mais la **version PHP réellement déployée sur OVH est 7.3** (vérifiée le 18/09/2026 dans l'espace client OVH, marquée d'un avertissement — probablement signalée EOL par OVH lui-même). Offre d'hébergement : **PERSO**. D'après la doc officielle OVH, la version PHP n'est PAS limitée par l'offre (Perso/Pro/Performance) : OVH propose PHP 5.4 à 8.5 sur tout hébergement mutualisé, configurable par site (espace client → Hébergements → Multisite → domaine → Configuration → "Version PHP globale"). PHP 7.3 est donc probablement un réglage jamais mis à jour, pas une contrainte d'offre — mais Symfony 4.4 lui-même ne supporte officiellement que jusqu'à PHP 7.4, donc une vraie modernisation nécessite aussi de monter Symfony, pas seulement de changer la version PHP dans le manager OVH.
 - **ORM** : Doctrine (avec migrations, `src/Migrations`)
 - **Back-office** : EasyAdmin ^2.3
 - **Front** : Webpack Encore + Sass, Bootstrap 4, jQuery, un peu de React (16) et animejs pour certaines parties interactives
@@ -84,7 +86,7 @@ Ce skill (`.claude/skills/poteries-josette/`) est versionné avec le repo — co
 - [ ] Voir avec Josette pour supprimer la page "événements"
 - [ ] Idem : voir avec Josette pour les pages "recettes", "coups de cœur" et "contact" (+ vérifier si la partie back-office correspondante serait aussi à retirer)
 - [ ] Revoir tout le plan du site (sitemap/architecture des pages) — englobe probablement les décisions au cas par cas ci-dessus sur événements/recettes/coups de cœur/contact
-- [ ] Ajouter des tests unitaires / fonctionnels (voir aussi "Pistes d'amélioration" ci-dessous : `tests/` est actuellement vide de tout test réel)
+- [x] Ajouter des tests unitaires / fonctionnels — démarré le 18/09/2026 : 10 tests passants (`tests/Entity/UserTest.php` + `tests/Controller/PublicPagesTest.php`, smoke tests sur les pages sans dépendance BDD). Reste à faire : couvrir les pages avec repository (articles/blog/recipes/events) une fois une BDD de test seedée, et les formulaires (contact, recherche).
 - [ ] Ajouter un CI/CD (voir aussi "Pistes d'amélioration" ci-dessous : pas de `.github/workflows` actuellement, déploiement manuel)
 - [ ] Revoir le footer
 - [ ] Revoir les mentions légales
@@ -93,12 +95,17 @@ Ce skill (`.claude/skills/poteries-josette/`) est versionné avec le repo — co
 
 ## Pistes d'amélioration identifiées (18/09/2026)
 
-**Priorité — sécurité/risque** : PHP ^7.1.3 et Symfony 4.4 sont tous les deux hors support depuis longtemps (PHP 7.1 EOL fin 2019, Symfony 4.4 EOL nov. 2023), sur un site public avec un back-office/login exposé. À traiter avant le reste. Compromis : upgrader est un chantier, potentiellement bloqué par l'offre PHP d'OVH (voir "Stack technique" ci-dessus) — vérifier d'abord si un hébergement OVH plus récent est possible sans tout migrer.
+**Priorité — sécurité/risque** : PHP ^7.1.3 et Symfony 4.4 sont tous les deux hors support depuis longtemps (PHP 7.1 EOL fin 2019, Symfony 4.4 EOL nov. 2023), sur un site public avec un back-office/login exposé. À traiter avant le reste. Bonne nouvelle : ce n'est PAS bloqué par l'offre OVH (PHP jusqu'à 8.5 disponible sur toute offre mutualisée, voir "Stack technique" ci-dessus) — le vrai chantier est de monter Symfony (4.4 ne supporte officiellement que jusqu'à PHP 7.4) et ses dépendances avant de pouvoir changer la version PHP côté OVH.
 
 **Technique**
-- Aucun test réel n'existe (`tests/` ne contient qu'un `bootstrap.php`, malgré `phpunit.xml.dist` configuré) — zéro filet de sécurité pour changer du code sans casser le site.
+- Premiers tests ajoutés le 18/09/2026 (voir TODO ci-dessus) — encore un filet de sécurité limité, à étoffer.
 - Pas de CI/CD (pas de `.github/workflows`) — chaque déploiement se fait manuellement.
 - EasyAdmin 2.3 est aussi une version ancienne (la 4 existe, mais liée à la montée de version Symfony).
+- **Environnement de test** : la machine de dev n'a que PHP 8.1 avec très peu d'extensions (pas de mbstring/xml/pdo_mysql...) — inadapté au projet (PHP ^7.1.3). Un environnement Docker a été mis en place (`docker-compose.yml` + `docker/php/Dockerfile`, image `php:7.4-cli`) : `docker compose run --rm php <commande>`. Points à connaître :
+  - Le `composer.lock` du projet a été généré avec **Composer 1** (symfony/flex, ocramius/package-versions pinnés sur des versions qui exigent l'API de plugin Composer 1). Le Dockerfile installe donc `composer:1`, pas `composer:2`.
+  - `composer install` fonctionne (résolution depuis le lock + cache), mais **Packagist a coupé le support de Composer 1 en septembre 2025** : toute résolution *live* (ex. `composer update`, ou le mécanisme `vendor/bin/simple-phpunit` de symfony/phpunit-bridge qui télécharge PHPUnit à la volée) échoue désormais. Contournement : un phar PHPUnit 7.5 autonome est téléchargé directement (`.phpunit/phpunit.phar`, dossier déjà ignoré par git) et lancé via `docker compose run --rm php php .phpunit/phpunit.phar`.
+  - Implication plus large : moderniser ce projet (Symfony 5+, PHP 7.4/8+) réglera aussi ce problème de Composer 1, en plus du reste (voir priorité sécurité/risque ci-dessus).
+  - `config/packages/test/webpack_encore.yaml` : `strict_mode` activé à `false` (était commenté) pour que les tests fonctionnels n'échouent pas faute d'assets Webpack buildés.
 
 **Fonctionnel**
 - Naming trompeur de la route `/shop` (voir "Fonctionnalités" ci-dessus) — à corriger si ça gêne, ou au moins renommer en interne.
