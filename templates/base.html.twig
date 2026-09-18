@@ -21,6 +21,9 @@
     {% include '_navbar.html.twig' %}
         {% block body %}{% endblock %}
     {% include '_footer.html.twig' %}
+        <button id="back-to-top" class="back-to-top" aria-label="Remonter en haut de la page" title="Remonter en haut">
+            <i class="fas fa-arrow-up"></i>
+        </button>
         {% block javascripts %}
             {{ encore_entry_script_tags('app') }}
             {{ encore_entry_script_tags('index') }}

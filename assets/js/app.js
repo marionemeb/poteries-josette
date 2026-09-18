@@ -5,3 +5,14 @@ require('../scss/app.scss');
 require('jquery');
 require('bootstrap');
 
+const backToTopButton = document.getElementById('back-to-top');
+if (backToTopButton) {
+    window.addEventListener('scroll', function () {
+        backToTopButton.classList.toggle('visible', window.scrollY > 400);
+    });
+
+    backToTopButton.addEventListener('click', function () {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+}
+
