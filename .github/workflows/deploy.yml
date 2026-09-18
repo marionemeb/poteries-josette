@@ -16,7 +16,11 @@ jobs:
           tools: composer:1
 
       - name: Install PHP dependencies (production)
-        run: composer install --no-dev --optimize-autoloader --no-interaction
+        # APP_ENV=prod matters here, not just cosmetic: composer's post-install
+        # scripts run cache:clear, which boots the kernel — with --no-dev, dev
+        # bundles (WebProfilerBundle...) are gone from vendor/, so booting in
+        # dev (the .env.dist default) fails with a ClassNotFoundError.
+        run: APP_ENV=prod composer install --no-dev --optimize-autoloader --no-interaction
 
       - name: Set up Node
         uses: actions/setup-node@v4
