@@ -32,7 +32,7 @@ Prérequis : PHP ^7.1.3 avec les extensions `ctype` et `iconv`, Composer, Node.j
 composer install
 yarn install
 
-cp .env .env.local   # renseigner les variables (DATABASE_URL, MAILER_DSN, APP_SECRET...)
+cp .env.dist .env   # puis ajuster DATABASE_URL/MAILER_DSN/APP_SECRET si besoin
 php bin/console doctrine:migrations:migrate
 
 yarn build           # build de production des assets
@@ -63,7 +63,7 @@ docker compose run --rm -e APP_ENV=test php php bin/console doctrine:schema:upda
 docker compose run --rm php php .phpunit/phpunit.phar
 ```
 
-Le fichier `.env` (non commité) doit exister pour que le kernel démarre — voir "Installation" ci-dessus ; `.env.test` (commité) surcharge `DATABASE_URL` pour pointer vers le service `db` du `docker-compose.yml`.
+Le fichier `.env` (non commité, `cp .env.dist .env` — voir "Installation" ci-dessus) doit exister pour que le kernel démarre ; `.env.test` (commité) surcharge `DATABASE_URL` pour pointer vers le service `db` du `docker-compose.yml`. La CI (`.github/workflows/tests.yml`) fait ce `cp` automatiquement.
 
 **Attention** : `doctrine:schema:update` sert ici uniquement à préparer la base de **test**, isolée dans le conteneur Docker — ne jamais l'utiliser sur la base de production. `src/Migrations/` n'est de toute façon plus à jour avec le mapping actuel (voir le skill du projet), donc `doctrine:migrations:migrate` seul ne suffit pas pour retrouver un schéma de test cohérent avec le code.
 

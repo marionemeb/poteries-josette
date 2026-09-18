@@ -87,7 +87,7 @@ Ce skill (`.claude/skills/poteries-josette/`) est versionné avec le repo — co
 - [ ] Idem : voir avec Josette pour les pages "recettes", "coups de cœur" et "contact" (+ vérifier si la partie back-office correspondante serait aussi à retirer)
 - [ ] Revoir tout le plan du site (sitemap/architecture des pages) — englobe probablement les décisions au cas par cas ci-dessus sur événements/recettes/coups de cœur/contact
 - [x] Ajouter des tests unitaires / fonctionnels — 19 tests passants au 18/09/2026 (`tests/Entity/UserTest.php`, `tests/Controller/PublicPagesTest.php`, `EventsControllerTest`, `ArticlesControllerTest`, `BlogControllerTest`, `RecipesControllerTest`, base commune `tests/DatabaseWebTestCase.php` pour les fixtures faites main, pas de bundle de fixtures installé). Bug réel trouvé et corrigé au passage : `PdfController` utilisait `$dompdf->stream()` (envoie les headers/le contenu directement, incompatible avec un `Response` Symfony) au lieu de `$dompdf->output()` — corrigé, `/pdf/{id}` est maintenant testé aussi. Reste à faire : formulaires de recherche/filtre (blog/recipes), soumission du formulaire de contact, back-office EasyAdmin.
-- [ ] Ajouter un CI/CD (voir aussi "Pistes d'amélioration" ci-dessous : pas de `.github/workflows` actuellement, déploiement manuel)
+- [x] Ajouter un CI/CD — `.github/workflows/tests.yml` ajouté le 18/09/2026 : lance la suite de tests (Docker PHP 7.4 + MySQL) à chaque push/PR sur `master`. Ne couvre que les tests, pas le déploiement (toujours manuel, voir plus bas).
 - [ ] Revoir le footer
 - [ ] Revoir les mentions légales
 - [ ] Automatiser le déploiement vers OVH (actuellement manuel)
@@ -107,6 +107,10 @@ Ce skill (`.claude/skills/poteries-josette/`) est versionné avec le repo — co
   - `composer install` fonctionne (résolution depuis le lock + cache), mais **Packagist a coupé le support de Composer 1 en septembre 2025** : toute résolution *live* (ex. `composer update`, ou le mécanisme `vendor/bin/simple-phpunit` de symfony/phpunit-bridge qui télécharge PHPUnit à la volée) échoue désormais. Contournement : un phar PHPUnit 7.5 autonome est téléchargé directement (`.phpunit/phpunit.phar`, dossier déjà ignoré par git) et lancé via `docker compose run --rm php php .phpunit/phpunit.phar`.
   - Implication plus large : moderniser ce projet (Symfony 5+, PHP 7.4/8+) réglera aussi ce problème de Composer 1, en plus du reste (voir priorité sécurité/risque ci-dessus).
   - `config/packages/test/webpack_encore.yaml` : `strict_mode` activé à `false` (était commenté) pour que les tests fonctionnels n'échouent pas faute d'assets Webpack buildés.
+  - `.env` n'est pas commité (gitignoré) et Symfony a besoin qu'il existe pour démarrer. Un `.env.dist` (template, valeurs non sensibles) est committé à la place — `cp .env.dist .env` avant de travailler (README) ou en CI.
+  - Le service `db` du `docker-compose.yml` a un healthcheck MySQL — **attention** : `mysqladmin ping` sans `--protocol=tcp` peut répondre "healthy" pendant la phase d'initialisation interne de mysqld (réseau désactivé, ping local via socket réussit), avant que le serveur ne soit réellement joignable depuis le conteneur `php` → forcer `--protocol=tcp` dans le test du healthcheck.
+  - Les fichiers créés dans le volume monté (ex. `vendor/`) appartiennent à `root` sur l'hôte (le conteneur tourne en root) — `rm -rf vendor` échoue côté hôte, il faut passer par `docker compose run --rm php rm -rf vendor`.
+- **CI** : `.github/workflows/tests.yml` reproduit exactement cette séquence (build image, `composer install`, schéma de test, téléchargement du phar PHPUnit, exécution) à chaque push/PR sur `master`. `phpstan` n'est volontairement pas dans la CI pour l'instant (78 erreurs préexistantes le feraient échouer dès le premier run).
 
 **Fonctionnel**
 - Naming trompeur de la route `/shop` (voir "Fonctionnalités" ci-dessus) — à corriger si ça gêne, ou au moins renommer en interne.
