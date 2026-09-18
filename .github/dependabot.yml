@@ -1,0 +1,32 @@
+version: 2
+updates:
+  # npm: should work normally now that package-lock.json's "resolved" URLs
+  # point back at the public registry (see the project skill for the
+  # incident where they briefly pointed at an unrelated private registry).
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 5
+    cooldown:
+      default-days: 21
+
+  # composer: untested — Packagist has shut down the legacy protocol this
+  # project's Composer 1 toolchain relies on (see the project skill). It's
+  # unknown whether Dependabot's own resolver hits the same wall; PRs from
+  # this entry (or the lack of them) are the way to find out.
+  - package-ecosystem: "composer"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 5
+    cooldown:
+      default-days: 21
+
+  # Keep the CI/deploy workflows' own action versions current.
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    cooldown:
+      default-days: 21
