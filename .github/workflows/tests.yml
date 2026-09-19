@@ -33,3 +33,26 @@ jobs:
 
       - name: Run tests
         run: docker compose run --rm php php .phpunit/phpunit.phar
+
+  frontend-build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Set up Node
+        uses: actions/setup-node@v7
+        with:
+          node-version: '12'
+
+      - name: Install Node dependencies
+        run: |
+          # Node 12 ships npm 6, which can't read our lockfileVersion 3
+          # package-lock.json — upgrade npm first (still fine on Node 12).
+          npm install -g npm@7
+          npm ci
+
+      - name: Build production assets
+        # Catches exactly the kind of breakage the phpunit job above can't
+        # see (e.g. the webpack-encore 3.x Dependabot PR that broke `npm run
+        # build` outright while every PHP test still passed).
+        run: npm run build

@@ -10,6 +10,13 @@ updates:
     open-pull-requests-limit: 5
     cooldown:
       default-days: 21
+    ignore:
+      # Major-bumped alone on 19/09/2026 and broke the build outright:
+      # Encore 3.x needs Webpack 5 + a modern sass-loader/dart-sass + a
+      # Node new enough for `??` syntax, none of which this project has.
+      # Re-enable once node-sass/sass-loader/Node are modernized together.
+      - dependency-name: "@symfony/webpack-encore"
+        update-types: ["version-update:semver-major"]
 
   # composer: untested — Packagist has shut down the legacy protocol this
   # project's Composer 1 toolchain relies on (see the project skill). It's
