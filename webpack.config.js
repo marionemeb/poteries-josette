@@ -29,7 +29,6 @@ Encore
     .addEntry('articles', './assets/scss/articles.scss')
     .addEntry('event', './assets/scss/event.scss')
     .addEntry('recipes', './assets/scss/recipes.scss')
-    .addEntry('contact', './assets/scss/contact.scss')
     .addEntry('login', './assets/scss/login.scss')
 
     // When enabled, Webpack "splits" your files into smaller pieces for greater optimization.

@@ -19,6 +19,19 @@ class EventRepository extends ServiceEntityRepository
         parent::__construct($registry, Event::class);
     }
 
+    /**
+     * @return Event[] Événements dont la date de fin n'est pas encore passée, triés par date de début.
+     */
+    public function findUpcoming(): array
+    {
+        return $this->createQueryBuilder('e')
+            ->andWhere('e.dateEnd >= :today')
+            ->setParameter('today', new \DateTime('today'))
+            ->orderBy('e.dateStart', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
     // /**
     //  * @return Event[] Returns an array of Event objects
     //  */

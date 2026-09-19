@@ -28,7 +28,6 @@ class PublicPagesTest extends WebTestCase
         yield 'work (portfolio)' => ['/work'];
         yield 'shop (atelier presentation, misleadingly named)' => ['/shop'];
         yield 'legal mentions' => ['/legalMentions'];
-        yield 'contact form' => ['/contact'];
         yield 'login' => ['/login'];
     }
 }

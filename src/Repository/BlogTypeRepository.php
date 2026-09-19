@@ -19,6 +19,18 @@ class BlogTypeRepository extends ServiceEntityRepository
         parent::__construct($registry, BlogType::class);
     }
 
+    /**
+     * @return BlogType[] Types ayant au moins un article de blog.
+     */
+    public function findWithArticles(): array
+    {
+        return $this->createQueryBuilder('t')
+            ->innerJoin('t.blog', 'b')
+            ->groupBy('t.id')
+            ->getQuery()
+            ->getResult();
+    }
+
     // /**
     //  * @return Blog[] Returns an array of Blog objects
     //  */

@@ -97,11 +97,58 @@ class RecipesControllerTest extends DatabaseWebTestCase
         $this->assertSelectorTextNotContains('body', 'Tarte au citron');
     }
 
+    public function testEmptyCategoryIsExcludedFromTheFilter(): void
+    {
+        $withRecipe = (new RecipeCategory())->setName('Plats au four');
+        $empty = (new RecipeCategory())->setName('Catégorie sans recette');
+        $this->persist($withRecipe);
+        $this->persist($empty);
+
+        $recipe = (new Recipe())
+            ->setName('Gratin dauphinois')
+            ->setDescription('Un classique.')
+            ->setIngredient('Pommes de terre, creme')
+            ->setUpdatedAt(new \DateTime())
+            ->setCategory($withRecipe);
+        $this->persist($recipe);
+
+        $crawler = $this->client->request('GET', '/recipes');
+
+        $this->assertResponseIsSuccessful();
+        $options = $crawler->filter('select.searchTerm option')->each(fn ($node) => $node->text());
+        $this->assertContains('Plats au four', $options);
+        $this->assertNotContains('Catégorie sans recette', $options);
+    }
+
     public function testPageLoadsWithNoRecipes(): void
     {
         $this->client->request('GET', '/recipes');
 
         $this->assertResponseIsSuccessful();
+    }
+
+    public function testNavAndFooterHideRecipesLinkWhenNoRecipes(): void
+    {
+        // setUp() already purged Recipe/RecipeCategory.
+        $crawler = $this->client->request('GET', '/');
+
+        $this->assertResponseIsSuccessful();
+        $this->assertSame(0, $crawler->filter('a[href="/recipes"]')->count());
+    }
+
+    public function testNavShowsRecipesLinkWhenARecipeExists(): void
+    {
+        $recipe = (new Recipe())
+            ->setName('Gratin dauphinois')
+            ->setDescription('Un classique.')
+            ->setIngredient('Pommes de terre, creme')
+            ->setUpdatedAt(new \DateTime());
+        $this->persist($recipe);
+
+        $crawler = $this->client->request('GET', '/');
+
+        $this->assertResponseIsSuccessful();
+        $this->assertGreaterThan(0, $crawler->filter('a[href="/recipes"]')->count());
     }
 
     public function testPdfExportOfSeededRecipe(): void

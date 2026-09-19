@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\BlogType;
+use App\Repository\BlogTypeRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -17,6 +18,11 @@ class SearchType extends AbstractType
                 'required' => false,
                 'class' => BlogType::class,
                 'placeholder' => 'Toutes catégories',
+                'query_builder' => function (BlogTypeRepository $repository) {
+                    return $repository->createQueryBuilder('t')
+                        ->innerJoin('t.blog', 'b')
+                        ->groupBy('t.id');
+                },
             ]);
     }
 

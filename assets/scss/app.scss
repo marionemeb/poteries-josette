@@ -45,7 +45,7 @@ h1, h2, h3, h4 {
 
 .h1-home{
     color: white;
-    font-size: 96px;
+    font-size: 56px;
     text-shadow: 1px 1px 2px #082b34;
     border-bottom: 4px solid white;
     border-top: 4px solid white;
@@ -242,10 +242,10 @@ h1, h2, h3, h4 {
 
 @media (max-width: 575.98px) {
     .articles-title {
-        font-size: 50px;
+        font-size: 30px;
     }
     .h1-home {
-        font-size: 40px !important;
+        font-size: 30px !important;
     }
     .back-to-top {
         right: 15px;
@@ -258,10 +258,10 @@ h1, h2, h3, h4 {
 
 @media (min-width: 576px) and (max-width: 767.98px) {
     .articles-title {
-        font-size: 50px;
+        font-size: 30px;
     }
     .h1-home {
-        font-size: 40px !important;
+        font-size: 30px !important;
     }
 }
 

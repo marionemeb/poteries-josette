@@ -3,7 +3,7 @@
         <div class="row">
             <div class="col-lg-5 col-xs-12 about-company">
                 <a href="{{ path('home') }}"><h2>Les Poteries de Josette</h2></a>
-                <p class="pr-5 text-white-50"><a href="https://goo.gl/maps/ZTLvtrUiiAPCeKKe9">OINGT en
+                <p class="pr-5 text-white-50"><a href="https://goo.gl/maps/ZTLvtrUiiAPCeKKe9" target="_blank" rel="noopener noreferrer">OINGT en
                     BEAUJOLAIS</a> ,<br>
                     classé un des plus beaux villages de France </p>
                 <p><a href="https://www.facebook.com/lespoteriesdejosette"><i
@@ -15,16 +15,21 @@
                     <li>- <a href="{{ path('articles') }}">Poteries</a></li>
                     <li>- <a href="{{ path('work') }}">Argile et émaux</a></li>
                     <li>- <a href="{{ path('shop') }}">Atelier</a></li>
-                    <li>- <a href="{{ path('events') }}">Evènements</a></li>
-                    <li>- <a href="{{ path('recipes') }}">Recettes de Josette</a></li>
-                    <li>- <a href="{{ path('blog') }}">Coup de coeur</a></li>
-                    <li>- <a href="{{ path('contact') }}">Contact</a></li>
+                    {% if has_upcoming_events() %}
+                        <li>- <a href="{{ path('events') }}">Evènements</a></li>
+                    {% endif %}
+                    {% if has_recipes() %}
+                        <li>- <a href="{{ path('recipes') }}">Recettes de Josette</a></li>
+                    {% endif %}
+                    {% if has_blog_articles() %}
+                        <li>- <a href="{{ path('blog') }}">Coup de coeur</a></li>
+                    {% endif %}
                 </ul>
             </div>
             <div class="col-lg-4 col-xs-12 location">
                 <h4 class="mt-lg-0 mt-sm-4">Adresse</h4>
-                <p>Rue Tyre-Laine<br>
-                    69620 OINGT - FRANCE
+                <p><a href="https://goo.gl/maps/ZTLvtrUiiAPCeKKe9" target="_blank" rel="noopener noreferrer" class="text-white-50">Rue Tyre-Laine<br>
+                    69620 OINGT - FRANCE</a>
                 </p>
                 <p class="mb-0"><i class="fa fa-phone mr-3"></i>Tel : 04 74 71 11 73</p>
                 <p><i class="fa fa-envelope-o mr-3"></i><a href="mailto:josette.bourgogne@wanadoo.fr" target="_blank">josette.bourgogne@wanadoo.fr</a></p>

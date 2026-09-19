@@ -10,10 +10,15 @@
                 <li class="nav-item"><a class="nav-link" href="{{ path('articles') }}">Poteries</a></li>
                 <li class="nav-item"><a class="nav-link" href="{{ path('work') }}">Argile et émaux</a></li>
                 <li class="nav-item"><a class="nav-link" href="{{ path('shop') }}">Atelier</a></li>
-                <li class="nav-item"><a class="nav-link" href="{{ path('events') }}">Evènements</a></li>
-                <li class="nav-item"><a class="nav-link" href="{{ path('recipes') }}">Recettes de Josette</a></li>
-                <li class="nav-item"><a class="nav-link" href="{{ path('blog') }}">Coups de coeur</a></li>
-                <li class="nav-item"><a class="nav-link" href="{{ path('contact') }}">Contact</a></li>
+                {% if has_upcoming_events() %}
+                    <li class="nav-item"><a class="nav-link" href="{{ path('events') }}">Evènements</a></li>
+                {% endif %}
+                {% if has_recipes() %}
+                    <li class="nav-item"><a class="nav-link" href="{{ path('recipes') }}">Recettes de Josette</a></li>
+                {% endif %}
+                {% if has_blog_articles() %}
+                    <li class="nav-item"><a class="nav-link" href="{{ path('blog') }}">Coups de coeur</a></li>
+                {% endif %}
             </ul>
         </div>
     </nav>

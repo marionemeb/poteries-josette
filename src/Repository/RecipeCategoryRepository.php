@@ -19,6 +19,18 @@ class RecipeCategoryRepository extends ServiceEntityRepository
         parent::__construct($registry, RecipeCategory::class);
     }
 
+    /**
+     * @return RecipeCategory[] Catégories ayant au moins une recette.
+     */
+    public function findWithRecipes(): array
+    {
+        return $this->createQueryBuilder('c')
+            ->innerJoin('c.recipes', 'r')
+            ->groupBy('c.id')
+            ->getQuery()
+            ->getResult();
+    }
+
     // /**
     //  * @return RecipeCategory[] Returns an array of RecipeCategory objects
     //  */

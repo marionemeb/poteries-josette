@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\RecipeCategory;
+use App\Repository\RecipeCategoryRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -17,6 +18,11 @@ class SearchRecipeType extends AbstractType
                 'required' => false,
                 'class' => RecipeCategory::class,
                 'placeholder' => 'Toutes catégories',
+                'query_builder' => function (RecipeCategoryRepository $repository) {
+                    return $repository->createQueryBuilder('c')
+                        ->innerJoin('c.recipes', 'r')
+                        ->groupBy('c.id');
+                },
             ]);
     }
 

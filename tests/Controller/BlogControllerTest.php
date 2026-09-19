@@ -64,10 +64,53 @@ class BlogControllerTest extends DatabaseWebTestCase
         $this->assertSelectorTextNotContains('body', 'Ma boutique de laine préférée');
     }
 
+    public function testEmptyTypeIsExcludedFromTheFilter(): void
+    {
+        $withArticle = (new BlogType())->setName('Céramistes amis');
+        $empty = (new BlogType())->setName('Type sans article');
+        $this->persist($withArticle);
+        $this->persist($empty);
+
+        $blogArticle = (new Blog())
+            ->setName('Atelier de Marie')
+            ->setDescription('Une potière voisine dont le travail mérite le détour.')
+            ->setType($withArticle);
+        $this->persist($blogArticle);
+
+        $crawler = $this->client->request('GET', '/blog');
+
+        $this->assertResponseIsSuccessful();
+        $options = $crawler->filter('select.searchTerm option')->each(fn ($node) => $node->text());
+        $this->assertContains('Céramistes amis', $options);
+        $this->assertNotContains('Type sans article', $options);
+    }
+
     public function testPageLoadsWithNoArticles(): void
     {
         $this->client->request('GET', '/blog');
 
         $this->assertResponseIsSuccessful();
+    }
+
+    public function testNavAndFooterHideBlogLinkWhenNoArticles(): void
+    {
+        // setUp() already purged Blog/BlogType.
+        $crawler = $this->client->request('GET', '/');
+
+        $this->assertResponseIsSuccessful();
+        $this->assertSame(0, $crawler->filter('a[href="/blog"]')->count());
+    }
+
+    public function testNavShowsBlogLinkWhenAnArticleExists(): void
+    {
+        $blogArticle = (new Blog())
+            ->setName('Atelier de Marie')
+            ->setDescription('Une potière voisine dont le travail mérite le détour.');
+        $this->persist($blogArticle);
+
+        $crawler = $this->client->request('GET', '/');
+
+        $this->assertResponseIsSuccessful();
+        $this->assertGreaterThan(0, $crawler->filter('a[href="/blog"]')->count());
     }
 }

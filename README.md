@@ -9,10 +9,9 @@ Site de présentation (pas d'e-commerce, pas de panier/paiement en ligne) :
 - **Catalogue de poteries** (`/articles`) — galerie des pièces créées par la potière
 - **Mon atelier** (`/shop`) — présentation du lieu de travail à Oingt
 - **Travaux / portfolio** (`/work`)
-- **Coups de cœur** (`/blog`) — recommandations filtrables par type
-- **Recettes** (`/recipes`) — filtrables par catégorie, exportables en PDF
-- **Événements** (`/events`) — expositions, marchés
-- **Contact** (`/contact`) — formulaire avec envoi d'email
+- **Coups de cœur** (`/blog`) — recommandations filtrables par type, masqué dans la nav/footer s'il n'y a aucun article
+- **Recettes** (`/recipes`) — filtrables par catégorie, exportables en PDF, masqué dans la nav/footer s'il n'y a aucune recette
+- **Événements** (`/events`) — expositions, marchés, masqué dans la nav/footer s'il n'y a aucun événement à venir (les événements passés ne s'affichent pas non plus)
 - **Mentions légales** (`/legalMentions`)
 - **Back-office** (EasyAdmin) — administration du contenu (poteries, événements, coups de cœur, recettes et leurs catégories/types) avec upload d'images
 
