@@ -88,7 +88,7 @@ Ce skill (`.claude/skills/poteries-josette/`) est versionné avec le repo — co
 
 ## État des lieux / TODO
 
-- [ ] Ajouter Instagram (lien/flux/intégration — à préciser : simple lien vers le compte, ou affichage des posts sur le site)
+- [x] Ajouter Instagram — fait le 19/09/2026 : simple lien (`templates/_footer.html.twig`) vers https://www.instagram.com/les_poteries_de_josette/, à côté du lien Facebook existant, icône Font Awesome `fa-instagram`. Pas d'affichage des posts intégré (option plus lourde, écartée).
 - [ ] Reprendre l'UI/UX (voir `assets/design-poteries-josette.md` pour l'état actuel du design avant toute refonte)
 - [ ] Vérifier la responsivité du site sur différents supports (PC, tablette, mobile)
 - [x] Ajouter un bouton "remonter en haut" sur les pages — fait le 18/09/2026 (`templates/base.html.twig`, `assets/scss/app.scss`, `assets/js/app.js`), bouton circulaire fixe en bas à droite, apparaît après 400px de scroll. **Confirmé visuellement par l'utilisateur le 19/09/2026** (test en local avec données factices) : couleur gardée en gris foncé/noir (une proposition en orange accent a été essayée puis refusée), tooltip natif du navigateur retiré (`title` enlevé, `aria-label` conservé pour l'accessibilité).
