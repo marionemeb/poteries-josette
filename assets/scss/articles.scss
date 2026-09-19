@@ -1,10 +1,37 @@
 @import "app.scss";
 /****************************ARTICLES****************/
 .card-columns{
-  column-count: 3;
+  // A CSS multi-column layout (Bootstrap's card-columns default) stacks
+  // cards independently per column with no shared row boundaries, so a
+  // single card with a longer, wrapped title pushes everything below it
+  // in that column out of sync with its neighbors. A grid keeps every
+  // card in a row aligned to the same top, regardless of title length.
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  column-count: initial;
 
   .card{
     border: 2px solid #f8f9fa;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    margin-bottom: 0;
+
+    &:hover{
+      transform: translateY(-4px);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
+    }
+
+    .card-img-top{
+      aspect-ratio: 4 / 3;
+      object-fit: cover;
+    }
+
+    .card-title{
+      // Reserve room for two lines so a one-line title doesn't leave its
+      // card shorter than a wrapped neighbor in the same row.
+      min-height: 2.4em;
+    }
   }
 }
 .articles{
@@ -36,7 +63,7 @@
     position: initial !important;
   }
   .card-columns{
-    column-count: 1;
+    grid-template-columns: 1fr;
   }
 }
 

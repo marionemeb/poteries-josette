@@ -52,17 +52,21 @@ class LoadFakeDataCommand extends Command
             return 0;
         }
 
+        // Real product photos (see public/img/), copied locally into the
+        // (gitignored) uploads dir so the catalog looks like production
+        // instead of showing broken images for a placeholder filename with
+        // no extension.
         $product1 = (new Product())
-            ->setTitle('Vase émaillé bleu')
-            ->setName('vase-emaille-bleu')
-            ->setDescription('Pièce unique tournée et émaillée à la main, inspirée des bleus du Beaujolais.')
+            ->setTitle('Plat cœur émaillé')
+            ->setName('coeur.jpg')
+            ->setDescription('Plat en forme de cœur, terre vernissée émaillée rouge.')
             ->setUpdatedAt(new \DateTime());
         $this->em->persist($product1);
 
         $product2 = (new Product())
-            ->setTitle('Bol en grès')
-            ->setName('bol-en-gres')
-            ->setDescription('Bol quotidien en grès chamotté, émail mat.')
+            ->setTitle('Coquelicots en grès')
+            ->setName('coquelicots.jpg')
+            ->setDescription('Coupelles en forme de coquelicot, tournées et émaillées à la main.')
             ->setUpdatedAt(new \DateTime());
         $this->em->persist($product2);
 
