@@ -17,6 +17,19 @@ updates:
       # Re-enable once node-sass/sass-loader/Node are modernized together.
       - dependency-name: "@symfony/webpack-encore"
         update-types: ["version-update:semver-major"]
+      # react-dom alone would go to 19.x while `react` itself (not proposed
+      # in the same PR) stays on 16.x — React requires matching majors, and
+      # ReactDOM.render() (used in assets/js/index.js) was removed in 18+.
+      # The CI build "passes" because webpack doesn't check this at all.
+      - dependency-name: "react-dom"
+        update-types: ["version-update:semver-major"]
+      # @babel/preset-react 8.x requires @babel/core ^8 (peer dep warning),
+      # which this project doesn't have — the build hung reproducibly
+      # partway through babel-loader when tested locally, despite CI
+      # reporting green in isolation. Not trusted until @babel/core is
+      # bumped in lockstep and this is re-verified.
+      - dependency-name: "@babel/preset-react"
+        update-types: ["version-update:semver-major"]
 
   # composer: untested — Packagist has shut down the legacy protocol this
   # project's Composer 1 toolchain relies on (see the project skill). It's

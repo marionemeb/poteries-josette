@@ -35,6 +35,68 @@ class RecipesControllerTest extends DatabaseWebTestCase
         $this->assertSelectorTextContains('body', 'Gratin en terrine émaillée');
     }
 
+    public function testRecipeReactMountPointCarriesCorrectData(): void
+    {
+        // templates/recipes/index.html.twig mounts a React component (Recipes.jsx)
+        // on a div.react element, passing its content through data-* attributes.
+        // PHPUnit can't execute the JS that reads them, but it can catch the class
+        // of regression that matters most here: the front-end dependency bumps
+        // breaking the build, or a template change losing this data — either way
+        // the recipe would silently stop being displayable client-side.
+        $recipe = (new Recipe())
+            ->setName('Tourte aux champignons')
+            ->setDescription('Une recette de saison')
+            ->setIngredient('Champignons, pate feuilletee, creme')
+            ->setImageName('tourte.jpg')
+            ->setUpdatedAt(new \DateTime());
+        $this->persist($recipe);
+
+        $crawler = $this->client->request('GET', '/recipes');
+
+        $this->assertResponseIsSuccessful();
+        $mountPoint = $crawler->filter('div.react');
+        $this->assertGreaterThan(0, $mountPoint->count(), 'Le point de montage React (div.react) est introuvable.');
+        $this->assertSame('Tourte aux champignons', $mountPoint->attr('data-name'));
+        $this->assertSame('Une recette de saison', $mountPoint->attr('data-description'));
+        $this->assertSame('Champignons, pate feuilletee, creme', $mountPoint->attr('data-ingredient'));
+        $this->assertSame('tourte.jpg', $mountPoint->attr('data-image-name'));
+    }
+
+    public function testFilteringByCategoryOnlyShowsMatchingRecipes(): void
+    {
+        $matching = (new RecipeCategory())->setName('Plats au four');
+        $other = (new RecipeCategory())->setName('Desserts');
+        $this->persist($matching);
+        $this->persist($other);
+
+        $inCategory = (new Recipe())
+            ->setName('Gratin dauphinois')
+            ->setDescription('Un classique.')
+            ->setIngredient('Pommes de terre, creme')
+            ->setUpdatedAt(new \DateTime())
+            ->setCategory($matching);
+        $this->persist($inCategory);
+
+        $outsideCategory = (new Recipe())
+            ->setName('Tarte au citron')
+            ->setDescription('Acidulee.')
+            ->setIngredient('Citron, sucre, oeufs')
+            ->setUpdatedAt(new \DateTime())
+            ->setCategory($other);
+        $this->persist($outsideCategory);
+
+        $crawler = $this->client->request('GET', '/recipes');
+        $selectName = $crawler->filter('select.searchTerm')->attr('name');
+        $form = $crawler->filter('form.search')->form();
+        $form[$selectName] = (string) $matching->getId();
+
+        $this->client->submit($form);
+
+        $this->assertResponseIsSuccessful();
+        $this->assertSelectorTextContains('body', 'Gratin dauphinois');
+        $this->assertSelectorTextNotContains('body', 'Tarte au citron');
+    }
+
     public function testPageLoadsWithNoRecipes(): void
     {
         $this->client->request('GET', '/recipes');
