@@ -56,3 +56,21 @@ jobs:
         # see (e.g. the webpack-encore 3.x Dependabot PR that broke `npm run
         # build` outright while every PHP test still passed).
         run: npm run build
+
+  php73-syntax-check:
+    runs-on: ubuntu-latest
+    # Our own PHP tooling (docker/php, this workflow's phpunit job) runs
+    # PHP 7.4 for convenience, but OVH — and the deploy workflow, which
+    # deliberately matches it — runs PHP 7.3. 7.4-only syntax (typed
+    # properties, arrow functions used carelessly, etc.) parses fine in the
+    # phpunit job and breaks only at deploy time. This lints src/ against
+    # the real target version so that gap is caught here instead.
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Lint src/ under PHP 7.3
+        run: |
+          docker run --rm -v "$PWD":/app php:7.3-cli \
+            sh -c 'find /app/src -name "*.php" -exec php -l {} \;' \
+            | tee /tmp/lint.log
+          ! grep -q "Errors parsing" /tmp/lint.log

@@ -25,8 +25,10 @@ class LoadFakeDataCommand extends Command
 {
     protected static $defaultName = 'app:load-fake-data';
 
-    private EntityManagerInterface $em;
-    private KernelInterface $kernel;
+    /** @var EntityManagerInterface */
+    private $em;
+    /** @var KernelInterface */
+    private $kernel;
 
     public function __construct(EntityManagerInterface $em, KernelInterface $kernel)
     {

@@ -10,9 +10,12 @@ use Twig\TwigFunction;
 
 class NavigationExtension extends AbstractExtension
 {
-    private EventRepository $events;
-    private RecipeRepository $recipes;
-    private BlogRepository $blog;
+    /** @var EventRepository */
+    private $events;
+    /** @var RecipeRepository */
+    private $recipes;
+    /** @var BlogRepository */
+    private $blog;
 
     public function __construct(EventRepository $events, RecipeRepository $recipes, BlogRepository $blog)
     {
