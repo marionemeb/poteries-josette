@@ -9,14 +9,25 @@
         <section class="card-columns">
             {% for product in products %}
                 <div class="card">
-                    <img class="card-img-top" src="{{ ('/uploads/images/products/'~product.name) }}" alt="{{ product.title }}">
-                    <div class="card-body">
-                        <h2 class="card-title">{{ product.title }}</h2>
-                        <p class="card-text">{{ product.description }}</p>
-                    </div>
+                    <img class="card-img-top" src="{{ ('/uploads/images/products/'~product.name) }}" alt="{{ product.title }}" onerror="this.closest('.card').remove()" onclick="document.getElementById('image-lightbox-img').src=this.src; document.getElementById('image-lightbox').classList.add('open');">
+                    {% if product.title or product.description %}
+                        <div class="card-body">
+                            {% if product.title %}
+                                <h2 class="card-title">{{ product.title }}</h2>
+                            {% endif %}
+                            {% if product.description %}
+                                <p class="card-text">{{ product.description }}</p>
+                            {% endif %}
+                        </div>
+                    {% endif %}
                 </div>
             {% endfor %}
         </section>
         </div>
+    </div>
+
+    {# Click a product photo to see it uncropped at its original size. #}
+    <div id="image-lightbox" class="image-lightbox" onclick="this.classList.remove('open')">
+        <img id="image-lightbox-img" src="" alt="">
     </div>
 {% endblock %}

@@ -25,12 +25,33 @@
     .card-img-top{
       aspect-ratio: 4 / 3;
       object-fit: cover;
+      // Bootstrap's .card is a flex column, so any extra height a grid row
+      // stretches onto a shorter card (e.g. one with no description) has
+      // somewhere to go: growing the image instead of leaving blank space
+      // below the title.
+      flex-grow: 1;
+      cursor: zoom-in;
+    }
+
+    .card-body{
+      // Bootstrap defaults this to flex: 1 1 auto, which would claim the
+      // stretched space itself (as padding-like blank space) instead of
+      // leaving it for the image above.
+      flex-grow: 0;
+      // Smaller text overall so more of each card's height goes to the
+      // photo instead of the title/description.
+      padding: 0.75rem 1rem;
     }
 
     .card-title{
+      font-size: 1.15rem;
       // Reserve room for two lines so a one-line title doesn't leave its
       // card shorter than a wrapped neighbor in the same row.
       min-height: 2.4em;
+    }
+
+    .card-text{
+      font-size: 0.85rem;
     }
   }
 }
@@ -51,6 +72,30 @@
   padding-top: 100px;
   width: fit-content;
   margin-bottom: 100px;
+}
+
+.image-lightbox{
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.85);
+  z-index: 1050;
+  align-items: center;
+  justify-content: center;
+  cursor: zoom-out;
+
+  &.open{
+    display: flex;
+  }
+
+  img{
+    // Shown uncropped at its natural size, unlike the card thumbnail
+    // (object-fit: cover there crops it to the 4:3 card shape).
+    max-width: 90vw;
+    max-height: 90vh;
+    object-fit: contain;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+  }
 }
 
 /**************************** RESPONSIVE *********************************************/
