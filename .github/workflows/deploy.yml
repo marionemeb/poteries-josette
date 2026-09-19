@@ -40,11 +40,22 @@ jobs:
         run: npm run build
 
       - name: Deploy over FTP
-        # var/** matters here, not just tidiness: var/cache alone can contain
-        # tens of thousands of near-empty directories (Symfony's filesystem
-        # cache pools), and uploading that one file at a time over FTP is
-        # what made the first real run effectively hang. The server
-        # regenerates its own cache on first request — never ship it.
+        # Symfony in prod does NOT auto-invalidate its compiled container
+        # when source files change — it just keeps using whatever's already
+        # in var/cache/prod on the server. Excluding var/** entirely (as a
+        # previous version of this workflow did) meant every deploy after
+        # the very first left a stale, out-of-date compiled container in
+        # place — code changes shipped over FTP but never actually took
+        # effect, and could throw fatal errors once the mismatch got bad
+        # enough (this broke production on 19/09/2026). So the compiled
+        # cache (container, routes, twig, ~300 small files) DOES need to
+        # ship every time. What must still be excluded is only
+        # var/cache/**/pools/** — Symfony's filesystem cache pools, which
+        # pre-create tens of thousands of near-empty directories regardless
+        # of actual cached item count, and uploading that one-by-one over
+        # FTP is what made an earlier run take 2+ hours. var/log/** is
+        # excluded too, so this deploy never overwrites the server's real
+        # error log with an empty one from the build machine.
         uses: SamKirkland/FTP-Deploy-Action@v4.4.0
         with:
           server: ${{ secrets.OVH_FTP_HOST }}
@@ -64,4 +75,5 @@ jobs:
             .env.test
             .envrc
             .phpunit/**
-            var/**
+            var/cache/**/pools/**
+            var/log/**
