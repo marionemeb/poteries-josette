@@ -40,6 +40,18 @@ yarn build           # build de production des assets
 
 ## Développement
 
+Sur une machine sans PHP 7.x/Node 12 natifs, `bin/dev-setup.sh` enchaîne tout ce qu'il faut (Docker, dépendances, base de dev + schéma, données factices, assets front) en une seule commande, sûr à relancer plusieurs fois :
+
+```bash
+bin/dev-setup.sh
+
+# Puis pour lancer le serveur :
+docker compose run --rm -p 8000:8000 -e APP_ENV=dev php php -S 0.0.0.0:8000 -t public
+# et ouvrir http://localhost:8000
+```
+
+Avec les outils installés nativement :
+
 ```bash
 symfony server:start     # ou php -S 127.0.0.1:8000 -t public
 yarn watch                # rebuild les assets à chaque changement
