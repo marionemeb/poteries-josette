@@ -35,16 +35,34 @@ class NavigationExtension extends AbstractExtension
 
     public function hasUpcomingEvents(): bool
     {
-        return count($this->events->findUpcoming()) > 0;
+        // These three functions run on every single page via the nav/footer
+        // (see _navbar.html.twig / _footer.html.twig) — a DB error here must
+        // never take down pages that have nothing to do with events/recipes/
+        // blog. Defaulting to true just shows the (harmless) link; the actual
+        // /events, /recipes or /blog page would still surface a real error
+        // on its own if the underlying query is genuinely broken.
+        try {
+            return count($this->events->findUpcoming()) > 0;
+        } catch (\Throwable $e) {
+            return true;
+        }
     }
 
     public function hasRecipes(): bool
     {
-        return $this->recipes->findOneBy([]) !== null;
+        try {
+            return $this->recipes->findOneBy([]) !== null;
+        } catch (\Throwable $e) {
+            return true;
+        }
     }
 
     public function hasBlogArticles(): bool
     {
-        return $this->blog->findOneBy([]) !== null;
+        try {
+            return $this->blog->findOneBy([]) !== null;
+        } catch (\Throwable $e) {
+            return true;
+        }
     }
 }
