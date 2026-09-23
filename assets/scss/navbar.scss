@@ -105,14 +105,25 @@
   }
 }
 
-// Between lg and xl the six links barely fit on one line: tighten them.
-@media (min-width: 992px) and (max-width: 1199.98px) {
+// The seven links only fit on one line at full size from 1440px: tighten
+// them step by step below that, down to the burger menu (< 992px).
+@media (min-width: 1200px) and (max-width: 1439.98px) {
   .nav-item{
-    margin: 10px 8px;
+    margin: 10px 6px;
   }
 
   .nav-link{
-    font-size: 20px;
+    font-size: 22px;
+  }
+}
+
+@media (min-width: 992px) and (max-width: 1199.98px) {
+  .nav-item{
+    margin: 10px 4px;
+  }
+
+  .nav-link{
+    font-size: 18px;
   }
 }
 

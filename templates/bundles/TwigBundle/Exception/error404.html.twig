@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Page introuvable{% endblock %}
+
+{% block body %}
+    <div class="container-fluid error-page">
+        <div class="container">
+            <div class="articles-title">Page introuvable</div>
+            <p class="error-page-text">
+                Cette page n'existe pas, ou elle a été déplacée.<br>
+                Les poteries, elles, sont toujours là !
+            </p>
+            <div class="error-page-actions">
+                <a class="btn-all" href="{{ path('home') }}">Retour à l'accueil</a>
+                <a class="btn-all" href="{{ path('articles') }}">Voir les poteries</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}

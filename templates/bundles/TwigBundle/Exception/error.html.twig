@@ -1,0 +1,75 @@
+{# Every error other than 404 (500 in particular). Deliberately standalone:
+   no base.html.twig, no database, no Webpack Encore build — when the site is
+   broken, one of those is often the cause, and this page must still render. #}
+{% set is_server_error = status_code >= 500 %}
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>{{ is_server_error ? 'Erreur technique' : 'Accès impossible' }} — Les Poteries de Josette</title>
+        <link rel="icon" href="/favicon.ico" sizes="any">
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Courgette|Open+Sans&display=swap">
+        <style>
+            * { box-sizing: border-box; }
+            body {
+                margin: 0;
+                min-height: 100vh;
+                display: flex;
+                align-items: center;
+                font-family: 'Open Sans', sans-serif;
+                color: #ffffff;
+                background-color: #222424;
+                background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.35)), url("/img/macro.jpg");
+                background-size: cover;
+                background-position: center;
+            }
+            main { width: 100%; max-width: 900px; margin: 0 auto; padding: 40px 24px; }
+            h1 {
+                display: inline-block;
+                margin: 0 0 40px;
+                font: normal 56px 'Courgette', cursive;
+                text-shadow: 1px 1px 2px #082b34;
+                border-bottom: 4px solid #ffffff;
+            }
+            p { font-size: 22px; line-height: 1.5; margin: 0 0 16px; text-shadow: 1px 1px 2px #082b34; }
+            .contact { font-size: 17px; opacity: 0.9; }
+            .contact a { color: #ffffff; }
+            .btn-all {
+                display: inline-block;
+                margin-top: 24px;
+                padding: 10px 15px;
+                border-radius: 12px 0 12px 0;
+                background: rgba(255, 255, 255, 0.5);
+                box-shadow: 1px 1px 3px #999;
+                color: #ffffff;
+                font-size: 22px;
+                text-decoration: none;
+            }
+            .btn-all:hover { background: rgba(255, 255, 255, 0.65); }
+            @media (max-width: 575.98px) {
+                h1 { font-size: 30px; }
+                p { font-size: 18px; }
+                .btn-all { font-size: 18px; }
+            }
+        </style>
+    </head>
+    <body>
+        <main>
+            {% if is_server_error %}
+                <h1>Oups, un souci technique</h1>
+                <p>Le site rencontre un problème momentané.<br>Merci de réessayer dans quelques minutes.</p>
+            {% else %}
+                <h1>Accès impossible</h1>
+                <p>Cette page n'est pas accessible.</p>
+            {% endif %}
+            <p class="contact">
+                Pour joindre Josette : 04 74 71 11 73 ·
+                <a href="mailto:josette.bourgogne@wanadoo.fr">josette.bourgogne@wanadoo.fr</a>
+            </p>
+            <a class="btn-all" href="/">Retour à l'accueil</a>
+        </main>
+    </body>
+</html>
