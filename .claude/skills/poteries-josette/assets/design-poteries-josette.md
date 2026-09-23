@@ -12,7 +12,7 @@ Relevé le 18/09/2026 à partir du code (`assets/scss/*.scss`, `templates/base.h
 
 Pas de palette de variables centralisée (couleurs en dur dans le SCSS) :
 - **Fond général** : blanc (`#ffffff`)
-- **Accent** : orange brûlé `#ff832d` (liens sur fond sombre), assombri au survol `rgba(199, 64, 18, 0.69)` / `#d7400a` (liens du footer)
+- **Plus d'accent orange depuis le 23/09/2026** (l'utilisateur n'aime pas l'orange) : liens de contenu en blanc souligné, survols en blanc plus pâle (`rgba(255,255,255,0.65–0.75)`) ou gris foncé (`#3a3d3d` pour le bouton « remonter en haut », `#222424`/`#6c7070` pour les icônes des cartes recettes). Ne pas réintroduire d'orange.
 - **Sombre / footer / mentions légales** : quasi-noir `#222424` / `#1d2124`
 - **Ombre de texte sur les héros photo** : teinte bleu-pétrole foncé `#082b34`
 - Texte blanc/`whitesmoke` sur toutes les sections à fond photo

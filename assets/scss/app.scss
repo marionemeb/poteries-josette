@@ -55,6 +55,20 @@ h1, h2, h3, h4 {
 
 /********************** WORK *************************************/
 
+// Long texts laid over a photo (Atelier, Argile et émaux): a dark translucent
+// panel keeps them readable whatever the photo behind.
+.shop .wrapper, .work .wrapper{
+    background: rgba(20, 22, 22, 0.65);
+    backdrop-filter: blur(3px);
+    border-radius: 12px 0 12px 0;
+    padding: 28px 32px;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.6);
+
+    @media (max-width: 575.98px) {
+        padding: 20px;
+    }
+}
+
 .work{
     background-position: bottom;
     background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.1)), url("/img/hands.jpg");
@@ -70,13 +84,15 @@ h1, h2, h3, h4 {
     overflow: auto;
 
     a{
-        color: #ff832d;
+        color: #ffffff;
+        text-decoration: underline;
+        text-underline-offset: 3px;
         // Long email addresses/URLs would otherwise overflow narrow screens.
         overflow-wrap: break-word;
     }
 
     a:hover{
-        color: rgba(199, 64, 18, 0.69);
+        color: rgba(255, 255, 255, 0.75);
     }
 
     img{
@@ -107,9 +123,11 @@ h1, h2, h3, h4 {
 
 /**************************** SHOP *******************************/
 .shop{
-    background-position: bottom;
-    background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.82)), url("/img/oingt.jpg");
+    // Light veil so the village stays visible: readability comes from the
+    // panel behind the text below, not from darkening the whole photo.
+    background-image: linear-gradient(rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.55)), url("/img/oingt-aerien.jpg");
     background-size: cover;
+    background-position: center top;
     text-align: left;
     color: whitesmoke;
     padding-bottom: 100px;
@@ -155,7 +173,7 @@ h1, h2, h3, h4 {
 
         &:hover {
             text-decoration: none;
-            color: #d7400a;
+            color: rgba(255, 255, 255, 0.65);
         }
     }
 
@@ -284,7 +302,7 @@ h1, h2, h3, h4 {
     transition: background-color .2s;
 
     &:hover {
-        background: #d7400a;
+        background: #3a3d3d;
     }
 
     &.visible {

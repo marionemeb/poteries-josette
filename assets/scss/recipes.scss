@@ -45,11 +45,11 @@ main{
   font-size:20px;
   transition:1s;
   cursor:pointer;
-  color:#ffa710
+  color: #222424;
 }
 .container-recipe .card-title i:hover{
   transform: scale(1.25);
-  color: #d41818;
+  color: #6c7070;
 
 }
 .container-recipe .card:hover{
@@ -113,7 +113,8 @@ body.popup-open{
     cursor: pointer;
 
     &:hover{
-      color: #d7400a;
+      background: #222424;
+      color: #ffffff;
     }
   }
 
