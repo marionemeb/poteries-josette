@@ -23,6 +23,10 @@ jobs:
       - name: Prepare test database schema
         run: docker compose run --rm -e APP_ENV=test php php bin/console doctrine:migrations:migrate --no-interaction
 
+      - name: Check migrations match the entity mapping
+        # Fails if an entity changed without a matching migration.
+        run: docker compose run --rm -e APP_ENV=test php php bin/console doctrine:schema:validate
+
       - name: Download PHPUnit
         # symfony/phpunit-bridge's usual auto-download (vendor/bin/simple-phpunit)
         # relies on Composer 1, which Packagist stopped serving in Sept 2025 — see
