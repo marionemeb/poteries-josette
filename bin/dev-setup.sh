@@ -20,9 +20,17 @@ echo "==> Dépendances PHP"
 docker compose run --rm php composer install
 
 echo "==> Base de données de dev (josette_dev)"
+# Une base créée avant le passage aux migrations (via schema:update) n'a pas
+# de table migration_versions : migrate échouerait sur des tables existantes.
+# Elle ne contient que des données factices, on la recrée.
+if docker compose exec -T db mysql -uroot -N -e "SHOW TABLES FROM josette_dev" 2>/dev/null | grep -qx user \
+    && ! docker compose exec -T db mysql -uroot -N -e "SHOW TABLES FROM josette_dev" | grep -qx migration_versions; then
+    echo "    ancienne base sans migrations, recréée"
+    docker compose exec -T db mysql -uroot -e "DROP DATABASE josette_dev;"
+fi
 docker compose exec -T db mysql -uroot -e \
     "CREATE DATABASE IF NOT EXISTS josette_dev; GRANT ALL PRIVILEGES ON josette_dev.* TO 'josette'@'%'; FLUSH PRIVILEGES;"
-docker compose run --rm -e APP_ENV=dev php php bin/console doctrine:schema:update --force
+docker compose run --rm -e APP_ENV=dev php php bin/console doctrine:migrations:migrate --no-interaction
 
 echo "==> Données factices (no-op si déjà présentes)"
 docker compose run --rm -e APP_ENV=dev php php bin/console app:load-fake-data

@@ -65,7 +65,7 @@ docker compose build php
 docker compose run --rm php composer install
 
 # La base de test doit exister et être à jour avant de lancer les tests
-docker compose run --rm -e APP_ENV=test php php bin/console doctrine:schema:update --force
+docker compose run --rm -e APP_ENV=test php php bin/console doctrine:migrations:migrate --no-interaction
 
 # PHPUnit 7.5 (composer.lock étant lui-même en Composer 1, la
 # récupération dynamique via symfony/phpunit-bridge ne fonctionne
@@ -76,7 +76,17 @@ docker compose run --rm php php .phpunit/phpunit.phar
 
 Le fichier `.env` (non commité, `cp .env.dist .env` — voir "Installation" ci-dessus) doit exister pour que le kernel démarre ; `.env.test` (commité) surcharge `DATABASE_URL` pour pointer vers le service `db` du `docker-compose.yml`. La CI (`.github/workflows/tests.yml`) fait ce `cp` automatiquement.
 
-**Attention** : `doctrine:schema:update` sert ici uniquement à préparer la base de **test**, isolée dans le conteneur Docker — ne jamais l'utiliser sur la base de production. `src/Migrations/` n'est de toute façon plus à jour avec le mapping actuel (voir le skill du projet), donc `doctrine:migrations:migrate` seul ne suffit pas pour retrouver un schéma de test cohérent avec le code.
+## Base de données et migrations
+
+`src/Migrations/` part d'une migration de référence (`Version20260923000000`) qui recrée exactement le schéma de production tel qu'exporté le 23/09/2026 — les migrations de 2020 n'étaient plus fidèles à la prod (une partie n'avait jamais été commitée). Une base vide + `doctrine:migrations:migrate` donne donc le même schéma que la prod.
+
+Toute évolution du schéma passe par une nouvelle migration (`doctrine:migrations:diff`), jamais par `doctrine:schema:update`. Sans SSH sur l'hébergement, une migration s'applique en prod en exécutant son SQL dans phpMyAdmin, puis en insérant sa version dans la table `migration_versions`.
+
+Une base locale créée avant le 23/09/2026 (via `schema:update`) n'a pas de table `migration_versions` : `bin/dev-setup.sh` recrée automatiquement la base de dev dans ce cas ; pour la base de test, la recréer une fois à la main :
+
+```bash
+docker compose exec -T db mysql -uroot -e "DROP DATABASE josette_test; CREATE DATABASE josette_test;"
+```
 
 ## Qualité
 

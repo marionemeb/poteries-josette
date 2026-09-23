@@ -10,7 +10,6 @@
 /var/
 /vendor/
 /public/uploads/images/products/
-/src/Migrations/
 /.php-version
 /.htaccess
 ###< symfony/framework-bundle ###
