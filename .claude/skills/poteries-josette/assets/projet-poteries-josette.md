@@ -1,6 +1,6 @@
 # Projet poteries-josette
 
-Dernière mise à jour le 23/09/2026.
+Dernière mise à jour le 24/09/2026.
 
 ## Hébergement / production
 
@@ -19,7 +19,7 @@ Remote GitHub : `git@github.com:marionemeb/poteries-josette.git` (SSH via l'alia
 
 ## Stack technique
 
-- **Backend** : **Symfony 5.4 + PHP 8.3 depuis le 23/09/2026** (avant : Symfony 4.4 / PHP 7.3 en prod, 7.4 en Docker). Docker (`php:8.3-cli`), CI et `deploy.yml` sont en PHP 8.3 ; `config.platform.php` = 8.3. La prod OVH doit être en PHP 8.3 **au moment où ce code est déployé** (voir étape 3.1 dans « Pistes d'amélioration »). Historique : l'ancienne note « PHP 7.3 en prod / Docker en 7.4, attention aux syntaxes 7.4 » est caduque.
+- **Backend** : **Symfony 5.4 + PHP 8.3, en production depuis le 24/09/2026** (avant : Symfony 4.4 / PHP 7.3 en prod, 7.4 en Docker). Docker (`php:8.3-cli`), CI et `deploy.yml` sont en PHP 8.3 ; `config.platform.php` = 8.3. La prod OVH doit être en PHP 8.3 **au moment où ce code est déployé** (voir étape 3.1 dans « Pistes d'amélioration »). Historique : l'ancienne note « PHP 7.3 en prod / Docker en 7.4, attention aux syntaxes 7.4 » est caduque.
   - (Ancien piège PHP 7.3 vs 7.4 du 19/09/2026 : plus d'actualité, prod/Docker/CI sur la même version.)
 - **ORM** : Doctrine (avec migrations, `src/Migrations`)
 - **Back-office** : EasyAdmin 2.3.15 (config YAML `config/packages/easy_admin.yaml`) — fonctionne en Symfony 5.4, à migrer vers EasyAdmin 4 (config en PHP) pour Symfony 6.4.
@@ -136,7 +136,7 @@ Ce skill (`.claude/skills/poteries-josette/`) est versionné avec le repo — co
 
 ## Pistes d'amélioration identifiées (18/09/2026)
 
-**Étape 3.1 — Symfony 5.4 + PHP 8.3 (code prêt le 23/09/2026)** : plan initial (5.4 sur PHP 7.3, puis PHP 8) abandonné — sur PHP < 8.1, **aucune version de Twig ni de dompdf n'est exempte de failles connues** (Composer 2.9+ refuse de les installer), donc rester en 7.3 = rester vulnérable. Fait en une fois :
+**Étape 3.1 — Symfony 5.4 + PHP 8.3 : ✅ en production depuis le 24/09/2026** (déployé puis PHP 8.3 activé dans l'espace client OVH, site revérifié par l'utilisateur) : plan initial (5.4 sur PHP 7.3, puis PHP 8) abandonné — sur PHP < 8.1, **aucune version de Twig ni de dompdf n'est exempte de failles connues** (Composer 2.9+ refuse de les installer), donc rester en 7.3 = rester vulnérable. Fait en une fois :
   - Toutes les dépendances mises à jour, **`composer audit` : aucune faille connue** (contre 63 avis sur 23 paquets avant). Versions clés : Symfony 5.4.53, Doctrine ORM 2.20, doctrine-bundle 2.7, **doctrine-migrations-bundle volontairement gardé en 2.x** (la 3.x changerait le format de la table `migration_versions` en prod), EasyAdmin 2.3.15, Vich 1.23, dompdf 3.1, reset-password-bundle 1.25, PHPUnit 9.6.
   - **Twig bloqué en `~3.28.0`** : Twig 3.29.0 (18/09/2026) exige un argument à `TemplateWrapper::unwrap()`, que `symfony/twig-bundle` 5.4.45 appelle sans argument → `cache:clear` plante. 3.28 est sans faille connue. À relâcher en passant à Symfony 6.4.
   - Code : `Doctrine\Common\Persistence\ManagerRegistry` → `Doctrine\Persistence\ManagerRegistry` dans les 6 repositories ; `new Dotenv(false)` → `new Dotenv()` ; `phpunit.xml.dist` migré au format 9.6 ; swiftmailer (bundle + 3 fichiers de config) retiré.
