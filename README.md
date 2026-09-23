@@ -67,10 +67,10 @@ docker compose run --rm php composer install
 # La base de test doit exister et être à jour avant de lancer les tests
 docker compose run --rm -e APP_ENV=test php php bin/console doctrine:migrations:migrate --no-interaction
 
-# PHPUnit 7.5 (composer.lock étant lui-même en Composer 1, la
-# récupération dynamique via symfony/phpunit-bridge ne fonctionne
-# plus depuis l'arrêt du support Composer 1 par Packagist — un phar
-# autonome est utilisé à la place, voir .phpunit/phpunit.phar)
+# PHPUnit 7.5 en phar autonome (.phpunit/phpunit.phar, téléchargé par la
+# CI), hérité de l'époque Composer 1 où le téléchargement automatique via
+# symfony/phpunit-bridge ne fonctionnait plus — conservé jusqu'à la montée
+# de version de Symfony)
 docker compose run --rm php php .phpunit/phpunit.phar
 ```
 

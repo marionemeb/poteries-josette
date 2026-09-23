@@ -20,9 +20,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
         opcache \
     && rm -rf /var/lib/apt/lists/*
 
-# composer.lock predates Composer 2 (pinned ocramius/package-versions + symfony/flex
-# versions that require the Composer 1.x plugin API) — use Composer 1 to match it.
-COPY --from=composer:1 /usr/bin/composer /usr/bin/composer
+COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
 RUN git config --system --add safe.directory /var/www
 

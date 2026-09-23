@@ -28,9 +28,9 @@ jobs:
         run: docker compose run --rm -e APP_ENV=test php php bin/console doctrine:schema:validate
 
       - name: Download PHPUnit
-        # symfony/phpunit-bridge's usual auto-download (vendor/bin/simple-phpunit)
-        # relies on Composer 1, which Packagist stopped serving in Sept 2025 — see
-        # the "Environnement de test" note in .claude/skills/poteries-josette.
+        # Standalone phar instead of symfony/phpunit-bridge's auto-download
+        # (vendor/bin/simple-phpunit): a leftover from the Composer 1 era, when
+        # that download no longer worked. Kept until the Symfony upgrade.
         run: |
           mkdir -p .phpunit
           curl -sL -o .phpunit/phpunit.phar https://phar.phpunit.de/phpunit-7.5.20.phar

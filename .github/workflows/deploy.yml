@@ -13,7 +13,7 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: '7.3'
-          tools: composer:1
+          tools: composer:2
 
       - name: Install PHP dependencies (production)
         # APP_ENV=prod matters here, not just cosmetic: composer's post-install
