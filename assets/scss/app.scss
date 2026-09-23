@@ -71,6 +71,8 @@ h1, h2, h3, h4 {
 
     a{
         color: #ff832d;
+        // Long email addresses/URLs would otherwise overflow narrow screens.
+        overflow-wrap: break-word;
     }
 
     a:hover{
@@ -80,12 +82,22 @@ h1, h2, h3, h4 {
     img{
         float: right;
         width: 400px;
+        max-width: 100%;
         margin: 0 0 30px 30px;
     }
 
     .img-work{
         float: left !important;
         margin: 30px 30px 30px 0 !important;
+    }
+
+    // Too narrow to float text next to a photo: stack it full width instead.
+    @media (max-width: 575.98px) {
+        img, .img-work{
+            float: none !important;
+            width: 100%;
+            margin: 20px 0 !important;
+        }
     }
 }
 
@@ -159,38 +171,47 @@ h1, h2, h3, h4 {
     .copyright p{border-top:1px solid rgba(255,255,255,.1);}
 }
 
-/****************** SEARCH BAR ***************************************/
-.search {
-    width: 100%;
-    position: relative;
+/****************** CATEGORY FILTER (blog, recipes) *******************/
+.category-filter {
     display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
 }
 
-.searchTerm{
-    width: 200px;
-    border: 3px solid #222424;
-    border-right: none;
-    padding: 5px;
-    height: 40px;
-    border-radius: 5px 0 0 5px;
-    outline: none;
+// The radio itself stays in the page (keyboard, forms) but is invisible:
+// its label is what gets styled as a pill.
+.category-filter-input {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.category-filter-chip {
+    margin: 0;
+    padding: 6px 16px;
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.85);
     color: #222424;
-}
-
-.searchTerm:focus{
-    color: #222424;
-}
-
-.searchButton {
-    width: 40px;
-    height: 40px;
-    border: 1px solid #222424;
-    background: #222424;
-    text-align: center;
-    color: #ffffff;
-    border-radius: 0 5px 5px 0;
+    font-size: 15px;
+    line-height: 1.4;
     cursor: pointer;
-    font-size: 20px;
+    transition: background-color .2s, color .2s;
+
+    &:hover {
+        background: #ffffff;
+    }
+}
+
+.category-filter-input:checked + .category-filter-chip {
+    background: #222424;
+    border-color: #222424;
+    color: #ffffff;
+}
+
+.category-filter-input:focus-visible + .category-filter-chip {
+    outline: 2px solid #ffffff;
+    outline-offset: 2px;
 }
 
 .wrap{

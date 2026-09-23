@@ -7,12 +7,7 @@
         <div class="container">
             <div class="articles-title">Mes coups de coeur</div>
             <div class="wrap">
-                {{ form_start(searchForm, {'attr':{'class': 'search'}}) }}
-                {{ form_widget(searchForm.name, {'attr':{'class': 'searchTerm', 'placeholder': "Filter par catégorie"}}) }}
-                <button type="submit" class="searchButton">
-                    <i class="fa fa-search"></i>
-                </button>
-                {{ form_end(searchForm) }}
+                {% include '_category_filter.html.twig' %}
             </div>
             <section class="card-columns blog-articles">
                 {% for blogArticle in blogArticles %}

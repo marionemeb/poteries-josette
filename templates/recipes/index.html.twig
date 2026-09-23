@@ -8,12 +8,7 @@
             <div class="articles-title">Les recettes de Josette</div>
             <div class="container-recipes">
                 <div class="wrap">
-                    {{ form_start(searchForm, {'attr':{'class': 'search'}}) }}
-                    {{ form_widget(searchForm.name, {'attr':{'class': 'searchTerm', 'placeholder': "Filter par catégorie"}}) }}
-                    <button type="submit" class="searchButton">
-                        <i class="fa fa-search"></i>
-                    </button>
-                    {{ form_end(searchForm) }}
+                    {% include '_category_filter.html.twig' %}
                 </div>
                 <main class="card-columns">
                     {% for recipe in recipes %}

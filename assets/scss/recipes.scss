@@ -65,94 +65,94 @@ main{
 /********************* POP-UP RECIPES ******************************/
 .recipes-visibility{
   position: fixed;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background: rgba(0, 0, 0, 0.7);
-  transition: opacity 500ms;
-  opacity: 1;
+  inset: 0;
+  // Above the burger button (1060), which would otherwise cover the close button.
+  z-index: 1070;
+  display: flex;
+  background: rgba(0, 0, 0, 0.75);
+  // A long recipe scrolls inside the backdrop instead of being cut off.
+  overflow-y: auto;
+  padding: 5vh 16px;
+  cursor: default;
+  animation: popup-fade-in 0.2s ease;
 }
 
-.visible{
-  visibility: visible;
-}
-
-.hidden{
-  visibility: hidden;
-}
-
-.popup{
-  margin: 150px auto;
-  padding: 20px;
-  background: whitesmoke;
-  border-radius: 5px;
-  width: 50%;
-  position: relative;
-  transition: all 0s ease-in-out;
-
-  .close{
-    position: absolute;
-    top:10px;
-    right: 10px;
-    transition: all 0ms;
-    font-size: 30px;
-    font-weight: bold;
-    text-decoration: none;
-    color: #333;
-  }
-
-}
-
-.popup .close:hover{
-  color: #de750d;
+body.popup-open{
+  overflow: hidden;
 }
 
 .recipe-card {
+  position: relative;
   background: #fff;
-  margin: 4em auto;
-  width: 90%;
-  max-width: 496px;
-  @include border-top-radius(5px);
-  @include border-bottom-radius(5px);
+  // auto: centered when shorter than the screen, scrolls from the top when longer.
+  margin: auto;
+  width: 100%;
+  max-width: 560px;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+  text-align: left;
 
-  aside {
-    position: relative;
+  .close{
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    z-index: 1;
+    width: 40px;
+    height: 40px;
+    border: none;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.9);
+    color: #222222;
+    font-size: 28px;
+    line-height: 40px;
+    padding: 0;
+    opacity: 1;
+    text-shadow: none;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+    cursor: pointer;
 
-    img {
-      max-width: 100%;
-      height: auto;
-      vertical-align: bottom;
-      @include border-top-radius(5px);
+    &:hover{
+      color: #d7400a;
     }
   }
 
+  aside img {
+    display: block;
+    width: 100%;
+    max-height: 50vh;
+    object-fit: cover;
+  }
+
   article {
-    padding: 1.25em 1.5em;
+    padding: 1.5em;
   }
 
   h2{
-    font-size: em(28);
+    font-size: 1.75rem;
     color: #222222;
-    margin: 0;
+    margin: 0 48px 0.5em 0;
     font-weight: 300;
+    overflow-wrap: break-word;
   }
 
   p {
-    margin: 1.25em 0;
-    font-size: em(13);
-    font-weight: 400;
+    margin: 1em 0 0;
+    font-size: 1rem;
     color: #222222;
+    // Keep the line breaks typed in the back office.
+    white-space: pre-line;
 
     span {
       font-weight: 700;
       color: #000000;
     }
   }
+}
 
-  .ingredients {
-    margin: 2em 0 0.5em;
-  }
+@keyframes popup-fade-in{
+  from{ opacity: 0; }
+  to{ opacity: 1; }
 }
 
 /**************************** RESPONSIVE *********************************************/

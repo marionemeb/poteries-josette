@@ -17,7 +17,9 @@ class SearchRecipeType extends AbstractType
             ->add('name', EntityType::class,[
                 'required' => false,
                 'class' => RecipeCategory::class,
-                'placeholder' => 'Toutes catégories',
+                'placeholder' => 'Toutes',
+                // Radio buttons, rendered as pills by templates/_category_filter.html.twig
+                'expanded' => true,
                 'query_builder' => function (RecipeCategoryRepository $repository) {
                     return $repository->createQueryBuilder('c')
                         ->innerJoin('c.recipes', 'r')

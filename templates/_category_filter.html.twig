@@ -1,0 +1,9 @@
+{# Category filter shared by /blog and /recipes: one pill per category instead
+   of a native <select>, submitted as soon as a pill is picked (assets/js/app.js). #}
+{{ form_start(searchForm, {'attr': {'class': 'search category-filter'}}) }}
+    {% for choice in searchForm.name %}
+        {{ form_widget(choice, {'attr': {'class': 'category-filter-input'}}) }}
+        {{ form_label(choice, null, {'label_attr': {'class': 'category-filter-chip'}}) }}
+    {% endfor %}
+    <noscript><button type="submit" class="category-filter-chip">Filtrer</button></noscript>
+{{ form_end(searchForm) }}

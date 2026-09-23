@@ -3,10 +3,10 @@
   position: absolute;
   width: 100%;
   text-align: center;
+}
 
-  button{
-    display: none;
-  }
+.nav-toggle{
+  display: none;
 }
 
 .nav-item{
@@ -17,6 +17,7 @@
 .nav-link{
   color: white;
   font-size: 24px;
+  white-space: nowrap;
 }
 
 .nav-link:hover{
@@ -28,46 +29,94 @@
 
 /**************************** RESPONSIVE *********************************************/
 
-@media (max-width: 575.98px) {
-  .nav-top{
-    button{
-      display: unset !important;
+// Below Bootstrap's lg breakpoint (navbar-expand-lg), the links are hidden
+// behind a burger button and open as a full-screen overlay.
+@media (max-width: 991.98px) {
+  .nav-toggle{
+    display: block;
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    // Above the overlay, so the same button closes the menu.
+    z-index: 1060;
+    width: 48px;
+    height: 48px;
+    border: none;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.35);
+    color: white;
+    font-size: 22px;
+    cursor: pointer;
+
+    &:focus{
+      outline: 2px solid white;
+      outline-offset: 2px;
     }
-    .navbar-nav{
-      background-color: #222424;
-      line-height: 0.6rem;
+  }
+
+  .nav-toggle-close{
+    display: none;
+  }
+
+  .menu-open .nav-toggle{
+    position: fixed;
+    background: transparent;
+    font-size: 28px;
+
+    .nav-toggle-open{
+      display: none;
     }
+
+    .nav-toggle-close{
+      display: inline;
+    }
+  }
+
+  .nav-top .navbar-collapse.show{
+    position: fixed;
+    inset: 0;
+    z-index: 1050;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(29, 33, 36, 0.97);
+    animation: nav-fade-in 0.2s ease;
+  }
+
+  .nav-top .navbar-nav{
+    align-items: center;
+  }
+
+  .nav-top .nav-item{
+    margin: 8px 0;
+    font-weight: normal;
+  }
+
+  .nav-top .nav-link{
+    font-family: 'Courgette', cursive;
+    font-size: 30px;
+    padding: 6px 0;
+    border-bottom: 2px solid transparent;
+  }
+
+  // The page behind the overlay must not scroll while the menu is open.
+  body.menu-open{
+    overflow: hidden;
   }
 }
 
-@media (min-width: 576px) and (max-width: 767.98px) {
-  .nav-top{
-    button{
-      display: unset !important;
-    }
-    .navbar-nav{
-      background-color: #222424;
-      line-height: 0.6rem;
-    }
-  }
-}
-
-@media (min-width: 768px) and (max-width: 991.98px) {
-  .nav-top{
-    button{
-      display: unset !important;
-    }
-    .navbar-nav{
-      background-color: #222424;
-      line-height: 0.6rem;
-    }
-  }
-}
-
+// Between lg and xl the six links barely fit on one line: tighten them.
 @media (min-width: 992px) and (max-width: 1199.98px) {
+  .nav-item{
+    margin: 10px 8px;
+  }
 
+  .nav-link{
+    font-size: 20px;
+  }
 }
 
-@media (min-width: 1200px) {
-
+@keyframes nav-fade-in{
+  from{ opacity: 0; }
+  to{ opacity: 1; }
 }

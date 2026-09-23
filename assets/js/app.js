@@ -5,6 +5,33 @@ require('../scss/app.scss');
 require('jquery');
 require('bootstrap');
 
+const navToggle = document.querySelector('.nav-toggle');
+const navMenu = document.getElementById('navbarToggleExternalContent');
+if (navToggle && navMenu) {
+    const setMenuOpen = function (open) {
+        navMenu.classList.toggle('show', open);
+        document.body.classList.toggle('menu-open', open);
+        navToggle.setAttribute('aria-expanded', open);
+        navToggle.setAttribute('aria-label', open ? 'Fermer le menu' : 'Ouvrir le menu');
+    };
+
+    navToggle.addEventListener('click', function () {
+        setMenuOpen(!navMenu.classList.contains('show'));
+    });
+
+    document.addEventListener('keydown', function (event) {
+        if (event.key === 'Escape') {
+            setMenuOpen(false);
+        }
+    });
+}
+
+document.querySelectorAll('.category-filter-input').forEach(function (input) {
+    input.addEventListener('change', function () {
+        input.form.submit();
+    });
+});
+
 const backToTopButton = document.getElementById('back-to-top');
 if (backToTopButton) {
     window.addEventListener('scroll', function () {

@@ -17,7 +17,9 @@ class SearchType extends AbstractType
             ->add('name', EntityType::class,[
                 'required' => false,
                 'class' => BlogType::class,
-                'placeholder' => 'Toutes catégories',
+                'placeholder' => 'Toutes',
+                // Radio buttons, rendered as pills by templates/_category_filter.html.twig
+                'expanded' => true,
                 'query_builder' => function (BlogTypeRepository $repository) {
                     return $repository->createQueryBuilder('t')
                         ->innerJoin('t.blog', 'b')

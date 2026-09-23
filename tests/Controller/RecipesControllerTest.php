@@ -86,9 +86,9 @@ class RecipesControllerTest extends DatabaseWebTestCase
         $this->persist($outsideCategory);
 
         $crawler = $this->client->request('GET', '/recipes');
-        $selectName = $crawler->filter('select.searchTerm')->attr('name');
+        $radioName = $crawler->filter('input.category-filter-input')->attr('name');
         $form = $crawler->filter('form.search')->form();
-        $form[$selectName] = (string) $matching->getId();
+        $form[$radioName]->select((string) $matching->getId());
 
         $this->client->submit($form);
 
@@ -115,7 +115,7 @@ class RecipesControllerTest extends DatabaseWebTestCase
         $crawler = $this->client->request('GET', '/recipes');
 
         $this->assertResponseIsSuccessful();
-        $options = $crawler->filter('select.searchTerm option')->each(fn ($node) => $node->text());
+        $options = $crawler->filter('label.category-filter-chip')->each(fn ($node) => $node->text());
         $this->assertContains('Plats au four', $options);
         $this->assertNotContains('Catégorie sans recette', $options);
     }
