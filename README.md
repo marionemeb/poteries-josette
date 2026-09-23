@@ -17,7 +17,7 @@ Site de présentation (pas d'e-commerce, pas de panier/paiement en ligne) :
 
 ## Stack technique
 
-- **Backend** : Symfony 4.4 (PHP ^7.1.3), Doctrine ORM
+- **Backend** : Symfony 5.4 (PHP 8.3), Doctrine ORM
 - **Back-office** : EasyAdmin 2.3
 - **Front** : Webpack Encore, Sass, Bootstrap 4, jQuery, React (composants ponctuels)
 - **PDF** : Dompdf
@@ -25,7 +25,7 @@ Site de présentation (pas d'e-commerce, pas de panier/paiement en ligne) :
 
 ## Installation
 
-Prérequis : PHP ^7.1.3 avec les extensions `ctype` et `iconv`, Composer, Node.js/Yarn, une base MySQL.
+Prérequis : PHP 8.3 avec les extensions `ctype`, `iconv` et `intl`, Composer 2, Node.js/Yarn, une base MySQL 8.0.
 
 ```bash
 composer install
@@ -39,7 +39,7 @@ yarn build           # build de production des assets
 
 ## Développement
 
-Sur une machine sans PHP 7.x/Node 12 natifs, `bin/dev-setup.sh` enchaîne tout ce qu'il faut (Docker, dépendances, base de dev + schéma, données factices, assets front) en une seule commande, sûr à relancer plusieurs fois :
+Sur une machine sans PHP 8.3/Node 12 natifs, `bin/dev-setup.sh` enchaîne tout ce qu'il faut (Docker, dépendances, base de dev + schéma, données factices, assets front) en une seule commande, sûr à relancer plusieurs fois :
 
 ```bash
 bin/dev-setup.sh
@@ -58,7 +58,7 @@ yarn watch                # rebuild les assets à chaque changement
 
 ## Tests
 
-La machine de dev n'a pas forcément PHP 7.x installé : un environnement Docker (PHP 7.4 + MySQL) est fourni pour lancer les tests de façon reproductible, proche de la prod (OVH tourne en PHP 7.3).
+La machine de dev n'a pas forcément PHP 8.3 installé : un environnement Docker (PHP 8.3 + MySQL 8.0, les mêmes versions qu'en prod chez OVH) est fourni pour lancer les tests de façon reproductible.
 
 ```bash
 docker compose build php
@@ -67,11 +67,7 @@ docker compose run --rm php composer install
 # La base de test doit exister et être à jour avant de lancer les tests
 docker compose run --rm -e APP_ENV=test php php bin/console doctrine:migrations:migrate --no-interaction
 
-# PHPUnit 7.5 en phar autonome (.phpunit/phpunit.phar, téléchargé par la
-# CI), hérité de l'époque Composer 1 où le téléchargement automatique via
-# symfony/phpunit-bridge ne fonctionnait plus — conservé jusqu'à la montée
-# de version de Symfony)
-docker compose run --rm php php .phpunit/phpunit.phar
+docker compose run --rm php vendor/bin/phpunit
 ```
 
 Le fichier `.env` (non commité, `cp .env.dist .env` — voir "Installation" ci-dessus) doit exister pour que le kernel démarre ; `.env.test` (commité) surcharge `DATABASE_URL` pour pointer vers le service `db` du `docker-compose.yml`. La CI (`.github/workflows/tests.yml`) fait ce `cp` automatiquement.

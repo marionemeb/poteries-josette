@@ -5,7 +5,7 @@ namespace App\Repository;
 use App\Entity\Blog;
 use App\Entity\BlogType;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * @method Blog|null find($id, $lockMode = null, $lockVersion = null)

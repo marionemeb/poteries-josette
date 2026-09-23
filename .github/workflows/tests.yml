@@ -27,16 +27,8 @@ jobs:
         # Fails if an entity changed without a matching migration.
         run: docker compose run --rm -e APP_ENV=test php php bin/console doctrine:schema:validate
 
-      - name: Download PHPUnit
-        # Standalone phar instead of symfony/phpunit-bridge's auto-download
-        # (vendor/bin/simple-phpunit): a leftover from the Composer 1 era, when
-        # that download no longer worked. Kept until the Symfony upgrade.
-        run: |
-          mkdir -p .phpunit
-          curl -sL -o .phpunit/phpunit.phar https://phar.phpunit.de/phpunit-7.5.20.phar
-
       - name: Run tests
-        run: docker compose run --rm php php .phpunit/phpunit.phar
+        run: docker compose run --rm php vendor/bin/phpunit
 
   frontend-build:
     runs-on: ubuntu-latest
