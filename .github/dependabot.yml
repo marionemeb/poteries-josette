@@ -40,6 +40,14 @@ updates:
     open-pull-requests-limit: 5
     cooldown:
       default-days: 21
+    ignore:
+      # Major versions of these are migrations of their own (EasyAdmin 5,
+      # Doctrine ORM 3 both failed CI on 2026-09-24), done on purpose like
+      # Symfony upgrades rather than through a Dependabot bump.
+      - dependency-name: "easycorp/easyadmin-bundle"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "doctrine/orm"
+        update-types: ["version-update:semver-major"]
 
   # Keep the CI/deploy workflows' own action versions current.
   - package-ecosystem: "github-actions"
