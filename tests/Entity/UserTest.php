@@ -22,12 +22,12 @@ class UserTest extends TestCase
         $this->assertSame(['ROLE_ADMIN', 'ROLE_USER'], array_values($user->getRoles()));
     }
 
-    public function testGetUsernameReturnsEmail(): void
+    public function testGetUserIdentifierReturnsEmail(): void
     {
         $user = new User();
         $user->setEmail('josette@poterie-josette.com');
 
-        $this->assertSame('josette@poterie-josette.com', $user->getUsername());
+        $this->assertSame('josette@poterie-josette.com', $user->getUserIdentifier());
     }
 
     public function testToStringReturnsEmail(): void

@@ -9,7 +9,7 @@
 
     {% if app.user %}
         <div class="mb-3">
-            Tu es connecté en tant que : {{ app.user.username }}, <a href="{{ path('app_logout') }}">Logout</a>
+            Tu es connecté en tant que : {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Logout</a>
         </div>
     {% endif %}
     <form method="post">
