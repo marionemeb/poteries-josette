@@ -1,0 +1,27 @@
+name: Uptime
+
+# Pings the production site every hour. A failed run means the site is down
+# or erroring; GitHub emails the failure to whoever last edited this schedule.
+# /articles reads from the database, so it also catches DB/connection errors
+# that the home page tolerates (NavigationExtension swallows them).
+# Note: GitHub disables scheduled workflows after 60 days without repo activity
+# (it emails a warning first) — re-enable from the Actions tab if that happens.
+
+on:
+  schedule:
+    - cron: '17 * * * *'
+  workflow_dispatch:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check production pages
+        run: |
+          status=0
+          for path in / /articles; do
+            code=$(curl -s -o /dev/null -w '%{http_code}' --max-time 30 --retry 2 --retry-delay 20 "https://www.poterie-josette.com$path")
+            echo "$path -> $code"
+            [ "$code" = "200" ] || status=1
+          done
+          exit $status
