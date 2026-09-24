@@ -9,6 +9,7 @@ use App\Entity\Product;
 use App\Entity\Recipe;
 use App\Entity\RecipeCategory;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -21,10 +22,9 @@ use Symfony\Component\HttpKernel\KernelInterface;
  * never touch a real environment by accident, and is a no-op if data
  * already exists so re-running bin/dev-setup.sh stays safe.
  */
+#[AsCommand(name: 'app:load-fake-data')]
 class LoadFakeDataCommand extends Command
 {
-    protected static $defaultName = 'app:load-fake-data';
-
     /** @var EntityManagerInterface */
     private $em;
     /** @var KernelInterface */

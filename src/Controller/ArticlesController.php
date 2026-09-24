@@ -9,16 +9,11 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class ArticlesController extends AbstractController
 {
-    /**
-     * @Route("/articles", name="articles")
-     * @param ProductRepository $products
-     * @return Response
-     */
-    public function index(ProductRepository $products)
+    #[Route('/articles', name: 'articles')]
+    public function index(ProductRepository $products): Response
     {
-        $products = $products->findAll();
         return $this->render('articles/index.html.twig', [
-            'products' => $products,
+            'products' => $products->findAll(),
         ]);
     }
 }
