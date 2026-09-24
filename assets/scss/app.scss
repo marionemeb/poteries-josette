@@ -183,10 +183,24 @@ h1, h2, h3, h4 {
     .about-company{
         i{font-size: 25px;}
     }
+    .social a + a{
+        margin-left: 8px;
+    }
     .location{
         i{font-size: 18px;}
     }
-    .copyright p{border-top:1px solid rgba(255,255,255,.1);}
+    .copyright p{
+        border-top: 1px solid rgba(255,255,255,.1);
+        padding-top: 12px;
+    }
+    .separator{
+        margin: 0 6px;
+    }
+    // Josette's way into the back office: kept, but faded so it doesn't
+    // read as a link meant for visitors.
+    .admin-link{
+        color: rgba(255, 255, 255, 0.35);
+    }
 }
 
 /****************** CATEGORY FILTER (blog, recipes) *******************/
