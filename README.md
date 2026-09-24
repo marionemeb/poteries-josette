@@ -17,8 +17,8 @@ Site de présentation (pas d'e-commerce, pas de panier/paiement en ligne) :
 
 ## Stack technique
 
-- **Backend** : Symfony 5.4 (PHP 8.3), Doctrine ORM
-- **Back-office** : EasyAdmin 2.3
+- **Backend** : Symfony 6.4 (PHP 8.3), Doctrine ORM
+- **Back-office** : EasyAdmin 4 (`src/Controller/Admin/`)
 - **Front** : Webpack Encore, Sass, Bootstrap 4, jQuery, React (composants ponctuels)
 - **PDF** : Dompdf
 - **Email** : Symfony Mailer / SwiftMailer

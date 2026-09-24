@@ -5,60 +5,44 @@ namespace App\Entity;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
-use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Vich\UploaderBundle\Mapping\Attribute as Vich;
 use Symfony\Component\Validator\Constraints as Assert;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\RecipeRepository")
- * @Vich\Uploadable
- */
+#[ORM\Entity(repositoryClass: \App\Repository\RecipeRepository::class)]
+#[Vich\Uploadable]
 class Recipe
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: 'integer')]
     private $id;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
+    #[ORM\Column(type: 'string', length: 255)]
     private $name;
 
-    /**
-     * @ORM\Column(type="text")
-     */
+    #[ORM\Column(type: 'text')]
     private $description;
 
-    /**
-     * @ORM\Column(type="text")
-     */
+    #[ORM\Column(type: 'text')]
     private $ingredient;
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
+    #[ORM\Column(type: 'text', nullable: true)]
     private $imageName;
 
     /**
-     * @Vich\UploadableField(mapping="product_images", fileNameProperty="imageName")
      * @var ?File
-     * @Assert\File(
-     *     maxSize = "1000k",
-     * )
      */
+    #[Vich\UploadableField(mapping: 'product_images', fileNameProperty: 'imageName')]
+    #[Assert\File(maxSize: '1000k')]
     private $imageFile;
 
     /**
-     * @ORM\Column(type="datetime")
      * @var DateTime
      */
+    #[ORM\Column(type: 'datetime')]
     private $updatedAt;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\RecipeCategory", inversedBy="recipes")
-     */
+    #[ORM\ManyToOne(targetEntity: \App\Entity\RecipeCategory::class, inversedBy: 'recipes')]
     private $category;
 
     public function getId(): ?int

@@ -8,6 +8,8 @@
   </coverage>
   <php>
     <ini name="error_reporting" value="-1"/>
+    <!-- A cold test cache compiles every template during the run. -->
+    <ini name="memory_limit" value="512M"/>
     <server name="APP_ENV" value="test" force="true"/>
     <server name="SHELL_VERBOSITY" value="-1"/>
   </php>

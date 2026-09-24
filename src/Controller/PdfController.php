@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Entity\Recipe;
+use App\Repository\RecipeRepository;
 use Dompdf\Dompdf;
 use Dompdf\Options;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -11,14 +11,13 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class PdfController extends AbstractController
 {
-    /**
-     * @Route("/pdf/{id}", name="pdf")
-     * @param int $id
-     * @return Response
-     */
-    public function generate_pdf($id)
+    #[Route('/pdf/{id}', name: 'pdf')]
+    public function generate_pdf(int $id, RecipeRepository $recipes): Response
     {
-        $recipe = $this->getDoctrine()->getRepository(Recipe::class)->find($id);
+        $recipe = $recipes->find($id);
+        if (!$recipe) {
+            throw $this->createNotFoundException();
+        }
 
         $options = new Options();
         $options->set('defaultFont', 'Roboto');

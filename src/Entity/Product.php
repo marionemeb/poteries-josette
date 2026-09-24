@@ -5,51 +5,39 @@ namespace App\Entity;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
-use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Vich\UploaderBundle\Mapping\Attribute as Vich;
 use Symfony\Component\Validator\Constraints as Assert;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\ProductRepository")
- * @ORM\Table(name="product")
- * @Vich\Uploadable
- */
+#[ORM\Table(name: 'product')]
+#[ORM\Entity(repositoryClass: \App\Repository\ProductRepository::class)]
+#[Vich\Uploadable]
 class Product
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: 'integer')]
     private $id;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private $title;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private $name;
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
+    #[ORM\Column(type: 'text', nullable: true)]
     private $description;
 
     /**
-     * @Vich\UploadableField(mapping="product_images", fileNameProperty="name")
      * @var ?File
-     * @Assert\File(
-     *     maxSize = "1000k",
-     * )
      */
+    #[Vich\UploadableField(mapping: 'product_images', fileNameProperty: 'name')]
+    #[Assert\File(maxSize: '1000k')]
     private $imageFile;
 
     /**
-     * @ORM\Column(type="datetime")
      * @var DateTime
      */
+    #[ORM\Column(type: 'datetime')]
     private $updatedAt;
 
     public function getId(): ?int

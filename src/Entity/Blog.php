@@ -4,41 +4,27 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\BlogRepository")
- */
+#[ORM\Entity(repositoryClass: \App\Repository\BlogRepository::class)]
 class Blog
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: 'integer')]
     private $id;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
+    #[ORM\Column(type: 'string', length: 255)]
     private $name;
 
-    /**
-     * @ORM\Column(type="text")
-     */
+    #[ORM\Column(type: 'text')]
     private $description;
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
+    #[ORM\Column(type: 'text', nullable: true)]
     private $url;
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
+    #[ORM\Column(type: 'text', nullable: true)]
     private $location;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\BlogType", inversedBy="blog")
-     */
+    #[ORM\ManyToOne(targetEntity: \App\Entity\BlogType::class, inversedBy: 'blog')]
     private $type;
 
     public function getId(): ?int
