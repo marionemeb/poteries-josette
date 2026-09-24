@@ -31,9 +31,8 @@ updates:
       - dependency-name: "@babel/preset-react"
         update-types: ["version-update:semver-major"]
 
-  # composer: the project moved to Composer 2 on 2026-09-23. Symfony 4.4 is
-  # end of life and every 4.4 release now has known advisories, so expect
-  # few or no PRs here until the Symfony upgrade.
+  # composer: Symfony is pinned to 6.4.* (LTS) in composer.json, so PRs stay
+  # within 6.4; moving to 7.x is a deliberate upgrade, not a Dependabot bump.
   - package-ecosystem: "composer"
     directory: "/"
     schedule:

@@ -152,7 +152,7 @@ class SecurityTest extends DatabaseWebTestCase
         $product = $this->entityManager->getRepository(Product::class)->findOneBy(['title' => 'Bol à thé']);
         $this->assertNotNull($product);
         $this->assertNotNull($product->getName());
-        $uploaded = self::$container->getParameter('product_images').'/'.$product->getName();
+        $uploaded = static::getContainer()->getParameter('product_images').'/'.$product->getName();
         $this->assertFileExists($uploaded);
 
         $this->client->request('GET', '/articles');
@@ -203,7 +203,7 @@ class SecurityTest extends DatabaseWebTestCase
     public function testResetPasswordThenLoginWithNewPassword(): void
     {
         $user = $this->entityManager->getRepository(User::class)->findOneBy(['email' => self::EMAIL]);
-        $token = self::$container->get('symfonycasts.reset_password.helper')->generateResetToken($user)->getToken();
+        $token = static::getContainer()->get('symfonycasts.reset_password.helper')->generateResetToken($user)->getToken();
 
         // The token URL stores the token in session and redirects to the form.
         $this->client->request('GET', '/reset-password/reset/'.$token);

@@ -26,7 +26,7 @@ abstract class DatabaseWebTestCase extends WebTestCase
         parent::setUp();
 
         $this->client = static::createClient();
-        $this->entityManager = self::$container->get('doctrine')->getManager();
+        $this->entityManager = static::getContainer()->get('doctrine')->getManager();
     }
 
     protected function tearDown(): void
