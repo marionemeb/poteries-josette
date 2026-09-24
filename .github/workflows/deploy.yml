@@ -12,7 +12,11 @@ env:
 
 jobs:
   deploy:
-    runs-on: ubuntu-latest
+    # Pinned rather than ubuntu-latest, which moves to Ubuntu 26 from
+    # 2026-10-19: the front-end build still needs Node 12 (node-sass 4), not
+    # something to discover on a new image mid-deploy. Revisit once the
+    # front-end toolchain is modernised.
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v7
 
