@@ -3,6 +3,13 @@ name: Deploy to OVH
 on:
   workflow_dispatch:
 
+concurrency:
+  group: deploy
+  cancel-in-progress: false
+
+env:
+  SITE_URL: https://www.poterie-josette.com
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -40,41 +47,71 @@ jobs:
         # Node 12 above is deliberate, not arbitrary, see the project skill.
         run: npm run build
 
-      - name: Deploy over FTP
-        # Symfony in prod does NOT auto-invalidate its compiled container
-        # when source files change — it just keeps using whatever's already
-        # in var/cache/prod on the server. Excluding var/** entirely (as a
-        # previous version of this workflow did) meant every deploy after
-        # the very first left a stale, out-of-date compiled container in
-        # place — code changes shipped over FTP but never actually took
-        # effect, and could throw fatal errors once the mismatch got bad
-        # enough (this broke production on 19/09/2026). So the compiled
-        # cache (container, routes, twig, ~300 small files) DOES need to
-        # ship every time. What must still be excluded is only
-        # var/cache/**/pools/** — Symfony's filesystem cache pools, which
-        # pre-create tens of thousands of near-empty directories regardless
-        # of actual cached item count, and uploading that one-by-one over
-        # FTP is what made an earlier run take 2+ hours. var/log/** is
-        # excluded too, so this deploy never overwrites the server's real
-        # error log with an empty one from the build machine.
-        uses: SamKirkland/FTP-Deploy-Action@v4.4.0
-        with:
-          server: ${{ secrets.OVH_FTP_HOST }}
-          username: ${{ secrets.OVH_FTP_USERNAME }}
-          password: ${{ secrets.OVH_FTP_PASSWORD }}
-          server-dir: ${{ secrets.OVH_FTP_REMOTE_DIR }}
-          exclude: |
-            **/.git*
-            **/.git*/**
-            **/.github/**
-            **/node_modules/**
-            **/tests/**
-            **/docker/**
-            docker-compose.yml
-            .env
-            .env.dist
-            .env.test
-            .envrc
-            .phpunit/**
-            var/cache/**/pools/**
-            var/log/**
+      - name: Package the release
+        # One zip instead of a file-by-file FTP sync: OVH's FTP server cuts
+        # the connection after ~10k commands, which a vendor/ update easily
+        # exceeds (two failed deploys on 2026-09-24). See deploy/release.php.
+        run: deploy/package.sh release.zip
+
+      - name: Prepare the one-shot deploy script
+        # Random name and token for each run; the script deletes itself at
+        # the end. If a run dies before that, the leftover is unusable
+        # without this run's token.
+        run: |
+          token=$(openssl rand -hex 32)
+          echo "::add-mask::$token"
+          script="deploy-$(openssl rand -hex 12).php"
+          sed "s/__DEPLOY_TOKEN__/$token/" deploy/release.php > "$script"
+          echo "DEPLOY_TOKEN=$token" >> "$GITHUB_ENV"
+          echo "DEPLOY_SCRIPT=$script" >> "$GITHUB_ENV"
+
+      - name: Upload over FTP
+        env:
+          FTP_HOST: ${{ secrets.OVH_FTP_HOST }}
+          FTP_USER: ${{ secrets.OVH_FTP_USERNAME }}
+          FTP_PASS: ${{ secrets.OVH_FTP_PASSWORD }}
+          FTP_DIR: ${{ secrets.OVH_FTP_REMOTE_DIR }}
+        run: |
+          dir=${FTP_DIR#./}; dir=${dir#/}; dir=${dir%/}
+          [ -n "$dir" ] || { echo "OVH_FTP_REMOTE_DIR is empty"; exit 1; }
+          upload() { curl --fail --silent --show-error --ssl --retry 3 --user "$FTP_USER:$FTP_PASS" -T "$1" "ftp://$FTP_HOST/$2"; }
+          # The zip goes to the FTP home, above the app directory, where
+          # nothing is served over HTTP.
+          upload release.zip release.zip
+          upload "$DEPLOY_SCRIPT" "$dir/public/$DEPLOY_SCRIPT"
+
+      - name: Unpack on the server
+        run: |
+          step() { curl --fail-with-body --silent --show-error --max-time 600 -X POST -H "X-Deploy-Token: $DEPLOY_TOKEN" "$SITE_URL/$DEPLOY_SCRIPT?step=$1"; }
+          step check | tee check.json
+          jq -e '.zip and .home_writable and .www_writable and .release_zip > 0' check.json > /dev/null
+          step extract
+
+      - name: Switch to the new release
+        id: swap
+        run: |
+          curl --fail-with-body --silent --show-error --max-time 600 -X POST -H "X-Deploy-Token: $DEPLOY_TOKEN" "$SITE_URL/$DEPLOY_SCRIPT?step=swap"
+
+      - name: Check the live site
+        run: |
+          sleep 5
+          status=0
+          for path in / /articles /recipes /login; do
+            code=$(curl -s -o /dev/null -w '%{http_code}' --max-time 30 --retry 2 --retry-delay 10 "$SITE_URL$path")
+            echo "$path -> $code"
+            [ "$code" = "200" ] || status=1
+          done
+          exit $status
+
+      - name: Roll back
+        # Only once the new release is live; a failed swap already put the
+        # old one back by itself.
+        if: failure() && steps.swap.outcome == 'success'
+        run: |
+          curl --fail-with-body --silent --show-error --max-time 600 -X POST -H "X-Deploy-Token: $DEPLOY_TOKEN" "$SITE_URL/$DEPLOY_SCRIPT?step=rollback"
+
+      - name: Clean up
+        # Deletes the script and the zip; the previous release stays as
+        # www_prev until the next deploy, for a manual rollback.
+        run: |
+          curl --fail-with-body --silent --show-error --max-time 600 -X POST -H "X-Deploy-Token: $DEPLOY_TOKEN" "$SITE_URL/$DEPLOY_SCRIPT?step=finish"
