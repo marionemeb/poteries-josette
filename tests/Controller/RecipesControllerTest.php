@@ -62,6 +62,22 @@ class RecipesControllerTest extends DatabaseWebTestCase
         $this->assertSame('tourte.jpg', $mountPoint->attr('data-image-name'));
     }
 
+    public function testRecipeWithoutPhotoHasNoImageInItsCard(): void
+    {
+        $recipe = (new Recipe())
+            ->setName('Soupe sans photo')
+            ->setDescription('Une recette sans image.')
+            ->setIngredient('Poireaux, pommes de terre')
+            ->setUpdatedAt(new \DateTime());
+        $this->persist($recipe);
+
+        $crawler = $this->client->request('GET', '/recipes');
+
+        $this->assertResponseIsSuccessful();
+        $this->assertSelectorTextContains('body', 'Soupe sans photo');
+        $this->assertSame(0, $crawler->filter('.container-recipe img')->count());
+    }
+
     public function testFilteringByCategoryOnlyShowsMatchingRecipes(): void
     {
         $matching = (new RecipeCategory())->setName('Plats au four');

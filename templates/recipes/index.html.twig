@@ -26,8 +26,12 @@
                                         <a href="{{ path('pdf', { 'id': recipe.id }) }}'"><i class="fas fa-print"></i></a>
                                     </div>
                                 </div>
-                                <img src="{{ ('/uploads/images/products/'~recipe.imageName) }}"
-                                     alt="{{ recipe.imageName }}">
+                                {# No photo, or a file missing on the server: no broken image in the card. #}
+                                {% if recipe.imageName %}
+                                    <img src="{{ ('/uploads/images/products/'~recipe.imageName) }}"
+                                         alt="{{ recipe.imageName }}"
+                                         onerror="this.remove()">
+                                {% endif %}
                                 <h1 class="card-title mt-3 mb-3">{{ recipe.name }}</h1>
                             </div>
                         </div>
