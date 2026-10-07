@@ -1,33 +1,52 @@
 {% extends 'base.html.twig' %}
+{% import '_icons.html.twig' as icon %}
 
 {% block title %}Mes poteries{% endblock %}
 
 {% block body %}
-    <div class="container-fluid articles">
-        <div class="container">
-        <div class="articles-title">Mes poteries</div>
-        <section class="card-columns">
-            {% for product in products %}
-                <div class="card">
-                    <img class="card-img-top" src="{{ ('/uploads/images/products/'~product.name) }}" alt="{{ product.title }}" onerror="this.closest('.card').remove()" onclick="document.getElementById('image-lightbox-img').src=this.src; document.getElementById('image-lightbox').classList.add('open');">
-                    {% if product.title or product.description %}
-                        <div class="card-body">
-                            {% if product.title %}
-                                <h2 class="card-title">{{ product.title }}</h2>
-                            {% endif %}
-                            {% if product.description %}
-                                <p class="card-text">{{ product.description }}</p>
-                            {% endif %}
-                        </div>
-                    {% endif %}
-                </div>
-            {% endfor %}
-        </section>
-        </div>
-    </div>
+    <section class="page-hero page-hero--articles">
+        <h1 class="page-title">Mes poteries</h1>
+        <p class="page-lead">Poteries utilitaires et décoratives en terre vernissée. Touchez une photo pour l’agrandir.</p>
+    </section>
 
-    {# Click a product photo to see it uncropped at its original size. #}
-    <div id="image-lightbox" class="image-lightbox" onclick="this.classList.remove('open')">
-        <img id="image-lightbox-img" src="" alt="">
+    <main class="page-content" id="contenu">
+        {% if products is empty %}
+            <p class="empty-state">Les photos des poteries arrivent bientôt. En attendant, <a href="{{ path('shop') }}">venez les découvrir à l’atelier</a>.</p>
+        {% else %}
+            <section class="card-grid card-grid--gallery">
+                {% for product in products %}
+                    {# A photo that fails to load takes its whole card away. #}
+                    <article class="tile-card product-card">
+                        <button type="button" class="product-card-media" data-lightbox="{{ product.title }}" aria-label="Agrandir la photo{{ product.title ? ' : ' ~ product.title }}">
+                            <img src="{{ '/uploads/images/products/' ~ product.name }}" alt="{{ product.title }}" loading="lazy" onerror="this.closest('.product-card').remove()">
+                        </button>
+                        {% if product.title or product.description %}
+                            <div class="product-card-body">
+                                {% if product.title %}
+                                    <h2 class="tile-card-title">{{ product.title }}</h2>
+                                {% endif %}
+                                {% if product.description %}
+                                    <p class="tile-card-text">{{ product.description }}</p>
+                                {% endif %}
+                            </div>
+                        {% endif %}
+                    </article>
+                {% endfor %}
+            </section>
+        {% endif %}
+    </main>
+
+    {# Full-screen viewer, driven by assets/js/app.js. #}
+    <div id="image-lightbox" class="image-lightbox" role="dialog" aria-modal="true" aria-label="Photo agrandie" hidden>
+        <button type="button" class="lightbox-btn lightbox-close" aria-label="Fermer">{{ icon.svg('close', 22) }}</button>
+        <button type="button" class="lightbox-btn lightbox-prev" aria-label="Photo précédente">{{ icon.svg('chevron-left', 24) }}</button>
+        <figure class="lightbox-figure">
+            <img src="" alt="">
+            <figcaption>
+                <span class="lightbox-title"></span>
+                <span class="lightbox-counter"></span>
+            </figcaption>
+        </figure>
+        <button type="button" class="lightbox-btn lightbox-next" aria-label="Photo suivante">{{ icon.svg('chevron-right', 24) }}</button>
     </div>
 {% endblock %}

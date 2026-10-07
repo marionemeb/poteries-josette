@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
     <head>
-        <link rel="stylesheet" href="">
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="{% block description %}Les Poteries de Josette : poteries utilitaires et décoratives en terre vernissée, façonnées dans son atelier d’Oingt, en Beaujolais.{% endblock %}">
         {# Plain root-relative paths on purpose, not asset(): these files never
            need cache-busting, and asset() requires public/build/manifest.json
            to exist — which it doesn't in the CI phpunit job (only the separate
@@ -20,24 +20,22 @@
         <link rel="manifest" href="/site.webmanifest">
         <meta name="theme-color" content="#222424">
         <meta name="apple-mobile-web-app-title" content="Poteries Josette">
-        <script src="https://kit.fontawesome.com/ab15670bb2.js" crossorigin="anonymous"></script>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Courgette&family=Open+Sans:wght@400;600;700&display=swap">
         <title>{% block title %}Bienvenue{% endblock %}</title>
 
         {% block stylesheets %}
             {{ encore_entry_link_tags('app') }}
-            {{ encore_entry_link_tags('articles') }}
-            {{ encore_entry_link_tags('event') }}
-            {{ encore_entry_link_tags('navbar') }}
-            {{ encore_entry_link_tags('recipes') }}
-            {{ encore_entry_link_tags('login') }}
         {% endblock %}
     </head>
-    <body>
+    <body class="page-{{ app.request.attributes.get('_route')|default('error') }}">
     {% include '_navbar.html.twig' %}
         {% block body %}{% endblock %}
     {% include '_footer.html.twig' %}
+        {% import '_icons.html.twig' as icon %}
         <button id="back-to-top" class="back-to-top" aria-label="Remonter en haut de la page">
-            <i class="fas fa-arrow-up"></i>
+            {{ icon.svg('arrow-up', 20) }}
         </button>
         {% block javascripts %}
             {{ encore_entry_script_tags('app') }}

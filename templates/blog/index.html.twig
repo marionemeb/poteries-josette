@@ -1,32 +1,42 @@
 {% extends 'base.html.twig' %}
+{% import '_icons.html.twig' as icon %}
 
-{% block title %}Coups de coeur{% endblock %}
+{% block title %}Coups de cœur{% endblock %}
 
 {% block body %}
-    <div class="container-fluid blog">
-        <div class="container">
-            <div class="articles-title">Mes coups de coeur</div>
-            <div class="wrap">
-                {% include '_category_filter.html.twig' %}
-            </div>
-            <section class="card-columns blog-articles">
-                {% for blogArticle in blogArticles %}
-                    <div class="card">
-                        <a href="{{ blogArticle.url }}">
-                            <div class="card-body">
-                                <h5 class="card-title">{{ blogArticle.name }}</h5>
-                                <p class="card-text">
-                                    {{ blogArticle.description }}
-                                </p>
-                                <p class="card-text"><small class="text-muted">
-                                        <i class="fas fa-map-marker-alt"></i>{{ blogArticle.location }}
-                                        <i class="fas fa-heart"></i>{{ blogArticle.type }}</small></p>
-                            </div>
-                        </a>
-                    </div>
+    <section class="page-hero page-hero--blog">
+        <h1 class="page-title">Mes coups de cœur</h1>
+        <p class="page-lead">Les adresses et les artisans que Josette aime faire découvrir.</p>
+    </section>
 
+    <main class="page-content" id="contenu">
+        {% include '_category_filter.html.twig' %}
+
+        {% if blogArticles is empty %}
+            <p class="empty-state">Aucun coup de cœur dans cette catégorie pour le moment.</p>
+        {% else %}
+            <section class="card-grid">
+                {% for blogArticle in blogArticles %}
+                    {% set tag = blogArticle.url ? 'a' : 'article' %}
+                    <{{ tag }} class="tile-card blog-card"{% if blogArticle.url %} href="{{ blogArticle.url }}" target="_blank" rel="noopener noreferrer"{% endif %}>
+                        {% if blogArticle.type %}
+                            <span class="blog-card-type">{{ blogArticle.type }}</span>
+                        {% endif %}
+                        <h2 class="tile-card-title">{{ blogArticle.name }}</h2>
+                        {% if blogArticle.description %}
+                            <p class="tile-card-text">{{ blogArticle.description }}</p>
+                        {% endif %}
+                        {% if blogArticle.location or blogArticle.url %}
+                            <div class="blog-card-footer">
+                                <span class="blog-card-location">{% if blogArticle.location %}{{ icon.svg('pin', 16) }}{{ blogArticle.location }}{% endif %}</span>
+                                {% if blogArticle.url %}
+                                    <span class="blog-card-more">Visiter →</span>
+                                {% endif %}
+                            </div>
+                        {% endif %}
+                    </{{ tag }}>
                 {% endfor %}
             </section>
-        </div>
-    </div>
+        {% endif %}
+    </main>
 {% endblock %}

@@ -1,0 +1,288 @@
+/******************** ARGILE ET ÉMAUX (/work) ********************/
+.work-paper {
+    display: flex;
+    flex-direction: column;
+    gap: 56px;
+
+    @include media-breakpoint-down(xs) {
+        gap: 40px;
+    }
+
+    > p {
+        margin: 0;
+    }
+}
+
+.work-intro {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 36px;
+
+    p {
+        flex: 1 1 320px;
+        margin: 0;
+        font-size: 20px;
+        line-height: 1.7;
+
+        @include media-breakpoint-down(xs) {
+            font-size: 18px;
+        }
+    }
+
+    img {
+        flex: 0 1 300px;
+        width: 300px;
+        aspect-ratio: 4 / 5;
+        object-fit: cover;
+        border-radius: 14px 0 14px 0;
+
+        @include media-breakpoint-down(xs) {
+            flex-basis: 100%;
+            aspect-ratio: 4 / 3;
+        }
+    }
+}
+
+.glazes {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+
+    @include media-breakpoint-down(sm) {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    li {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        padding: 22px;
+        border: 1px solid $line;
+        border-radius: 12px;
+    }
+
+    strong {
+        font-size: 18px;
+    }
+
+    span:last-child {
+        font-size: 15px;
+        line-height: 1.6;
+        color: $muted;
+    }
+}
+
+.glaze-swatch {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    box-shadow: inset 0 -6px 12px rgba(0, 0, 0, 0.2);
+
+    &--honey { background: $glaze-honey; }
+    &--yellow { background: $glaze-yellow; }
+    &--green { background: $glaze-green; }
+}
+
+.work-note {
+    margin: 18px 0 0 !important;
+    padding: 16px 20px;
+    border-radius: 10px;
+    background: $paper;
+    font-size: 15px;
+    line-height: 1.7;
+    color: $muted;
+}
+
+.work-steps {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    counter-reset: step;
+
+    @include media-breakpoint-down(sm) {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    li {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        counter-increment: step;
+
+        &::before {
+            content: counter(step);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: $ink;
+            color: #ffffff;
+            font-weight: 700;
+        }
+    }
+
+    span {
+        font-size: 15px;
+        line-height: 1.6;
+        color: $muted;
+    }
+}
+
+.work-tips {
+    padding: 32px 36px;
+    border-radius: $radius;
+    background: $paper-deep;
+
+    @include media-breakpoint-down(xs) {
+        padding: 24px 20px;
+    }
+
+    h2 {
+        font-size: 32px;
+    }
+
+    ul {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        font-size: 16px;
+        line-height: 1.65;
+    }
+
+    li {
+        display: flex;
+        gap: 14px;
+    }
+
+    .icon {
+        margin-top: 2px;
+        color: $ink;
+    }
+}
+
+.work-forms p,
+.work-deco p {
+    margin: 0;
+}
+
+.work-deco {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 36px;
+
+    img {
+        flex: 0 1 320px;
+        width: 320px;
+        aspect-ratio: 1 / 1;
+        object-fit: cover;
+        border-radius: 0 14px 0 14px;
+
+        @include media-breakpoint-down(xs) {
+            flex-basis: 100%;
+            aspect-ratio: 4 / 3;
+        }
+    }
+
+    div {
+        flex: 1 1 300px;
+    }
+}
+
+.work-signature {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    padding-top: 32px;
+    border-top: 1px solid $line;
+
+    span {
+        font-family: $font-title;
+        font-size: 30px;
+        color: $ink;
+    }
+}
+
+/***************************** ATELIER (/shop) *****************************/
+.shop-layout {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: 32px;
+
+    .shop-paper {
+        flex: 999 1 560px;
+        min-width: 0;
+    }
+
+    .visit-card {
+        flex: 1 1 320px;
+    }
+}
+
+.shop-quote {
+    position: relative;
+    margin: 0 0 28px;
+    padding-left: 28px;
+    font-size: 19px;
+    line-height: 1.75;
+
+    @include media-breakpoint-down(xs) {
+        padding-left: 18px;
+        font-size: 17px;
+    }
+
+    &::before {
+        content: "“";
+        position: absolute;
+        left: -6px;
+        top: -18px;
+        font-family: $font-title;
+        font-size: 72px;
+        line-height: 1;
+        color: #d9cfc2;
+    }
+
+    footer {
+        font-size: 14px;
+        color: $muted;
+    }
+}
+
+.shop-photos {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+    margin-top: 28px;
+
+    @include media-breakpoint-down(xs) {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    img {
+        width: 100%;
+        aspect-ratio: 4 / 3;
+        object-fit: cover;
+        border-radius: 12px;
+    }
+}
+
+/************************** MENTIONS LÉGALES **************************/
+.legal-paper h2 {
+    margin-top: 36px;
+    font-size: 28px;
+}

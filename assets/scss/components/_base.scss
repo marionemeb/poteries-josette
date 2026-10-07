@@ -1,0 +1,102 @@
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background-color: $paper;
+    color: $text;
+    font-family: $font-text;
+    -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4 {
+    font-family: $font-title;
+    font-weight: 400;
+}
+
+img {
+    max-width: 100%;
+}
+
+a {
+    color: $ink;
+    text-decoration: underline;
+    text-decoration-color: rgba(34, 36, 36, 0.35);
+    text-underline-offset: 3px;
+    transition: color .2s, text-decoration-color .2s;
+
+    &:hover {
+        color: $ink-soft;
+        text-decoration-color: currentColor;
+    }
+}
+
+:focus-visible {
+    outline: 2px solid $ink;
+    outline-offset: 3px;
+}
+
+// Keyboard users can jump straight past the menu.
+.skip-link {
+    position: absolute;
+    top: -100px;
+    left: 16px;
+    z-index: 2000;
+    padding: 10px 16px;
+    border-radius: $radius-sm;
+    background: $card;
+    color: $ink;
+    box-shadow: $shadow;
+
+    &:focus {
+        top: 12px;
+    }
+}
+
+/********************** BACK TO TOP *************************************/
+.back-to-top {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    right: 24px;
+    bottom: 24px;
+    z-index: 1000;
+    width: 48px;
+    height: 48px;
+    border: none;
+    border-radius: 50%;
+    background: rgba(34, 36, 36, 0.88);
+    color: #ffffff;
+    font-size: 18px;
+    cursor: pointer;
+    box-shadow: $shadow;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(12px);
+    transition: opacity .25s, transform .25s, visibility .25s, background-color .2s;
+
+    &:hover {
+        background: $ink-soft;
+    }
+
+    &.visible {
+        opacity: 1;
+        visibility: visible;
+        transform: none;
+    }
+
+    @include media-breakpoint-down(xs) {
+        right: 16px;
+        bottom: 16px;
+        width: 42px;
+        height: 42px;
+        font-size: 16px;
+    }
+}
+
+body.menu-open,
+body.popup-open,
+body.lightbox-open {
+    overflow: hidden;
+}

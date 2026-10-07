@@ -19,8 +19,8 @@ class EventsControllerTest extends DatabaseWebTestCase
             ->setTitle('Marché de potiers de Oingt')
             ->setDescription('Exposition annuelle des artisans du village.')
             ->setLocation('Oingt')
-            ->setDateStart(new \DateTime('2026-10-01'))
-            ->setDateEnd(new \DateTime('2026-10-03'))
+            ->setDateStart(new \DateTime('+1 week'))
+            ->setDateEnd(new \DateTime('+1 week +2 days'))
             ->setUpdatedAt(new \DateTime());
         $this->persist($event);
 
@@ -78,5 +78,30 @@ class EventsControllerTest extends DatabaseWebTestCase
 
         $this->assertResponseIsSuccessful();
         $this->assertGreaterThan(0, $crawler->filter('a[href="/events"]')->count());
+    }
+
+    public function testHomeShowsTheNextUpcomingEvent(): void
+    {
+        $later = (new Event())
+            ->setTitle('Portes ouvertes')
+            ->setDescription('Démonstrations.')
+            ->setLocation('Oingt')
+            ->setDateStart(new \DateTime('+3 weeks'))
+            ->setDateEnd(new \DateTime('+3 weeks'))
+            ->setUpdatedAt(new \DateTime());
+        $sooner = (new Event())
+            ->setTitle('Marché de Noël')
+            ->setDescription('Exposition.')
+            ->setLocation('Oingt')
+            ->setDateStart(new \DateTime('+1 week'))
+            ->setDateEnd(new \DateTime('+1 week +1 day'))
+            ->setUpdatedAt(new \DateTime());
+        $this->persist($later);
+        $this->persist($sooner);
+
+        $this->client->request('GET', '/');
+
+        $this->assertResponseIsSuccessful();
+        $this->assertSelectorTextContains('.home-event-title', 'Marché de Noël');
     }
 }

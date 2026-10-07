@@ -6,14 +6,21 @@ export default class Recipes extends React.Component {
         super(props);
         this.state = {
             isHidden: this.props.isHidden,
-            imageBroken: false,
-            name: this.props.name,
-            description: this.props.description,
-            ingredient: this.props.ingredient,
-            imageName: this.props.imageName
+            imageBroken: false
         };
+        this.openButton = React.createRef();
+        this.closeButton = React.createRef();
         this.handleClick = this.handleClick.bind(this);
         this.handleKeyDown = this.handleKeyDown.bind(this);
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+        // Keyboard focus follows the pop-up: into it on open, back on close.
+        if (prevState.isHidden && !this.state.isHidden && this.closeButton.current) {
+            this.closeButton.current.focus();
+        } else if (!prevState.isHidden && this.state.isHidden && this.openButton.current) {
+            this.openButton.current.focus();
+        }
     }
 
     componentWillUnmount() {
@@ -39,38 +46,52 @@ export default class Recipes extends React.Component {
     }
 
     render() {
+        const {name, description, ingredient, imageName, category, pdfUrl} = this.props;
+
         return (
-            <div>
-                <i type="button"
-                   className="fas fa-eye"
-                   onClick={this.handleClick}
-                ></i>
-                {/* Rendered at the end of <body>: inside the recipe card (CSS columns),
+            <React.Fragment>
+                <button type="button" className="btn-pill" ref={this.openButton} onClick={this.handleClick}>
+                    Voir la recette
+                </button>
+                {/* Rendered at the end of <body>: inside the recipe card,
                     position: fixed would be confined to the card instead of the screen. */}
                 {!this.state.isHidden && ReactDOM.createPortal(
                     <div className="recipes-visibility" onClick={this.handleClick}>
                         {/* Clicks inside the card must not reach the backdrop, which closes it. */}
-                        <div className="popup recipe-card" onClick={e => e.stopPropagation()}>
-                            <button type="button" className="close" aria-label="Fermer" onClick={this.handleClick}>
-                                &times;
+                        <div className="recipe-card" role="dialog" aria-modal="true" aria-label={name}
+                             onClick={e => e.stopPropagation()}>
+                            <button type="button" className="recipe-card-close" aria-label="Fermer"
+                                    ref={this.closeButton} onClick={this.handleClick}>
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                     strokeWidth="2" strokeLinecap="round" aria-hidden="true">
+                                    <path d="M6 6l12 12M18 6L6 18"/>
+                                </svg>
                             </button>
-                            {this.state.imageName && !this.state.imageBroken &&
-                                <aside>
-                                    <img src={'/uploads/images/products/' + this.state.imageName}
-                                         alt={this.state.name}
-                                         onError={() => this.setState({imageBroken: true})}/>
-                                </aside>
+                            {imageName && !this.state.imageBroken &&
+                                <img className="recipe-card-photo" src={'/uploads/images/products/' + imageName}
+                                     alt="" onError={() => this.setState({imageBroken: true})}/>
                             }
-                            <article>
-                                <h2>{this.state.name}</h2>
-                                <p>{this.state.description}</p>
-                                <p className="ingredients"><span>Ingrédients :&nbsp;</span>{this.state.ingredient}</p>
+                            <article className="recipe-card-body">
+                                {category && <span className="tile-card-label">{category}</span>}
+                                <h2>{name}</h2>
+                                {ingredient &&
+                                    <div className="recipe-card-ingredients">
+                                        <strong>Ingrédients</strong>
+                                        <p>{ingredient}</p>
+                                    </div>
+                                }
+                                {description && <p className="recipe-card-steps">{description}</p>}
+                                {pdfUrl &&
+                                    <a className="btn-pill btn-pill-ghost" href={pdfUrl} target="_blank" rel="noopener">
+                                        Imprimer la recette
+                                    </a>
+                                }
                             </article>
                         </div>
                     </div>,
                     document.body
                 )}
-            </div>
+            </React.Fragment>
         );
     }
 }

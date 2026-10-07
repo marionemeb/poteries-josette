@@ -1,6 +1,6 @@
 # Projet poteries-josette
 
-Dernière mise à jour le 24/09/2026.
+Dernière mise à jour le 07/10/2026.
 
 ## Hébergement / production
 
@@ -90,13 +90,13 @@ Ce skill (`.claude/skills/poteries-josette/`) est versionné avec le repo — co
 ## État des lieux / TODO
 
 - [x] Ajouter Instagram — fait le 19/09/2026 : simple lien (`templates/_footer.html.twig`) vers https://www.instagram.com/les_poteries_de_josette/, à côté du lien Facebook existant, icône Font Awesome `fa-instagram`. Pas d'affichage des posts intégré (option plus lourde, écartée).
-- [ ] Reprendre l'UI/UX (voir `assets/design-poteries-josette.md` pour l'état actuel du design avant toute refonte)
+- [x] Reprendre l'UI/UX — **refonte complète le 07/10/2026** (branche `design-refresh`), d'après une maquette Claude Design validée par l'utilisatrice (https://claude.ai/artifact/VzDL94r2gjoGM226dfcSvm) : en-tête fixe, accueil enrichi (présentation, tuiles, prochain évènement, venir à l'atelier), bandeau photo + contenu sur fond crème pour les pages intérieures, visionneuse photo, fiche recette en « bottom sheet » sur mobile, dates d'évènements en français, un seul fichier CSS (Bootstrap n'est plus chargé 6 fois), icônes SVG à la place du kit Font Awesome. Détail dans `assets/design-poteries-josette.md`. Au passage, `EventsControllerTest::testPageListsSeededEvent` utilisait des dates figées (octobre 2026) devenues passées : remplacées par des dates relatives.
 - [x] Vérifier la responsivité du site sur différents supports (PC, tablette, mobile) — fait le 23/09/2026 (Playwright, 375/768/1024px, toutes les pages publiques) : menu mobile refait, filtres en pastilles, fenêtre recette, débordements corrigés — détail dans `assets/design-poteries-josette.md`.
 - [x] Ajouter un bouton "remonter en haut" sur les pages — fait le 18/09/2026 (`templates/base.html.twig`, `assets/scss/app.scss`, `assets/js/app.js`), bouton circulaire fixe en bas à droite, apparaît après 400px de scroll. **Confirmé visuellement par l'utilisateur le 19/09/2026** (test en local avec données factices) : couleur gardée en gris foncé/noir (une proposition en orange accent a été essayée puis refusée), tooltip natif du navigateur retiré (`title` enlevé, `aria-label` conservé pour l'accessibilité).
 - [~] Reprendre les images de mauvaise qualité — audit des images fixes (`public/img/`) fait le 23/09/2026. **Fait** : 4 fonds trop lourds réenregistrés en JPEG qualité 82 sans perte visible (`macro`, `coquelicots-bouquet`, `poterie2`, `coeur` : 3,5 Mo → 1,1 Mo au total, PSNR ≥ 37 dB, vérifié à 100 %) ; `oingt.jpg` (ancien fond de l'Atelier, plus utilisé) supprimé. **À demander à Josette** (on ne peut pas rendre net une image trop petite en l'agrandissant, il faut de meilleures sources) :
   - `poterie.jpg` (photo des étagères dans « Argile et émaux », 720×960, très compressée — qualité JPEG ~50) : a-t-elle l'original, ou peut-elle la reprendre ?
   - `cook.jpg` (fond « Recettes ») et `hands.jpg` (fond « Argile et émaux »), 1280 px seulement : d'où viennent-elles, existe-t-il une version plus grande (≥ 1920 px) ?
-  - `olive-tree-962908_640.jpg` (fond des pages connexion/mot de passe, 640 px, très flou en plein écran) : vient de Pixabay (photo n° 962908) — la version grande taille y est téléchargeable gratuitement, pas besoin de Josette pour celle-ci.
+  - `olive-tree-962908_640.jpg` (**plus utilisée depuis la refonte du 07/10/2026**, les pages de connexion utilisent `macro.jpg`) (ancien fond des pages connexion/mot de passe, 640 px, très flou en plein écran) : vient de Pixabay (photo n° 962908) — la version grande taille y est téléchargeable gratuitement, pas besoin de Josette pour celle-ci.
   - Vue aérienne d'Oingt (`oingt-aerien.jpg`, 1024 px, un peu molle en plein écran) : même question que le crédit ci-dessous — la source d'origine a sûrement une version plus grande.
   - **Photos des poteries/recettes/événements** ajoutées depuis l'admin (`public/uploads/images/products/`, uniquement sur le serveur OVH, gitignoré) : pas encore auditées — récupérer le dossier par FTP pour les analyser.
 - [ ] **🔐 Faire changer le mot de passe de la boîte mail de Josette (compte SMTP Orange/Wanadoo)** — découvert le 23/09/2026 : il figurait en clair (en commentaire) dans `config/packages/swiftmailer.yaml`, versionné depuis 2020. Fichier supprimé le 23/09/2026, mais le mot de passe **reste lisible dans l'historique Git** (et sur GitHub, surtout si le dépôt est public). Ne jamais le recopier ailleurs.

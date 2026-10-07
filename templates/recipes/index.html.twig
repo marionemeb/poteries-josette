@@ -1,41 +1,47 @@
 {% extends 'base.html.twig' %}
+{% import '_icons.html.twig' as icon %}
 
 {% block title %}Mes recettes{% endblock %}
 
 {% block body %}
-    <div class="container-fluid recipes">
-        <div class="container">
-            <div class="articles-title">Les recettes de Josette</div>
-            <div class="container-recipes">
-                <div class="wrap">
-                    {% include '_category_filter.html.twig' %}
-                </div>
-                <main class="card-columns">
-                    {% for recipe in recipes %}
-                        <div class="container-recipe">
-                            <div class="card card-block">
-                                <div class="card-title">
-                                    {# Pop-up #}
-                                    <div class="react"
-                                         data-name="{{ recipe.name }}"
-                                         data-description="{{ recipe.description }}"
-                                         data-ingredient="{{ recipe.ingredient }}"
-                                         data-image-name="{{ recipe.imageName }}"
-                                    ></div>
-                                    <div class="print">
-                                        <a href="{{ path('pdf', { 'id': recipe.id }) }}'"><i class="fas fa-print"></i></a>
-                                    </div>
-                                </div>
-                                <img src="{{ ('/uploads/images/products/'~recipe.imageName) }}"
-                                     alt="{{ recipe.imageName }}">
-                                <h1 class="card-title mt-3 mb-3">{{ recipe.name }}</h1>
+    <section class="page-hero page-hero--recipes">
+        <h1 class="page-title">Les recettes de Josette</h1>
+        <p class="page-lead">Des recettes gourmandes, pensées pour être cuites et servies dans ses plats.</p>
+    </section>
+
+    <main class="page-content" id="contenu">
+        {% include '_category_filter.html.twig' %}
+
+        {% if recipes is empty %}
+            <p class="empty-state">Aucune recette dans cette catégorie pour le moment.</p>
+        {% else %}
+            <section class="card-grid">
+                {% for recipe in recipes %}
+                    <article class="tile-card recipe-tile">
+                        {% if recipe.imageName %}
+                            <img class="recipe-tile-photo" src="{{ '/uploads/images/products/' ~ recipe.imageName }}" alt="" loading="lazy" onerror="this.remove()">
+                        {% endif %}
+                        <div class="recipe-tile-body">
+                            {% if recipe.category %}
+                                <span class="tile-card-label">{{ recipe.category.name }}</span>
+                            {% endif %}
+                            <h2 class="tile-card-title">{{ recipe.name }}</h2>
+                            <div class="recipe-tile-actions">
+                                {# "Voir la recette" button + pop-up (assets/js/components/Recipes.jsx) #}
+                                <div class="react"
+                                     data-name="{{ recipe.name }}"
+                                     data-description="{{ recipe.description }}"
+                                     data-ingredient="{{ recipe.ingredient }}"
+                                     data-image-name="{{ recipe.imageName }}"
+                                     data-category="{{ recipe.category ? recipe.category.name }}"
+                                     data-pdf-url="{{ path('pdf', {'id': recipe.id}) }}"
+                                ></div>
+                                <a class="btn-pill btn-pill-ghost" href="{{ path('pdf', {'id': recipe.id}) }}" target="_blank" rel="noopener">{{ icon.svg('print', 16) }}Imprimer</a>
                             </div>
                         </div>
-                    {% endfor %}
-                </main>
-
-            </div>
-        </div>
-    </div>
-
+                    </article>
+                {% endfor %}
+            </section>
+        {% endif %}
+    </main>
 {% endblock %}

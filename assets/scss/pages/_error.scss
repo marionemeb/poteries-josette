@@ -1,0 +1,24 @@
+/********************** ERROR PAGES (404) *************************************/
+.error-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    min-height: 100svh;
+    padding-bottom: 90px;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.35)), url("/img/macro.jpg");
+}
+
+.error-page-actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 16px;
+    margin-top: 36px;
+
+    @include media-breakpoint-down(xs) {
+        flex-direction: column;
+        align-self: stretch;
+    }
+}
