@@ -19,8 +19,8 @@ class EventsControllerTest extends DatabaseWebTestCase
             ->setTitle('Marché de potiers de Oingt')
             ->setDescription('Exposition annuelle des artisans du village.')
             ->setLocation('Oingt')
-            ->setDateStart(new \DateTime('2026-10-01'))
-            ->setDateEnd(new \DateTime('2026-10-03'))
+            ->setDateStart(new \DateTime('+1 week'))
+            ->setDateEnd(new \DateTime('+1 week +2 days'))
             ->setUpdatedAt(new \DateTime());
         $this->persist($event);
 
