@@ -1,11 +1,83 @@
 {% extends 'base.html.twig' %}
+{% import '_icons.html.twig' as icon %}
+{% import 'events/_dates.html.twig' as dates %}
 
-{% block title %}Bienvenue{% endblock %}
+{% block title %}Les Poteries de Josette — poteries artisanales à Oingt{% endblock %}
 
 {% block body %}
-    <div class="container-fluid container-home">
-        <div class="div-h1 ml12">
+    <section class="home-hero">
+        <div class="home-hero-content">
+            <span class="home-hero-kicker">Oingt · Beaujolais</span>
             <h1 class="h1-home">Les Poteries de Josette</h1>
+            <p class="home-hero-lead">Poteries utilitaires et décoratives en terre vernissée, façonnées dans mon atelier d’Oingt.</p>
+            <div class="home-hero-actions">
+                <a class="btn-all btn-light-solid" href="{{ path('articles') }}">Voir les poteries</a>
+                <a class="btn-all btn-light-outline" href="{{ path('shop') }}">Visiter l’atelier</a>
+            </div>
         </div>
-    </div>
+        <a class="home-hero-scroll" href="#bienvenue" aria-label="Défiler vers le contenu">{{ icon.svg('chevron-down', 28) }}</a>
+    </section>
+
+    <section class="home-intro" id="bienvenue">
+        <img class="home-intro-photo" src="/img/contact.jpg" alt="Josette dans son atelier, entourée de ses poteries" loading="lazy">
+        <div class="home-intro-text">
+            <span class="kicker">L’atelier</span>
+            <h2>Des poteries « rondes et chaleureuses »</h2>
+            <p>Elles sont destinées à décorer vos tables et à présenter toutes vos recettes gourmandes pour le plaisir des yeux et du palais. Inspirées de formes traditionnelles — tians, pichets, marmitons, huiliers, plats divers — elles sont utiles toute l’année.</p>
+            <ul class="home-facts">
+                <li>{{ icon.svg('pot', 24) }}<strong>Terre vernissée</strong><span>Émaux maison</span></li>
+                <li>{{ icon.svg('oven', 24) }}<strong>Va au four</strong><span>Sans choc thermique</span></li>
+                <li>{{ icon.svg('drop', 24) }}<strong>Lave-vaisselle</strong><span>Toutes les pièces</span></li>
+            </ul>
+            <a class="home-intro-link" href="{{ path('work') }}">Découvrir mon travail de l’argile →</a>
+        </div>
+    </section>
+
+    <section class="home-universe">
+        <div class="home-universe-inner">
+            <div class="home-section-head">
+                <span class="kicker">À découvrir</span>
+                <h2>L’univers de Josette</h2>
+            </div>
+            <div class="home-tiles">
+                <a class="home-tile home-tile--articles" href="{{ path('articles') }}">
+                    <span class="home-tile-title">Mes poteries</span>
+                    <span class="home-tile-text">Plats, coquelicots, pièces décoratives →</span>
+                </a>
+                <a class="home-tile home-tile--work" href="{{ path('work') }}">
+                    <span class="home-tile-title">Argile et émaux</span>
+                    <span class="home-tile-text">Couleurs, technique et conseils →</span>
+                </a>
+                <a class="home-tile home-tile--shop" href="{{ path('shop') }}">
+                    <span class="home-tile-title">L’atelier à Oingt</span>
+                    <span class="home-tile-text">Un des plus beaux villages de France →</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    {% if next_event %}
+        <a class="home-event" href="{{ path('events') }}">
+            <span class="home-event-inner">
+                <span class="home-event-main">
+                    {{ dates.badge(next_event.dateStart) }}
+                    <span class="home-event-text">
+                        <span class="home-event-kicker">Prochain évènement</span>
+                        <span class="home-event-title">{{ next_event.title }}</span>
+                    </span>
+                </span>
+                <span class="home-event-cta"><span class="home-event-cta-text">Tous les évènements</span>{{ icon.svg('chevron-right', 18) }}</span>
+            </span>
+        </a>
+    {% endif %}
+
+    <section class="home-visit">
+        <div class="home-visit-text">
+            <span class="kicker">Venir me voir</span>
+            <h2>Venir à l’atelier</h2>
+            <p>Mon atelier se situe dans un magnifique petit village beaujolais, Oingt, seul village du Rhône ayant le label des plus beaux villages de France. Je vous invite à venir me voir travailler, à flâner au gré des ruelles aux noms si pittoresques.</p>
+            {% include '_visit.html.twig' %}
+        </div>
+        <img class="home-visit-photo" src="/img/poterie.jpg" alt="Poteries en terre posées sur les marches devant l’atelier" loading="lazy">
+    </section>
 {% endblock %}

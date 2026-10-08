@@ -75,7 +75,7 @@ class RecipesControllerTest extends DatabaseWebTestCase
 
         $this->assertResponseIsSuccessful();
         $this->assertSelectorTextContains('body', 'Soupe sans photo');
-        $this->assertSame(0, $crawler->filter('.container-recipe img')->count());
+        $this->assertSame(0, $crawler->filter('.recipe-tile img')->count());
     }
 
     public function testFilteringByCategoryOnlyShowsMatchingRecipes(): void

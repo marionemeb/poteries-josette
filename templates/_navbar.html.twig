@@ -1,25 +1,37 @@
-<div class="nav-top">
-    <button class="nav-toggle" type="button" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Ouvrir le menu">
-        <span class="nav-toggle-open"><i class="fas fa-bars" aria-hidden="true"></i></span>
-        <span class="nav-toggle-close"><i class="fas fa-times" aria-hidden="true"></i></span>
-    </button>
-    <nav class="navbar navbar-expand-lg bg-transparent rounded">
-        <div class="collapse navbar-collapse justify-content-md-center" id="navbarToggleExternalContent">
-            <ul class="navbar-nav">
-                <li class="nav-item"><a class="nav-link" href="{{ path('home') }}">Accueil</a></li>
-                <li class="nav-item"><a class="nav-link" href="{{ path('articles') }}">Poteries</a></li>
-                <li class="nav-item"><a class="nav-link" href="{{ path('work') }}">Argile et émaux</a></li>
-                <li class="nav-item"><a class="nav-link" href="{{ path('shop') }}">Atelier</a></li>
+{% set current_route = app.request.attributes.get('_route') %}
+{% macro nav_link(route, label, current_route) %}
+    <li><a class="nav-link{{ route == current_route ? ' active' }}" href="{{ path(route) }}"{% if route == current_route %} aria-current="page"{% endif %}>{{ label }}</a></li>
+{% endmacro %}
+{% import _self as nav %}
+{% import '_icons.html.twig' as icon %}
+<a class="skip-link" href="#contenu">Aller au contenu</a>
+<header class="site-header" id="site-header">
+    <div class="site-header-inner">
+        <a class="site-brand" href="{{ path('home') }}">Les Poteries de Josette</a>
+        <button class="nav-toggle" type="button" aria-controls="site-nav" aria-expanded="false" aria-label="Ouvrir le menu">
+            <span class="nav-toggle-bars" aria-hidden="true"></span>
+        </button>
+        <nav class="site-nav" id="site-nav" aria-label="Navigation principale">
+            <ul>
+                {{ nav.nav_link('home', 'Accueil', current_route) }}
+                {{ nav.nav_link('articles', 'Poteries', current_route) }}
+                {{ nav.nav_link('work', 'Argile et émaux', current_route) }}
+                {{ nav.nav_link('shop', 'Atelier', current_route) }}
                 {% if has_upcoming_events() %}
-                    <li class="nav-item"><a class="nav-link" href="{{ path('events') }}">Evènements</a></li>
+                    {{ nav.nav_link('events', 'Évènements', current_route) }}
                 {% endif %}
                 {% if has_recipes() %}
-                    <li class="nav-item"><a class="nav-link" href="{{ path('recipes') }}">Recettes de Josette</a></li>
+                    {{ nav.nav_link('recipes', 'Recettes de Josette', current_route) }}
                 {% endif %}
                 {% if has_blog_articles() %}
-                    <li class="nav-item"><a class="nav-link" href="{{ path('blog') }}">Coups de coeur</a></li>
+                    {{ nav.nav_link('blog', 'Coups de cœur', current_route) }}
                 {% endif %}
             </ul>
-        </div>
-    </nav>
-</div>
+            {# Only in the full-screen mobile menu. #}
+            <div class="site-nav-actions">
+                <a href="tel:+33474711173">{{ icon.svg('phone', 18) }}Appeler</a>
+                <a href="https://www.google.com/maps/search/?api=1&query=Rue+Tyre-Laine+69620+Oingt" target="_blank" rel="noopener noreferrer">{{ icon.svg('pin', 18) }}Itinéraire</a>
+            </div>
+        </nav>
+    </div>
+</header>

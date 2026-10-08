@@ -1,0 +1,49 @@
+/**************************** BLOG (coups de cœur) **********************************/
+.blog-card {
+    gap: 12px;
+    padding: 28px;
+
+    @include media-breakpoint-down(xs) {
+        padding: 22px;
+    }
+
+    .tile-card-title {
+        margin-top: 4px;
+        font-size: 26px;
+    }
+}
+
+.blog-card-type {
+    align-self: flex-start;
+    padding: 6px 12px;
+    border-radius: 999px;
+    background: $paper-deep;
+    color: $ink;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+
+.blog-card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-top: auto;
+    padding-top: 12px;
+    border-top: 1px solid $line;
+    font-size: 14px;
+}
+
+.blog-card-location {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: $muted;
+}
+
+.blog-card-more {
+    font-weight: 600;
+    white-space: nowrap;
+}

@@ -3,20 +3,27 @@
 {% block title %}Mon atelier{% endblock %}
 
 {% block body %}
-    <div class="container-fluid shop">
-        <div class="container">
-            <div class="articles-title">L'atelier de la potière à Oingt</div>
-            <div class="wrapper p-work">
-                <blockquote>« A une trentaine de km de Lyon, perché au-dessus des vignes du Beaujolais, <strong>Oingt</strong> est l’un des joyaux du
-                "Pays des pierres dorées".<br>
-                De son <strong>passé médiéval</strong>, la cité a conservé l’ancienne chapelle du château, la porte fortifiée de Nizy et une
-                tour donjon d’où l’on jouit d’un panorama exceptionnel sur la <strong>vallée d’Azergues</strong>. <br>
-                Au coeur du village, les maisons aux façades jaunes ocre accueillent artistes et <strong>artisans d’art</strong>. »<br><br>
-                <em>Source: Association <a href="http://www.les-plus-beaux-villages-de-france.org">Les Plus beaux villages de France</a></em>
-                </blockquote><br>
-                Mon atelier se situe dans ce village <strong>magnifique</strong>.<br>
-                Je vous invite à venir me voir travailler, à flâner au gré des ruelles aux noms si <strong>pittoresques</strong>.
+    <section class="page-hero page-hero--shop">
+        <h1 class="page-title">L’atelier de la potière à Oingt</h1>
+        <p class="page-lead">Au cœur du « Pays des pierres dorées », perché au-dessus des vignes du Beaujolais.</p>
+    </section>
+
+    <main class="page-content shop-layout" id="contenu">
+        <article class="paper shop-paper">
+            <blockquote class="shop-quote">
+                <p>À une trentaine de km de Lyon, perché au-dessus des vignes du Beaujolais, <strong>Oingt</strong> est l’un des joyaux du « Pays des pierres dorées ». De son <strong>passé médiéval</strong>, la cité a conservé l’ancienne chapelle du château, la porte fortifiée de Nizy et une tour donjon d’où l’on jouit d’un panorama exceptionnel sur la <strong>vallée d’Azergues</strong>. Au cœur du village, les maisons aux façades jaunes ocre accueillent artistes et <strong>artisans d’art</strong>.</p>
+                <footer>Source : association <a href="http://www.les-plus-beaux-villages-de-france.org" target="_blank" rel="noopener noreferrer">Les Plus Beaux Villages de France</a></footer>
+            </blockquote>
+            <p>Mon atelier se situe dans ce village <strong>magnifique</strong>. Je vous invite à venir me voir travailler, à flâner au gré des ruelles aux noms si <strong>pittoresques</strong>.</p>
+            <div class="shop-photos">
+                <img src="/img/poterie.jpg" alt="Poteries sur les marches devant l’atelier" loading="lazy">
+                <img src="/img/contact.jpg" alt="Josette dans son atelier" loading="lazy">
             </div>
-        </div>
-    </div>
+        </article>
+
+        <aside class="visit-card">
+            <h2>Venir à l’atelier</h2>
+            {% include '_visit.html.twig' with {dark: true, call_label: 'Appeler avant de passer'} %}
+        </aside>
+    </main>
 {% endblock %}

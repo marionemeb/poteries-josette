@@ -1,0 +1,196 @@
+/****************************** RECIPES *************************************/
+.recipe-tile-photo {
+    display: block;
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+}
+
+.recipe-tile-body {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    gap: 10px;
+    padding: 20px 22px 22px;
+
+    .tile-card-title {
+        font-size: 24px;
+    }
+}
+
+.recipe-tile-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: auto;
+    padding-top: 8px;
+
+    .btn-pill {
+        min-height: 44px;
+    }
+}
+
+/********************* POP-UP RECIPES ******************************/
+.recipes-visibility {
+    position: fixed;
+    inset: 0;
+    // Above the header and its menu button.
+    z-index: 1070;
+    display: flex;
+    // A long recipe scrolls inside the backdrop instead of being cut off.
+    overflow-y: auto;
+    padding: 5vh 16px;
+    background: rgba(15, 16, 16, 0.75);
+    cursor: default;
+    animation: nav-fade-in .2s ease;
+
+    // Phones: the recipe slides up from the bottom of the screen.
+    @include media-breakpoint-down(xs) {
+        align-items: flex-end;
+        padding: 54px 0 0;
+    }
+}
+
+.recipe-card {
+    position: relative;
+    width: 100%;
+    max-width: 600px;
+    // auto: centered when shorter than the screen, scrolls from the top when longer.
+    margin: auto;
+    overflow: hidden;
+    border-radius: $radius;
+    background: $card;
+    box-shadow: 0 18px 50px rgba(0, 0, 0, 0.4);
+    text-align: left;
+
+    @include media-breakpoint-down(xs) {
+        margin: auto 0 0;
+        border-radius: 20px 20px 0 0;
+        animation: recipe-slide-up .25s ease;
+
+        // Grab handle of the bottom sheet.
+        &::before {
+            content: "";
+            position: absolute;
+            top: 8px;
+            left: 50%;
+            z-index: 1;
+            width: 40px;
+            height: 4px;
+            margin-left: -20px;
+            border-radius: 2px;
+            background: rgba(255, 255, 255, 0.85);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+        }
+    }
+}
+
+.recipe-card-close {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    border: none;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.92);
+    color: $ink;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+    cursor: pointer;
+
+    &:hover {
+        background: $ink;
+        color: #ffffff;
+    }
+}
+
+.recipe-card-photo {
+    display: block;
+    width: 100%;
+    height: 260px;
+    object-fit: cover;
+
+    @include media-breakpoint-down(xs) {
+        height: 220px;
+    }
+}
+
+.recipe-card-body {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    padding: 28px 32px 32px;
+
+    @include media-breakpoint-down(xs) {
+        gap: 16px;
+        padding: 22px 22px 28px;
+    }
+
+    h2 {
+        // Room for the close button when there is no photo.
+        margin: -8px 56px 0 0;
+        font-size: 32px;
+        color: $ink;
+        overflow-wrap: break-word;
+
+        @include media-breakpoint-down(xs) {
+            font-size: 28px;
+        }
+    }
+
+    .btn-pill {
+        align-self: flex-start;
+        min-height: 44px;
+
+        @include media-breakpoint-down(xs) {
+            align-self: stretch;
+            justify-content: center;
+            min-height: 48px;
+            background: $ink;
+            border-color: $ink;
+            color: #ffffff;
+
+            &:hover {
+                background: $ink-soft;
+                color: #ffffff;
+            }
+        }
+    }
+}
+
+.recipe-card-ingredients {
+    padding: 16px 18px;
+    border-radius: 10px;
+    background: $paper;
+
+    strong {
+        display: block;
+        margin-bottom: 6px;
+        font-size: 14px;
+    }
+
+    p {
+        margin: 0;
+        font-size: 15px;
+        line-height: 1.7;
+        white-space: pre-line;
+    }
+}
+
+.recipe-card-steps {
+    margin: 0;
+    font-size: 16px;
+    line-height: 1.8;
+    // Keep the line breaks typed in the back office.
+    white-space: pre-line;
+}
+
+@keyframes recipe-slide-up {
+    from { transform: translateY(40px); opacity: 0; }
+    to { transform: none; opacity: 1; }
+}

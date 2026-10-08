@@ -1,0 +1,116 @@
+/******************************** LIGHTBOX ********************************/
+// Full-screen photo viewer of /articles (assets/js/app.js): the photo
+// uncropped, its title, previous/next, Escape or a click outside to close.
+.image-lightbox {
+    position: fixed;
+    inset: 0;
+    z-index: 1070;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 90px;
+    background: rgba(15, 16, 16, 0.92);
+    animation: nav-fade-in .2s ease;
+
+    &[hidden] {
+        display: none;
+    }
+
+    @include media-breakpoint-down(xs) {
+        padding: 70px 12px 90px;
+    }
+}
+
+.lightbox-figure {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    max-width: 100%;
+    max-height: 100%;
+    margin: 0;
+
+    img {
+        max-width: 100%;
+        max-height: 78vh;
+        object-fit: contain;
+        border-radius: 6px;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+    }
+
+    figcaption {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        color: #ffffff;
+        text-align: center;
+    }
+}
+
+.lightbox-title {
+    font-family: $font-title;
+    font-size: 24px;
+}
+
+.lightbox-counter {
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.lightbox-btn {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 52px;
+    height: 52px;
+    padding: 0;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.12);
+    color: #ffffff;
+    cursor: pointer;
+    transition: background-color .2s;
+
+    &:hover {
+        background: rgba(255, 255, 255, 0.25);
+    }
+
+    &:focus-visible {
+        outline-color: #ffffff;
+    }
+}
+
+.lightbox-close {
+    top: 20px;
+    right: 20px;
+    width: 48px;
+    height: 48px;
+}
+
+.lightbox-prev,
+.lightbox-next {
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.lightbox-prev { left: 20px; }
+.lightbox-next { right: 20px; }
+
+@include media-breakpoint-down(xs) {
+    .lightbox-close {
+        top: 12px;
+        right: 12px;
+    }
+
+    // Arrows move below the photo, within thumb reach.
+    .lightbox-prev,
+    .lightbox-next {
+        top: auto;
+        bottom: 20px;
+        transform: none;
+    }
+
+    .lightbox-prev { left: calc(50% - 64px); }
+    .lightbox-next { right: calc(50% - 64px); }
+}

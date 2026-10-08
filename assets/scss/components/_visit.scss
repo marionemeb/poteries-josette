@@ -1,0 +1,121 @@
+/************************** VISIT (home, shop) ***************************/
+.visit-list {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    font-size: 16px;
+    line-height: 1.6;
+
+    li {
+        display: flex;
+        align-items: flex-start;
+        gap: 14px;
+    }
+
+    .icon {
+        margin-top: 1px;
+    }
+
+    a {
+        color: inherit;
+        overflow-wrap: break-word;
+    }
+}
+
+// "Itinéraire" / "Appeler" labels of the phone contact card (home page).
+.visit-list-action {
+    display: none;
+}
+
+// Home page on phones: the list becomes a contact card, one tappable row
+// per line, and replaces the two big buttons.
+@include media-breakpoint-down(xs) {
+    .home-visit {
+        .visit-list {
+            gap: 0;
+            padding: 6px 18px;
+            border-radius: $radius;
+            background: $card;
+            box-shadow: $shadow-sm;
+
+            li {
+                align-items: center;
+                min-height: 56px;
+                padding: 8px 0;
+
+                & + li {
+                    border-top: 1px solid $line;
+                }
+            }
+
+            .icon {
+                margin-top: 0;
+            }
+
+            a {
+                display: flex;
+                flex: 1;
+                align-items: center;
+                gap: 12px;
+                min-width: 0;
+                text-decoration: none;
+            }
+        }
+
+        .visit-list-action {
+            display: inline;
+            margin-left: auto;
+            font-size: 14px;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        .visit-actions {
+            display: none;
+        }
+    }
+}
+
+.visit-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    margin-top: 26px;
+
+    @include media-breakpoint-down(xs) {
+        flex-direction: column;
+
+        .btn-all {
+            width: 100%;
+        }
+    }
+}
+
+// Dark card next to the text on /shop.
+.visit-card {
+    background: $ink;
+    color: #ffffff;
+    border-radius: $radius;
+    padding: 36px 32px;
+
+    h2 {
+        margin: 0 0 22px;
+        font-size: 32px;
+    }
+
+    .visit-list a {
+        color: #ffffff;
+        text-decoration-color: rgba(255, 255, 255, 0.4);
+    }
+
+    .visit-actions {
+        flex-direction: column;
+
+        .btn-all {
+            width: 100%;
+        }
+    }
+}

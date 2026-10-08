@@ -11,10 +11,10 @@
     max-width: 520px;
     margin: 0 auto;
     padding: 12px 12px 12px 14px;
-    border-radius: 14px;
-    background: #ffffff;
-    color: #222424;
-    font-family: 'Open Sans', sans-serif;
+    border-radius: $radius;
+    background: $card;
+    color: $ink;
+    font-family: $font-text;
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
     opacity: 0;
     transform: translateY(24px);
@@ -63,7 +63,7 @@
     padding: 0 18px;
     border: none;
     border-radius: 999px;
-    background: #222424;
+    background: $ink;
     color: #ffffff;
     font-family: inherit;
     font-size: 14px;
@@ -77,7 +77,7 @@
     padding: 0;
     border: none;
     background: transparent;
-    color: #6f6a63;
+    color: $muted;
     font-size: 26px;
     line-height: 1;
     cursor: pointer;
