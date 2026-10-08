@@ -1,6 +1,6 @@
 # Projet poteries-josette
 
-Dernière mise à jour le 07/10/2026.
+Dernière mise à jour le 08/10/2026.
 
 ## Hébergement / production
 

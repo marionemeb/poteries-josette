@@ -1,0 +1,84 @@
+/******************** "ADD TO HOME SCREEN" BANNER (assets/js/install.js) ********************/
+.install-banner {
+    position: fixed;
+    left: 12px;
+    right: 12px;
+    bottom: 12px;
+    z-index: 1065;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    max-width: 520px;
+    margin: 0 auto;
+    padding: 12px 12px 12px 14px;
+    border-radius: 14px;
+    background: #ffffff;
+    color: #222424;
+    font-family: 'Open Sans', sans-serif;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity .3s, transform .3s;
+
+    &.visible {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+.install-banner-icon {
+    flex: none;
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+}
+
+.install-banner-text {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+    font-size: 14px;
+    line-height: 1.45;
+
+    strong {
+        font-size: 15px;
+    }
+
+    svg {
+        vertical-align: -3px;
+    }
+}
+
+.install-banner-actions {
+    display: flex;
+    flex: none;
+    align-items: center;
+    gap: 4px;
+}
+
+.install-banner-install {
+    min-height: 44px;
+    padding: 0 18px;
+    border: none;
+    border-radius: 999px;
+    background: #222424;
+    color: #ffffff;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.install-banner-close {
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    border: none;
+    background: transparent;
+    color: #6f6a63;
+    font-size: 26px;
+    line-height: 1;
+    cursor: pointer;
+}

@@ -4,6 +4,7 @@ require('../scss/app.scss');
 // Need jQuery? Install it with "yarn add jquery", then uncomment to require it.
 require('jquery');
 require('bootstrap');
+require('./install');
 
 const navToggle = document.querySelector('.nav-toggle');
 const navMenu = document.getElementById('navbarToggleExternalContent');
