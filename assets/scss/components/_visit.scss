@@ -25,6 +25,60 @@
     }
 }
 
+// "Itinéraire" / "Appeler" labels of the phone contact card (home page).
+.visit-list-action {
+    display: none;
+}
+
+// Home page on phones: the list becomes a contact card, one tappable row
+// per line, and replaces the two big buttons.
+@include media-breakpoint-down(xs) {
+    .home-visit {
+        .visit-list {
+            gap: 0;
+            padding: 6px 18px;
+            border-radius: $radius;
+            background: $card;
+            box-shadow: $shadow-sm;
+
+            li {
+                align-items: center;
+                min-height: 56px;
+                padding: 8px 0;
+
+                & + li {
+                    border-top: 1px solid $line;
+                }
+            }
+
+            .icon {
+                margin-top: 0;
+            }
+
+            a {
+                display: flex;
+                flex: 1;
+                align-items: center;
+                gap: 12px;
+                min-width: 0;
+                text-decoration: none;
+            }
+        }
+
+        .visit-list-action {
+            display: inline;
+            margin-left: auto;
+            font-size: 14px;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        .visit-actions {
+            display: none;
+        }
+    }
+}
+
 .visit-actions {
     display: flex;
     flex-wrap: wrap;

@@ -119,7 +119,8 @@
     }
 }
 
-.nav-toggle {
+.nav-toggle,
+.site-nav-actions {
     display: none;
 }
 
@@ -189,12 +190,15 @@
 
         &.show {
             display: flex;
+            flex-direction: column;
             animation: nav-fade-in .2s ease;
         }
 
         ul {
             flex-direction: column;
             gap: 6px;
+            // Centered in the space left above the call/directions buttons.
+            margin: auto 0;
         }
 
         .nav-link {
@@ -207,6 +211,35 @@
             &::after {
                 left: 4px;
                 right: 4px;
+            }
+        }
+    }
+
+    // "Appeler" / "Itinéraire" at the bottom of the open menu.
+    .site-nav-actions {
+        display: flex;
+        gap: 12px;
+        width: 100%;
+        max-width: 420px;
+        padding-top: 24px;
+
+        a {
+            display: flex;
+            flex: 1;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            min-height: 48px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 14px 0 14px 0;
+            color: #ffffff;
+            font-size: 15px;
+            font-weight: 600;
+            text-decoration: none;
+
+            &:hover {
+                background: rgba(255, 255, 255, 0.08);
+                color: #ffffff;
             }
         }
     }

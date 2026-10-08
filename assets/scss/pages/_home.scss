@@ -355,6 +355,12 @@ $tile-veil: linear-gradient(rgba(0, 0, 0, 0) 40%, rgba(0, 0, 0, 0.7));
 .home-event-inner {
     display: flex;
     flex-wrap: wrap;
+
+    @include media-breakpoint-down(xs) {
+        flex-wrap: nowrap;
+        gap: 12px;
+    }
+
     align-items: center;
     justify-content: space-between;
     gap: 24px;
@@ -408,8 +414,15 @@ $tile-veil: linear-gradient(rgba(0, 0, 0, 0) 40%, rgba(0, 0, 0, 0.7));
     border-radius: 14px 0 14px 0;
     font-weight: 600;
 
+    // Phones: just the arrow, the whole band being the link.
     @include media-breakpoint-down(xs) {
-        display: none;
+        min-height: 0;
+        padding: 0;
+        border: none;
+
+        .home-event-cta-text {
+            display: none;
+        }
     }
 }
 

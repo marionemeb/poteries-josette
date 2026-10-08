@@ -3,6 +3,7 @@
     <li><a class="nav-link{{ route == current_route ? ' active' }}" href="{{ path(route) }}"{% if route == current_route %} aria-current="page"{% endif %}>{{ label }}</a></li>
 {% endmacro %}
 {% import _self as nav %}
+{% import '_icons.html.twig' as icon %}
 <a class="skip-link" href="#contenu">Aller au contenu</a>
 <header class="site-header" id="site-header">
     <div class="site-header-inner">
@@ -26,6 +27,11 @@
                     {{ nav.nav_link('blog', 'Coups de cœur', current_route) }}
                 {% endif %}
             </ul>
+            {# Only in the full-screen mobile menu. #}
+            <div class="site-nav-actions">
+                <a href="tel:+33474711173">{{ icon.svg('phone', 18) }}Appeler</a>
+                <a href="https://www.google.com/maps/search/?api=1&query=Rue+Tyre-Laine+69620+Oingt" target="_blank" rel="noopener noreferrer">{{ icon.svg('pin', 18) }}Itinéraire</a>
+            </div>
         </nav>
     </div>
 </header>
