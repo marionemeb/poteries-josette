@@ -48,7 +48,8 @@ Vérifié le 07/10/2026 (Playwright, 1440 / 1024 / 390px, toutes les pages publi
 - Courgette pour les titres, Open Sans pour le corps ; pas d'orange.
 - Nouvelle page de section : `.page-hero` + modificateur avec sa photo, `.page-title`, `.page-lead`, puis `<main class="page-content" id="contenu">`.
 - Couleurs et tailles : passer par `_variables.scss`, pas de valeurs en dur.
-- Le favicon / icônes d'écran d'accueil (photo d'un plat aux ammonites sur émail rouge, 23/09/2026) et `site.webmanifest` n'ont pas changé.
+- Le favicon / icônes d'écran d'accueil (photo d'un plat aux ammonites sur émail rouge, 23/09/2026) n'ont pas changé.
+- **Installation sur mobile** (PR #35, fusionnée le 08/10/2026) : service worker `public/sw.js` (ne met en cache que la page hors connexion `public/offline.html`), manifeste avec `id` et icône `maskable` séparée, bandeau « ajouter à l'écran d'accueil » (`assets/js/install.js`, styles `components/_install.scss` depuis la fusion avec la refonte) : bouton « Installer » sur Android, explication Partager → « Sur l'écran d'accueil » sur iPhone, écrans tactiles ≤ 1024px seulement, masqué 30 jours après fermeture.
 
 ## Historique avant la refonte (septembre 2026)
 

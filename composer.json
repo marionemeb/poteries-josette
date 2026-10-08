@@ -37,7 +37,7 @@
         "symfonycasts/reset-password-bundle": "^1.1",
         "twig/extra-bundle": "^3.0",
         "twig/twig": "^3.0",
-        "vich/uploader-bundle": "^2"
+        "vich/uploader-bundle": "^3"
     },
     "require-dev": {
         "phpstan/phpstan": "^2.2",

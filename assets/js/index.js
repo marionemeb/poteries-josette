@@ -1,10 +1,10 @@
 //REACT
 import React from "react";
-import ReactDOM from "react-dom";
+import { createRoot } from "react-dom/client";
 import Recipes from "./components/Recipes";
 
 document.querySelectorAll("div.react").forEach(function (div) {
-    ReactDOM.render(<Recipes
+    createRoot(div).render(<Recipes
         isHidden={true}
         name={div.dataset.name}
         description={div.dataset.description}
@@ -12,5 +12,5 @@ document.querySelectorAll("div.react").forEach(function (div) {
         imageName={div.dataset.imageName}
         category={div.dataset.category}
         pdfUrl={div.dataset.pdfUrl}
-    />, div);
+    />);
 });

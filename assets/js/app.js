@@ -4,6 +4,7 @@ require('../scss/app.scss');
 // Need jQuery? Install it with "yarn add jquery", then uncomment to require it.
 require('jquery');
 require('bootstrap');
+require('./install');
 
 /* Header: transparent over the photo, dark bar once the page scrolls. */
 const header = document.getElementById('site-header');
