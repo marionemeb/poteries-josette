@@ -16,7 +16,9 @@ use Symfony\Component\Mime\Address;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use SymfonyCasts\Bundle\ResetPassword\Controller\ResetPasswordControllerTrait;
+use SymfonyCasts\Bundle\ResetPassword\Exception\ExpiredResetPasswordTokenException;
 use SymfonyCasts\Bundle\ResetPassword\Exception\ResetPasswordExceptionInterface;
+use SymfonyCasts\Bundle\ResetPassword\Exception\TooManyPasswordRequestsException;
 use SymfonyCasts\Bundle\ResetPassword\ResetPasswordHelperInterface;
 
 #[Route('/reset-password')]
@@ -85,16 +87,15 @@ class ResetPasswordController extends AbstractController
 
         $token = $this->getTokenFromSession();
         if (null === $token) {
-            throw $this->createNotFoundException('No reset password token found in the URL or in the session.');
+            throw $this->createNotFoundException('Aucun lien de réinitialisation en cours.');
         }
 
         try {
             $user = $this->resetPasswordHelper->validateTokenAndFetchUser($token);
         } catch (ResetPasswordExceptionInterface $e) {
-            $this->addFlash('reset_password_error', sprintf(
-                'There was a problem validating your reset request - %s',
-                $e->getReason()
-            ));
+            $this->addFlash('reset_password_error', $e instanceof ExpiredResetPasswordTokenException
+                ? 'Ce lien a expiré. Demandez-en un nouveau ci-dessous.'
+                : 'Ce lien n’est pas valable ou a déjà servi. Demandez-en un nouveau ci-dessous.');
 
             return $this->redirectToRoute('app_forgot_password_request');
         }
@@ -141,10 +142,9 @@ class ResetPasswordController extends AbstractController
         try {
             $resetToken = $this->resetPasswordHelper->generateResetToken($user);
         } catch (ResetPasswordExceptionInterface $e) {
-            $this->addFlash('reset_password_error', sprintf(
-                'There was a problem handling your password reset request - %s',
-                $e->getReason()
-            ));
+            $this->addFlash('reset_password_error', $e instanceof TooManyPasswordRequestsException
+                ? 'Un e-mail vient déjà de vous être envoyé. Vérifiez votre boîte de réception (et les indésirables) avant d’en redemander un.'
+                : 'La demande n’a pas pu aboutir. Réessayez dans quelques minutes.');
 
             return $this->redirectToRoute('app_forgot_password_request');
         }
@@ -152,7 +152,7 @@ class ResetPasswordController extends AbstractController
         $email = (new TemplatedEmail())
             ->from(new Address('josette.bourgogne@wanadoo.fr', 'Josette'))
             ->to($user->getEmail())
-            ->subject('Your password reset request')
+            ->subject('Réinitialisation de votre mot de passe')
             ->htmlTemplate('reset_password/email.html.twig')
             ->context([
                 'resetToken' => $resetToken,

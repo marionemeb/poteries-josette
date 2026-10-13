@@ -16,7 +16,7 @@ class ResetPasswordRequestFormType extends AbstractType
             ->add('email', EmailType::class, [
                 'constraints' => [
                     new NotBlank([
-                        'message' => 'Entrer votre email',
+                        'message' => 'Entrez votre adresse e-mail.',
                     ]),
                 ],
             ])
