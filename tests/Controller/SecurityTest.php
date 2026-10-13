@@ -198,6 +198,9 @@ class SecurityTest extends DatabaseWebTestCase
 
         $this->assertResponseRedirects('/reset-password/check-email');
         $this->assertEmailCount(1);
+        $email = $this->getMailerMessage();
+        $this->assertEmailHeaderSame($email, 'Subject', 'Réinitialisation de votre mot de passe');
+        $this->assertEmailHtmlBodyContains($email, 'réinitialiser mon mot de passe');
     }
 
     public function testResetPasswordThenLoginWithNewPassword(): void
@@ -245,6 +248,20 @@ class SecurityTest extends DatabaseWebTestCase
         $this->assertEmailCount(0);
     }
 
+    public function testSecondRequestTooSoonIsExplainedInFrench(): void
+    {
+        foreach ([1, 2] as $attempt) {
+            $crawler = $this->client->request('GET', '/reset-password');
+            $this->client->submit($crawler->filter('form')->form([
+                'reset_password_request_form[email]' => self::EMAIL,
+            ]));
+        }
+
+        $this->assertResponseRedirects('/reset-password');
+        $this->client->followRedirect();
+        $this->assertSelectorTextContains('.alert-danger', 'Un e-mail vient déjà de vous être envoyé.');
+    }
+
     public function testInvalidResetLinkSendsBackToTheRequestForm(): void
     {
         $this->client->request('GET', '/reset-password/reset/lien-invente');
@@ -252,7 +269,7 @@ class SecurityTest extends DatabaseWebTestCase
 
         $this->assertResponseRedirects('/reset-password');
         $this->client->followRedirect();
-        $this->assertSelectorExists('.alert-danger');
+        $this->assertSelectorTextContains('.alert-danger', 'Ce lien n’est pas valable ou a déjà servi.');
     }
 
     public function testResetLinkWorksOnlyOnce(): void
@@ -288,6 +305,7 @@ class SecurityTest extends DatabaseWebTestCase
         // The form comes back instead of saving: the old password still works.
         $this->assertResponseIsSuccessful();
         $this->assertSelectorExists('input[name="change_password_form[plainPassword][first]"]');
+        $this->assertSelectorTextContains('body', 'Les deux mots de passe ne sont pas identiques.');
         $this->login(self::EMAIL, self::PASSWORD);
         $this->assertResponseRedirects('/');
     }

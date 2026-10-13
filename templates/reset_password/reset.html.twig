@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Réinitialise ton mot de passe{% endblock %}
+{% block title %}Mot de passe oublié{% endblock %}
 {% block robots %}<meta name="robots" content="noindex">{% endblock %}
 
 {% block body %}
@@ -11,13 +11,13 @@
         <div class="wrap-login100" style="width: 700px">
             <div class="login100-form">
                     <span class="login100-form-title p-b-34 p-t-27">
-						<h2>Réinitialises ton mot de passe</h2>
+						<h2>Nouveau mot de passe</h2>
 					</span>
                 <div class="wrap-input100 mt-5" data-validate="Enter username">
                     {{ form_row(resetForm.plainPassword, {'attr':{'class': 'input100', 'placeholder': 'Mot de passe'}}) }}
                 </div>
                 <div class="container-login100-form-btn">
-                    <button class="login100-form-btn">Réinitialise ton mot de passe</button>
+                    <button class="login100-form-btn">Enregistrer</button>
                 </div>
             </div>
         </div>

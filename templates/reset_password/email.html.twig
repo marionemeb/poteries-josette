@@ -1,11 +1,12 @@
-<h1>Salut!</h1>
+<p>Bonjour,</p>
 
 <p>
-    Afin de réinitialiser ton mot de passe, clique sur le lien suivant :
-    <a href="{{ url('app_reset_password', {token: resetToken.token}) }}">here</a>
-    Ce lien expirera dans {{ tokenLifetime|date('g') }} heure(s)..
+    Pour choisir un nouveau mot de passe pour l’administration du site, cliquez sur ce lien :
+    <a href="{{ url('app_reset_password', {token: resetToken.token}) }}">réinitialiser mon mot de passe</a>.
 </p>
 
-<p>
-    Bonne journée!
-</p>
+<p>Ce lien expirera dans {{ tokenLifetime|date('g') }} heure(s) et ne peut servir qu’une fois.</p>
+
+<p>Si vous n’avez rien demandé, ignorez simplement cet e-mail : votre mot de passe ne change pas.</p>
+
+<p>Les Poteries de Josette</p>

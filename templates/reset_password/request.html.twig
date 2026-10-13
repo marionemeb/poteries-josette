@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Réinitialise ton mot de passe{% endblock %}
+{% block title %}Mot de passe oublié{% endblock %}
 {% block robots %}<meta name="robots" content="noindex">{% endblock %}
 
 {% block body %}
@@ -14,7 +14,7 @@
             <div class="wrap-login100">
                 <div class="login100-form">
                     <span class="login100-form-title">
-						<h4>Réinitialises ton mot de passe</h4>
+						<h4>Mot de passe oublié</h4>
 					</span>
                     <div class="wrap-input100 validate-input" data-validate="Enter username">
                         {{ form_row(requestForm.email, {'attr':{'class': 'input100', 'placeholder': 'exemple@email.com'}}) }}

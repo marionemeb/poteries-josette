@@ -10,7 +10,7 @@
 
     {% if app.user %}
         <div class="mb-3">
-            Tu es connecté en tant que : {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Logout</a>
+            Session ouverte : {{ app.user.userIdentifier }}. <a href="{{ path('app_logout') }}">Se déconnecter</a>
         </div>
     {% endif %}
     <form method="post">
@@ -46,7 +46,7 @@
 
                         <div class="text-center p-t-90 mt-3">
                             <a class="txt1" href="{{ path('app_forgot_password_request') }} ">
-                                Mot de passe oublié?
+                                Mot de passe oublié ?
                             </a>
                         </div>
                     </div>
