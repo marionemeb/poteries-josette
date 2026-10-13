@@ -18,6 +18,11 @@ img {
     max-width: 100%;
 }
 
+// <picture> only picks the file (WebP or JPEG): layout rules target the <img>.
+picture {
+    display: contents;
+}
+
 a {
     color: $ink;
     text-decoration: underline;

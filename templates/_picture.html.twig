@@ -1,0 +1,11 @@
+{# A photo of public/img/ served as WebP when the browser supports it, with
+   the JPEG as fallback. <picture> is display: contents (_base.scss), so the
+   <img> keeps behaving as the direct child of its container.
+   Usage: {% import '_picture.html.twig' as picture %}
+          {{ picture.img('contact', 'Josette dans son atelier', {class: 'home-intro-photo'}) }} #}
+{% macro img(name, alt, attrs = {}) %}
+    <picture>
+        <source srcset="/img/{{ name }}.webp" type="image/webp">
+        <img src="/img/{{ name }}.jpg" alt="{{ alt }}" loading="lazy"{% for attr, value in attrs %} {{ attr }}="{{ value }}"{% endfor %}>
+    </picture>
+{% endmacro %}

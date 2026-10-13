@@ -17,12 +17,12 @@
 
 // Photo of each page, with the dark veil that keeps the white title readable.
 $hero-veil: linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.35) 60%, rgba(0, 0, 0, 0.55));
-.page-hero--articles { background-image: $hero-veil, url("/img/poterie2.jpg"); }
-.page-hero--work { background-image: $hero-veil, url("/img/hands.jpg"); background-position: center 70%; }
-.page-hero--shop { background-image: linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.25) 60%, rgba(0, 0, 0, 0.55)), url("/img/oingt-aerien.jpg"); background-position: center 55%; } // the village sits in the lower half of the photo, the top is sky
-.page-hero--events { background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.35) 60%, rgba(0, 0, 0, 0.55)), url("/img/marche2.jpg"); }
-.page-hero--recipes { background-image: linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.35) 60%, rgba(0, 0, 0, 0.6)), url("/img/cook.jpg"); }
-.page-hero--blog { background-image: $hero-veil, url("/img/coeur.jpg"); }
+.page-hero--articles { @include photo-background($hero-veil, "poterie2"); }
+.page-hero--work { @include photo-background($hero-veil, "hands"); background-position: center 70%; }
+.page-hero--shop { @include photo-background(linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.25) 60%, rgba(0, 0, 0, 0.55)), "oingt-aerien"); background-position: center 55%; } // the village sits in the lower half of the photo, the top is sky
+.page-hero--events { @include photo-background(linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.35) 60%, rgba(0, 0, 0, 0.55)), "marche2"); }
+.page-hero--recipes { @include photo-background(linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.35) 60%, rgba(0, 0, 0, 0.6)), "cook"); }
+.page-hero--blog { @include photo-background($hero-veil, "coeur"); }
 .page-hero--legal { background-image: none; background-color: $ink-deep; }
 
 .page-title {

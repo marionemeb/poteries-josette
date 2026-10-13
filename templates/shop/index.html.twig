@@ -1,4 +1,5 @@
 {% extends 'base.html.twig' %}
+{% import '_picture.html.twig' as picture %}
 
 {% block title %}Mon atelier{% endblock %}
 {% block description %}L’atelier de Josette, potière à Oingt, l’un des plus beaux villages de France, en Beaujolais : adresse, téléphone et itinéraire.{% endblock %}
@@ -18,7 +19,7 @@
             <p>Mon atelier se situe dans ce village <strong>magnifique</strong>. Je vous invite à venir me voir travailler, à flâner au gré des ruelles aux noms si <strong>pittoresques</strong>.</p>
             <div class="shop-photos">
                 <img src="/img/poterie.jpg" alt="Poteries sur les marches devant l’atelier" loading="lazy">
-                <img src="/img/contact.jpg" alt="Josette dans son atelier" loading="lazy">
+                {{ picture.img('contact', 'Josette dans son atelier') }}
             </div>
         </article>
 

@@ -7,7 +7,7 @@
     min-height: 100vh;
     min-height: 100svh;
     padding: $header-height 24px 80px;
-    background-image: linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.25) 55%, rgba(0, 0, 0, 0.6)), url("/img/coquelicots-bouquet.jpg");
+    @include photo-background(linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.25) 55%, rgba(0, 0, 0, 0.6)), "coquelicots-bouquet");
     background-size: cover;
     background-position: center;
     color: #ffffff;
@@ -311,9 +311,9 @@
 }
 
 $tile-veil: linear-gradient(rgba(0, 0, 0, 0) 40%, rgba(0, 0, 0, 0.7));
-.home-tile--articles { background-image: $tile-veil, url("/img/coquelicots.jpg"); }
-.home-tile--work { background-image: $tile-veil, url("/img/hands.jpg"); }
-.home-tile--shop { background-image: $tile-veil, url("/img/oingt-aerien.jpg"); }
+.home-tile--articles { @include photo-background($tile-veil, "coquelicots"); }
+.home-tile--work { @include photo-background($tile-veil, "hands"); }
+.home-tile--shop { @include photo-background($tile-veil, "oingt-aerien"); }
 
 .home-tile-title {
     font-family: $font-title;

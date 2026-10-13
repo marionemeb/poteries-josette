@@ -31,3 +31,11 @@ $glaze-honey: #9a5b2a;
 $glaze-yellow: #d6a42b;
 $glaze-green: #4f7a3a;
 $glaze-red: #b3261e;
+
+// Photo background with a dark veil: WebP when the browser supports
+// image-set() with types (2023+ browsers), the JPEG otherwise. Both files
+// sit side by side in public/img/ (see public/img/README.md).
+@mixin photo-background($veil, $name) {
+    background-image: $veil, url("/img/#{$name}.jpg");
+    background-image: $veil, image-set(url("/img/#{$name}.webp") type("image/webp"), url("/img/#{$name}.jpg") type("image/jpeg"));
+}

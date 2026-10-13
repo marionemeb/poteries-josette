@@ -7,7 +7,7 @@
     min-height: 100vh;
     min-height: 100svh;
     padding-bottom: 90px;
-    background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.35)), url("/img/macro.jpg");
+    @include photo-background(linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.35)), "macro");
 }
 
 .error-page-actions {
