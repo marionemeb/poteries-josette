@@ -27,6 +27,14 @@ updates:
         update-types: ["version-update:semver-major"]
       - dependency-name: "react-dom"
         update-types: ["version-update:semver-major"]
+      # The site's styles are built on Bootstrap 4 (SCSS variables, mixins,
+      # grid). Bootstrap 5 rewrites all of that, and jQuery 4 is outside
+      # Bootstrap 4's peer range (npm ci fails with ERESOLVE, 13/10/2026).
+      # Both majors are a redesign of their own, done by hand.
+      - dependency-name: "bootstrap"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "jquery"
+        update-types: ["version-update:semver-major"]
 
   # composer: Symfony is pinned to 6.4.* (LTS) in composer.json, so PRs stay
   # within 6.4; moving to 7.x is a deliberate upgrade, not a Dependabot bump.
