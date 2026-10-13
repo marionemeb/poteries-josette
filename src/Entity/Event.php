@@ -18,18 +18,24 @@ class Event
     private $id;
 
     #[ORM\Column(type: 'string', length: 255)]
+    #[Assert\NotBlank]
     private $title;
 
     #[ORM\Column(type: 'text')]
+    #[Assert\NotBlank]
     private $description;
 
     #[ORM\Column(type: 'date')]
+    #[Assert\NotBlank]
     private $dateStart;
 
     #[ORM\Column(type: 'date')]
+    #[Assert\NotBlank]
+    #[Assert\GreaterThanOrEqual(propertyPath: 'dateStart', message: 'La fin ne peut pas être avant le début.')]
     private $dateEnd;
 
     #[ORM\Column(type: 'text')]
+    #[Assert\NotBlank]
     private $location;
 
     #[ORM\Column(type: 'text', nullable: true)]
@@ -50,6 +56,13 @@ class Event
      */
     #[ORM\Column(type: 'datetime')]
     private $updatedAt;
+
+    public function __construct()
+    {
+        // updated_at is NOT NULL, and an item saved without a picture never
+        // goes through setImageFile(), which is what normally sets it.
+        $this->updatedAt = new \DateTime();
+    }
 
     public function getId(): ?int
     {

@@ -113,4 +113,15 @@ class BlogControllerTest extends DatabaseWebTestCase
         $this->assertResponseIsSuccessful();
         $this->assertGreaterThan(0, $crawler->filter('a[href="/blog"]')->count());
     }
+
+    public function testUnknownFilterValueStillShowsThePage(): void
+    {
+        $crawler = $this->client->request('GET', '/blog');
+        $radioName = $crawler->filter('input.category-filter-input')->attr('name');
+
+        // An old or hand-edited link with a category that no longer exists.
+        $this->client->request('GET', '/blog?'.$radioName.'=999999');
+
+        $this->assertResponseIsSuccessful();
+    }
 }

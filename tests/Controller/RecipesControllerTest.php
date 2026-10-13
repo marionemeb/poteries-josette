@@ -181,4 +181,22 @@ class RecipesControllerTest extends DatabaseWebTestCase
         $this->assertResponseIsSuccessful();
         $this->assertResponseHeaderSame('content-type', 'application/pdf');
     }
+
+    public function testUnknownFilterValueStillShowsThePage(): void
+    {
+        $crawler = $this->client->request('GET', '/recipes');
+        $radioName = $crawler->filter('input.category-filter-input')->attr('name');
+
+        // An old or hand-edited link with a category that no longer exists.
+        $this->client->request('GET', '/recipes?'.$radioName.'=999999');
+
+        $this->assertResponseIsSuccessful();
+    }
+
+    public function testPdfOfUnknownRecipeIsNotFound(): void
+    {
+        $this->client->request('GET', '/pdf/999999');
+
+        $this->assertResponseStatusCodeSame(404);
+    }
 }

@@ -221,6 +221,77 @@ class SecurityTest extends DatabaseWebTestCase
         $this->assertResponseRedirects('/');
     }
 
+    public function testLoggedInNonAdminCannotOpenTheBackOffice(): void
+    {
+        $visitor = (new User())->setEmail('visiteur@example.com')->setRoles([]);
+        $visitor->setPassword('unused');
+        $this->persist($visitor);
+        $this->client->loginUser($visitor);
+
+        $this->client->request('GET', '/admin');
+
+        $this->assertResponseStatusCodeSame(403);
+    }
+
+    public function testForgotPasswordDoesNotRevealUnknownEmails(): void
+    {
+        $crawler = $this->client->request('GET', '/reset-password');
+        $this->client->submit($crawler->filter('form')->form([
+            'reset_password_request_form[email]' => 'personne@example.com',
+        ]));
+
+        // Same answer as for a real account, but nothing is sent.
+        $this->assertResponseRedirects('/reset-password/check-email');
+        $this->assertEmailCount(0);
+    }
+
+    public function testInvalidResetLinkSendsBackToTheRequestForm(): void
+    {
+        $this->client->request('GET', '/reset-password/reset/lien-invente');
+        $this->client->followRedirect();
+
+        $this->assertResponseRedirects('/reset-password');
+        $this->client->followRedirect();
+        $this->assertSelectorExists('.alert-danger');
+    }
+
+    public function testResetLinkWorksOnlyOnce(): void
+    {
+        $user = $this->entityManager->getRepository(User::class)->findOneBy(['email' => self::EMAIL]);
+        $token = static::getContainer()->get('symfonycasts.reset_password.helper')->generateResetToken($user)->getToken();
+
+        $this->client->request('GET', '/reset-password/reset/'.$token);
+        $crawler = $this->client->followRedirect();
+        $this->client->submit($crawler->filter('form')->form([
+            'change_password_form[plainPassword][first]' => 'nouveau-mot-de-passe',
+            'change_password_form[plainPassword][second]' => 'nouveau-mot-de-passe',
+        ]));
+        $this->assertResponseRedirects('/');
+
+        $this->client->request('GET', '/reset-password/reset/'.$token);
+        $this->client->followRedirect();
+        $this->assertResponseRedirects('/reset-password');
+    }
+
+    public function testMismatchedNewPasswordsAreRefused(): void
+    {
+        $user = $this->entityManager->getRepository(User::class)->findOneBy(['email' => self::EMAIL]);
+        $token = static::getContainer()->get('symfonycasts.reset_password.helper')->generateResetToken($user)->getToken();
+
+        $this->client->request('GET', '/reset-password/reset/'.$token);
+        $crawler = $this->client->followRedirect();
+        $this->client->submit($crawler->filter('form')->form([
+            'change_password_form[plainPassword][first]' => 'nouveau-mot-de-passe',
+            'change_password_form[plainPassword][second]' => 'autre-mot-de-passe',
+        ]));
+
+        // The form comes back instead of saving: the old password still works.
+        $this->assertResponseIsSuccessful();
+        $this->assertSelectorExists('input[name="change_password_form[plainPassword][first]"]');
+        $this->login(self::EMAIL, self::PASSWORD);
+        $this->assertResponseRedirects('/');
+    }
+
     private function login(string $email, string $password): void
     {
         $crawler = $this->client->request('GET', '/login');
