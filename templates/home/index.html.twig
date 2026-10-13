@@ -3,6 +3,37 @@
 {% import 'events/_dates.html.twig' as dates %}
 
 {% block title %}Les Poteries de Josette — poteries artisanales à Oingt{% endblock %}
+{% block title_suffix %}{% endblock %}
+
+{% block head_extra %}
+    {# The workshop's card for search engines (address, phone, social
+       networks). Only facts shown elsewhere on the site, no opening hours. #}
+    <script type="application/ld+json">
+        {{ {
+            '@context': 'https://schema.org',
+            '@type': 'LocalBusiness',
+            'name': 'Les Poteries de Josette',
+            'description': 'Poteries utilitaires et décoratives en terre vernissée, fabriquées par Josette Bourgogne dans son atelier d’Oingt, en Beaujolais.',
+            'url': site_url ~ '/',
+            'image': site_url ~ '/img/contact.jpg',
+            'logo': site_url ~ '/icon-512x512.png',
+            'telephone': '+33474711173',
+            'email': 'josette.bourgogne@wanadoo.fr',
+            'address': {
+                '@type': 'PostalAddress',
+                'streetAddress': 'Rue Tyre-Laine',
+                'postalCode': '69620',
+                'addressLocality': 'Oingt',
+                'addressRegion': 'Rhône',
+                'addressCountry': 'FR',
+            },
+            'sameAs': [
+                'https://www.facebook.com/lespoteriesdejosette',
+                'https://www.instagram.com/les_poteries_de_josette/',
+            ],
+        }|json_encode(constant('JSON_UNESCAPED_SLASHES') b-or constant('JSON_UNESCAPED_UNICODE') b-or constant('JSON_PRETTY_PRINT'))|raw }}
+    </script>
+{% endblock %}
 
 {% block body %}
     <section class="home-hero">

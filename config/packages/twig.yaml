@@ -3,3 +3,7 @@ twig:
     debug: '%kernel.debug%'
     strict_variables: '%kernel.debug%'
     exception_controller: null
+    globals:
+        # Public address of the site, for absolute links that must not depend
+        # on how the request reached PHP (canonical URLs, sitemap, Google card).
+        site_url: 'https://www.poterie-josette.com'
