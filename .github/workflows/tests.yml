@@ -7,10 +7,9 @@ on:
 
 jobs:
   phpunit:
-    # Pinned rather than ubuntu-latest, which moves to Ubuntu 26 from
-    # 2026-10-19: the front-end build still needs Node 12 (node-sass 4), not
-    # something to discover on a new image mid-deploy. Revisit once the
-    # front-end toolchain is modernised.
+    # Pinned rather than ubuntu-latest so a runner image change never lands
+    # mid-deploy. (It used to be required by Node 12 / node-sass; Node now
+    # comes from .nvmrc and no longer depends on the image.)
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v7
@@ -43,14 +42,11 @@ jobs:
       - name: Set up Node
         uses: actions/setup-node@v7
         with:
-          node-version: '12'
+          # Same version as local development (.nvmrc).
+          node-version-file: .nvmrc
 
       - name: Install Node dependencies
-        run: |
-          # Node 12 ships npm 6, which can't read our lockfileVersion 3
-          # package-lock.json — upgrade npm first (still fine on Node 12).
-          npm install -g npm@7
-          npm ci
+        run: npm ci
 
       - name: Build production assets
         # Catches exactly the kind of breakage the phpunit job above can't

@@ -35,18 +35,17 @@ docker compose run --rm -e APP_ENV=dev php php bin/console doctrine:migrations:m
 echo "==> Données factices (no-op si déjà présentes)"
 docker compose run --rm -e APP_ENV=dev php php bin/console app:load-fake-data
 
-echo "==> Assets front (Node 12 requis pour node-sass, voir le skill du projet)"
+echo "==> Assets front (Node 22, version fixée dans .nvmrc)"
 if [ -s "$HOME/.nvm/nvm.sh" ]; then
     # shellcheck source=/dev/null
     . "$HOME/.nvm/nvm.sh"
-    nvm install 12 >/dev/null
-    nvm use 12 >/dev/null
-    npm install -g npm@7 >/dev/null
+    nvm install >/dev/null
+    nvm use >/dev/null
     npm ci
     npm run build
 else
-    echo "    nvm introuvable — installe Node 12 puis lance :"
-    echo "    npm install -g npm@7 && npm ci && npm run build"
+    echo "    nvm introuvable — installe Node 22 puis lance :"
+    echo "    npm ci && npm run build"
 fi
 
 echo
