@@ -1,5 +1,6 @@
 {% extends 'base.html.twig' %}
 {% import '_icons.html.twig' as icon %}
+{% import '_picture.html.twig' as picture %}
 {% import 'events/_dates.html.twig' as dates %}
 
 {% block title %}Les Poteries de Josette — poteries artisanales à Oingt{% endblock %}
@@ -50,7 +51,7 @@
     </section>
 
     <section class="home-intro" id="bienvenue">
-        <img class="home-intro-photo" src="/img/contact.jpg" alt="Josette dans son atelier, entourée de ses poteries" loading="lazy">
+        {{ picture.img('contact', 'Josette dans son atelier, entourée de ses poteries', {class: 'home-intro-photo'}) }}
         <div class="home-intro-text">
             <span class="kicker">L’atelier</span>
             <h2>Des poteries « rondes et chaleureuses »</h2>
