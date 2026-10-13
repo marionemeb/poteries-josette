@@ -89,6 +89,7 @@ Ce skill (`.claude/skills/poteries-josette/`) est versionné avec le repo — co
 
 ## État des lieux / TODO
 
+- [x] **Référencement Google (SEO)** — 13/10/2026, branche `seo` : description propre à chaque page (`{% block description %}`), titres « Page · Les Poteries de Josette » (`title_suffix`, vide sur l'accueil), URL canonique sans les paramètres de filtre (`site_url` = global Twig dans `config/packages/twig.yaml`), `/sitemap.xml` (`SitemapController`, n'inclut évènements/recettes/coups de cœur que s'ils ont du contenu, comme le menu), `public/robots.txt` (exclut admin/connexion, déclare le sitemap), fiche `LocalBusiness` en JSON-LD sur l'accueil (adresse, téléphone, e-mail, Facebook/Instagram — pas d'horaires, inconnus), `noindex` sur connexion et mot de passe oublié. Tests : `tests/Controller/SeoTest.php`. **Après déploiement** : déclarer le sitemap dans Google Search Console (nécessite l'accès propriétaire du domaine) et vérifier la fiche avec l'outil « Résultats enrichis » de Google.
 - [ ] **À demander à Josette** (décidé avec l'utilisatrice le 13/10/2026, rien à faire côté code avant sa réponse) :
   - **Rouge coquelicot** : comment elle l'obtient (engobe, émail, oxyde…) — pour compléter la 4ᵉ pastille de couleur de « Argile et émaux », dont le texte reste volontairement court.
   - **TVA** : est-elle en franchise de TVA ? Si oui, ajouter « TVA non applicable, art. 293 B du CGI » aux mentions légales.

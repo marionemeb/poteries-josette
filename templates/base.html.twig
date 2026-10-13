@@ -23,7 +23,12 @@
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Courgette&family=Open+Sans:wght@400;600;700&display=swap">
-        <title>{% block title %}Bienvenue{% endblock %}</title>
+        <title>{% block title %}Bienvenue{% endblock %}{% block title_suffix %} · Les Poteries de Josette{% endblock %}</title>
+        {# One address per page for search engines: the category filters
+           (?search…) would otherwise look like duplicate pages. #}
+        <link rel="canonical" href="{{ site_url ~ app.request.pathInfo }}">
+        {% block robots %}{% endblock %}
+        {% block head_extra %}{% endblock %}
 
         {% block stylesheets %}
             {{ encore_entry_link_tags('app') }}

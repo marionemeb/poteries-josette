@@ -1,0 +1,13 @@
+{% set pages = ['home', 'articles', 'work', 'shop'] %}
+{% if has_upcoming_events() %}{% set pages = pages|merge(['events']) %}{% endif %}
+{% if has_recipes() %}{% set pages = pages|merge(['recipes']) %}{% endif %}
+{% if has_blog_articles() %}{% set pages = pages|merge(['blog']) %}{% endif %}
+{% set pages = pages|merge(['legalMentions']) %}
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+{% for page in pages %}
+    <url>
+        <loc>{{ site_url ~ path(page) }}</loc>
+    </url>
+{% endfor %}
+</urlset>
