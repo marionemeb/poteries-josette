@@ -4,7 +4,7 @@
         "@babel/preset-env": "^8.0.6",
         "@babel/preset-react": "^8.0.1",
         "@symfony/webpack-encore": "^7.2.0",
-        "bootstrap": "^4.4.1",
+        "bootstrap": "^5.3.8",
         "jquery": "^3.4.1",
         "popper.js": "^1.16.1",
         "sass": "^1.104.1",
