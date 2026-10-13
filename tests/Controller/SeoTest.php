@@ -96,4 +96,36 @@ class SeoTest extends DatabaseWebTestCase
 
         $this->assertSame(0, $crawler->filter('meta[name="robots"]')->count());
     }
+
+    public function testSharedLinksGetATitleDescriptionAndPhoto(): void
+    {
+        $crawler = $this->client->request('GET', '/shop');
+
+        $meta = fn (string $property) => $crawler->filter('meta[property="'.$property.'"]')->attr('content');
+        $this->assertSame('Mon atelier · Les Poteries de Josette', $meta('og:title'));
+        $this->assertStringContainsString('Oingt', $meta('og:description'));
+        $this->assertSame('https://www.poterie-josette.com/shop', $meta('og:url'));
+        $this->assertSame('https://www.poterie-josette.com/img/share/shop.jpg', $meta('og:image'));
+        $this->assertFileExists(__DIR__.'/../../public/img/share/shop.jpg');
+    }
+
+    public function testPagesWithoutTheirOwnPhotoShareTheHomePhoto(): void
+    {
+        $crawler = $this->client->request('GET', '/legalMentions');
+
+        $this->assertSame(
+            'https://www.poterie-josette.com/img/share/home.jpg',
+            $crawler->filter('meta[property="og:image"]')->attr('content')
+        );
+    }
+
+    public function testEverySharePhotoExists(): void
+    {
+        foreach (['home', 'articles', 'work', 'shop', 'events', 'recipes', 'blog'] as $page) {
+            $file = __DIR__.'/../../public/img/share/'.$page.'.jpg';
+            $this->assertFileExists($file);
+            [$width, $height] = getimagesize($file);
+            $this->assertSame([1200, 630], [$width, $height], $page.'.jpg doit faire 1200×630.');
+        }
+    }
 }
