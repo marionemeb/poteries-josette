@@ -40,6 +40,13 @@ class Product
     #[ORM\Column(type: 'datetime')]
     private $updatedAt;
 
+    public function __construct()
+    {
+        // updated_at is NOT NULL, and an item saved without a picture never
+        // goes through setImageFile(), which is what normally sets it.
+        $this->updatedAt = new \DateTime();
+    }
+
     public function getId(): ?int
     {
         return $this->id;

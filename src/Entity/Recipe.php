@@ -18,12 +18,15 @@ class Recipe
     private $id;
 
     #[ORM\Column(type: 'string', length: 255)]
+    #[Assert\NotBlank]
     private $name;
 
     #[ORM\Column(type: 'text')]
+    #[Assert\NotBlank]
     private $description;
 
     #[ORM\Column(type: 'text')]
+    #[Assert\NotBlank]
     private $ingredient;
 
     #[ORM\Column(type: 'text', nullable: true)]
@@ -44,6 +47,13 @@ class Recipe
 
     #[ORM\ManyToOne(targetEntity: \App\Entity\RecipeCategory::class, inversedBy: 'recipes')]
     private $category;
+
+    public function __construct()
+    {
+        // updated_at is NOT NULL, and an item saved without a picture never
+        // goes through setImageFile(), which is what normally sets it.
+        $this->updatedAt = new \DateTime();
+    }
 
     public function getId(): ?int
     {
