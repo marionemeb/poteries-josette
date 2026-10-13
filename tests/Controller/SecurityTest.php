@@ -290,6 +290,23 @@ class SecurityTest extends DatabaseWebTestCase
         $this->assertResponseRedirects('/reset-password');
     }
 
+    public function testTooShortNewPasswordIsRefused(): void
+    {
+        $user = $this->entityManager->getRepository(User::class)->findOneBy(['email' => self::EMAIL]);
+        $token = static::getContainer()->get('symfonycasts.reset_password.helper')->generateResetToken($user)->getToken();
+
+        $this->client->request('GET', '/reset-password/reset/'.$token);
+        $crawler = $this->client->followRedirect();
+        $this->client->submit($crawler->filter('form')->form([
+            'change_password_form[plainPassword][first]' => 'poterie1',
+            'change_password_form[plainPassword][second]' => 'poterie1',
+        ]));
+
+        $this->assertSelectorTextContains('body', 'Votre mot de passe doit faire au moins 12 caractères.');
+        $this->login(self::EMAIL, self::PASSWORD);
+        $this->assertResponseRedirects('/');
+    }
+
     public function testMismatchedNewPasswordsAreRefused(): void
     {
         $user = $this->entityManager->getRepository(User::class)->findOneBy(['email' => self::EMAIL]);
