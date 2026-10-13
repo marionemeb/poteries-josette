@@ -10,13 +10,15 @@ updates:
     open-pull-requests-limit: 5
     cooldown:
       default-days: 21
+    groups:
+      # Babel packages only work in lockstep (a lone @babel/preset-react 8
+      # with @babel/core 7 hung the build in 2026): one PR for all of them.
+      babel:
+        patterns: ["@babel/*"]
+      # Encore and the webpack/Sass tooling it drives move together too.
+      build-tools:
+        patterns: ["@symfony/webpack-encore", "webpack", "webpack-cli", "sass", "sass-loader"]
     ignore:
-      # Major-bumped alone on 19/09/2026 and broke the build outright:
-      # Encore 3.x needs Webpack 5 + a modern sass-loader/dart-sass + a
-      # Node new enough for `??` syntax, none of which this project has.
-      # Re-enable once node-sass/sass-loader/Node are modernized together.
-      - dependency-name: "@symfony/webpack-encore"
-        update-types: ["version-update:semver-major"]
       # A React major can remove APIs we call (18+ dropped ReactDOM.render(),
       # fixed by hand when moving to 19), and the CI build "passes" anyway:
       # webpack doesn't check this and no test runs the JS in a browser.
@@ -24,13 +26,6 @@ updates:
       - dependency-name: "react"
         update-types: ["version-update:semver-major"]
       - dependency-name: "react-dom"
-        update-types: ["version-update:semver-major"]
-      # @babel/preset-react 8.x requires @babel/core ^8 (peer dep warning),
-      # which this project doesn't have — the build hung reproducibly
-      # partway through babel-loader when tested locally, despite CI
-      # reporting green in isolation. Not trusted until @babel/core is
-      # bumped in lockstep and this is re-verified.
-      - dependency-name: "@babel/preset-react"
         update-types: ["version-update:semver-major"]
 
   # composer: Symfony is pinned to 6.4.* (LTS) in composer.json, so PRs stay

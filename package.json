@@ -1,15 +1,17 @@
 {
     "devDependencies": {
-        "@babel/preset-react": "^7.9.4",
-        "@symfony/webpack-encore": "^0.33.0",
+        "@babel/core": "^8.0.6",
+        "@babel/preset-env": "^8.0.6",
+        "@babel/preset-react": "^8.0.1",
+        "@symfony/webpack-encore": "^7.2.0",
         "bootstrap": "^4.4.1",
-        "core-js": "^3.0.0",
         "jquery": "^3.4.1",
-        "node-sass": "^4.13.1",
         "popper.js": "^1.16.1",
-        "regenerator-runtime": "^0.14.1",
-        "sass-loader": "^7.0.1",
-        "webpack-notifier": "^1.6.0"
+        "sass": "^1.104.1",
+        "sass-loader": "^17.0.1",
+        "webpack": "^5.111.1",
+        "webpack-cli": "^7.2.3",
+        "webpack-notifier": "^1.17.0"
     },
     "license": "UNLICENSED",
     "private": true,
@@ -24,5 +26,8 @@
         "prop-types": "^15.7.2",
         "react": "^19.3.0",
         "react-dom": "^19.3.0"
+    },
+    "engines": {
+        "node": ">=22.18"
     }
 }

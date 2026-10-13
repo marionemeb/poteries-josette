@@ -25,21 +25,21 @@ Site de présentation (pas d'e-commerce, pas de panier/paiement en ligne) :
 
 ## Installation
 
-Prérequis : PHP 8.3 avec les extensions `ctype`, `iconv` et `intl`, Composer 2, Node.js/Yarn, une base MySQL 8.0.
+Prérequis : PHP 8.3 avec les extensions `ctype`, `iconv` et `intl`, Composer 2, Node.js 22 (version dans `.nvmrc`) avec npm, une base MySQL 8.0.
 
 ```bash
 composer install
-yarn install
+npm ci
 
 cp .env.dist .env   # puis ajuster DATABASE_URL/MAILER_DSN/APP_SECRET si besoin
 php bin/console doctrine:migrations:migrate
 
-yarn build           # build de production des assets
+npm run build        # build de production des assets
 ```
 
 ## Développement
 
-Sur une machine sans PHP 8.3/Node 12 natifs, `bin/dev-setup.sh` enchaîne tout ce qu'il faut (Docker, dépendances, base de dev + schéma, données factices, assets front) en une seule commande, sûr à relancer plusieurs fois :
+Sur une machine sans PHP 8.3/Node 22 natifs, `bin/dev-setup.sh` enchaîne tout ce qu'il faut (Docker, dépendances, base de dev + schéma, données factices, assets front) en une seule commande, sûr à relancer plusieurs fois :
 
 ```bash
 bin/dev-setup.sh
@@ -53,7 +53,7 @@ Avec les outils installés nativement :
 
 ```bash
 symfony server:start     # ou php -S 127.0.0.1:8000 -t public
-yarn watch                # rebuild les assets à chaque changement
+npm run watch             # rebuild les assets à chaque changement
 ```
 
 ## Tests
@@ -92,7 +92,7 @@ docker compose run --rm php vendor/bin/phpstan analyse
 
 ## Déploiement
 
-`.github/workflows/deploy.yml` déploie sur l'hébergement OVH par FTP — build des assets (Node 12, requis pour `node-sass`) + `composer install --no-dev`, puis synchronisation FTP en excluant les fichiers de dev (`.git`, `.github`, `tests/`, `docker/`, `.env*`...).
+`.github/workflows/deploy.yml` déploie sur l'hébergement OVH par FTP — build des assets (Node 22, version fixée dans `.nvmrc`) + `composer install --no-dev`, puis synchronisation FTP en excluant les fichiers de dev (`.git`, `.github`, `tests/`, `docker/`, `.env*`...).
 
 **Déclenchement manuel uniquement** (`workflow_dispatch`, onglet Actions → "Deploy to OVH" → "Run workflow") — c'est le site de production réel, pas de déploiement automatique à chaque push pour l'instant.
 
