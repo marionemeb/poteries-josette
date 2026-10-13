@@ -89,6 +89,11 @@ Ce skill (`.claude/skills/poteries-josette/`) est versionné avec le repo — co
 
 ## État des lieux / TODO
 
+- [ ] **À demander à Josette** (décidé avec l'utilisatrice le 13/10/2026, rien à faire côté code avant sa réponse) :
+  - **Rouge coquelicot** : comment elle l'obtient (engobe, émail, oxyde…) — pour compléter la 4ᵉ pastille de couleur de « Argile et émaux », dont le texte reste volontairement court.
+  - **TVA** : est-elle en franchise de TVA ? Si oui, ajouter « TVA non applicable, art. 293 B du CGI » aux mentions légales.
+  - **Argile et émaux** : garder ou retirer les deux passages de son texte que la maquette avait coupés (section « Rondes et chaleureuses » et le paragraphe final sur le village d'Oingt) — gardés pour l'instant.
+  - **Photos floues** : meilleures versions de `poterie.jpg`, `cook.jpg`, `hands.jpg` et de la vue aérienne d'Oingt (détail plus bas, point « Reprendre les images »).
 - [x] Ajouter Instagram — fait le 19/09/2026 : simple lien (`templates/_footer.html.twig`) vers https://www.instagram.com/les_poteries_de_josette/, à côté du lien Facebook existant, icône Font Awesome `fa-instagram`. Pas d'affichage des posts intégré (option plus lourde, écartée).
 - [x] Reprendre l'UI/UX — **refonte complète le 07/10/2026** (branche `design-refresh`), d'après une maquette Claude Design validée par l'utilisatrice (https://claude.ai/artifact/VzDL94r2gjoGM226dfcSvm) : en-tête fixe, accueil enrichi (présentation, tuiles, prochain évènement, venir à l'atelier), bandeau photo + contenu sur fond crème pour les pages intérieures, visionneuse photo, fiche recette en « bottom sheet » sur mobile, dates d'évènements en français, un seul fichier CSS (Bootstrap n'est plus chargé 6 fois), icônes SVG à la place du kit Font Awesome. Détail dans `assets/design-poteries-josette.md`. Au passage, `EventsControllerTest::testPageListsSeededEvent` utilisait des dates figées (octobre 2026) devenues passées : remplacées par des dates relatives.
 - [x] Vérifier la responsivité du site sur différents supports (PC, tablette, mobile) — fait le 23/09/2026 (Playwright, 375/768/1024px, toutes les pages publiques) : menu mobile refait, filtres en pastilles, fenêtre recette, débordements corrigés — détail dans `assets/design-poteries-josette.md`.
