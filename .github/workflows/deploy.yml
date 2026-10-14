@@ -81,8 +81,17 @@ jobs:
       - name: Unpack on the server
         run: |
           step() { curl --fail-with-body --silent --show-error --max-time 600 -X POST -H "X-Deploy-Token: $DEPLOY_TOKEN" "$SITE_URL/$DEPLOY_SCRIPT?step=$1"; }
-          step check | tee check.json
-          jq -e '.zip and .home_writable and .www_writable and .release_zip > 0' check.json > /dev/null
+          # The web servers can see a file uploaded over FTP a few seconds
+          # late (shared storage; on 2026-10-14 the check ran 0.3 s after
+          # the upload and found no zip). Wait until it shows up whole.
+          size=$(stat -c %s release.zip)
+          for attempt in $(seq 1 24); do
+            step check | tee check.json
+            jq -e --argjson size "$size" '.release_zip == $size' check.json > /dev/null && break
+            [ "$attempt" = 24 ] && { echo "release.zip never showed up whole on the server ($size bytes expected)"; exit 1; }
+            sleep 5
+          done
+          jq -e '.zip and .home_writable and .www_writable' check.json > /dev/null
           step extract
 
       - name: Switch to the new release
