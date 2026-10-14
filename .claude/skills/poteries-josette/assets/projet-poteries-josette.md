@@ -96,7 +96,7 @@ Ce skill (`.claude/skills/poteries-josette/`) est versionné avec le repo — co
   - **Rouge coquelicot** : un émail qu'elle achète tout prêt → pastille « Un émail rouge vif, qui donne leur couleur à mes coquelicots. » sur « Argile et émaux » (branche `josette-answers`). **Ne pas écrire sur le site qu'il est acheté tout prêt** (demande de l'utilisatrice).
   - **TVA** : pas assujettie → « TVA non applicable, art. 293 B du CGI » ajouté aux mentions légales (+ test).
   - **Argile et émaux** : elle veut **revoir elle-même son texte** sur ses poteries (section « Rondes et chaleureuses » en attente de sa nouvelle version) et **garder le paragraphe sur le village** d'Oingt.
-  - **Vue aérienne d'Oingt** (`public/img/oingt-aerien.jpg`) : **prise sur internet, sans droits** → à remplacer (bandeau page Atelier, tuile « Mon atelier » de l'accueil, et vérifier `public/img/share/shop.jpg`). En attente de ses nouvelles photos ou d'une photo sous licence libre créditée.
+  - **Vue aérienne d'Oingt** (`public/img/oingt-aerien.jpg`) : **prise sur internet, sans droits** → à remplacer (bandeau page Atelier, tuile « Mon atelier » de l'accueil, et vérifier `public/img/share/shop.jpg`). **Décision de l'utilisatrice le 14/10/2026 : on la laisse pour le moment** (risque signalé), à remplacer quand une photo du village de Josette ou sous licence libre sera disponible.
   - **Nouvelles photos** : elle en a — à récupérer.
   - **Horaires** : « je verrai » — rien à afficher pour l'instant.
   - **Elle n'a pas réussi à entrer sur le site pour changer des photos** : à éclaircir (connexion refusée, ou photo introuvable dans l'admin ? Les photos des bandeaux et pages fixes ne sont pas modifiables depuis l'admin, seulement celles des poteries, évènements et recettes).
