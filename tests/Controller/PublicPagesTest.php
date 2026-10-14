@@ -30,4 +30,14 @@ class PublicPagesTest extends WebTestCase
         yield 'legal mentions' => ['/legalMentions'];
         yield 'login' => ['/login'];
     }
+
+    public function testLegalMentionsStateTheVatExemption(): void
+    {
+        // Josette isn't subject to VAT (micro-entreprise, franchise en base):
+        // the mention is mandatory once that's the case.
+        $client = static::createClient();
+        $client->request('GET', '/legalMentions');
+
+        $this->assertSelectorTextContains('body', 'TVA non applicable, art. 293 B du CGI');
+    }
 }
