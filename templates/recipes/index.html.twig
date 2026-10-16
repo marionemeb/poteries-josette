@@ -37,7 +37,7 @@
                                      data-category="{{ recipe.category ? recipe.category.name }}"
                                      data-pdf-url="{{ path('pdf', {'id': recipe.id}) }}"
                                 ></div>
-                                <a class="btn-pill btn-pill-ghost" href="{{ path('pdf', {'id': recipe.id}) }}" target="_blank" rel="noopener">{{ icon.svg('print', 16) }}Imprimer</a>
+                                <a class="btn-pill btn-pill-ghost" href="{{ path('pdf', {'id': recipe.id}) }}" target="_blank" rel="noopener nofollow">{{ icon.svg('print', 16) }}Imprimer</a>
                             </div>
                         </div>
                     </article>

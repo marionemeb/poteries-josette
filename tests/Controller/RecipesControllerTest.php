@@ -180,6 +180,8 @@ class RecipesControllerTest extends DatabaseWebTestCase
 
         $this->assertResponseIsSuccessful();
         $this->assertResponseHeaderSame('content-type', 'application/pdf');
+        // Printable copy of /recipes: kept out of search results.
+        $this->assertResponseHeaderSame('X-Robots-Tag', 'noindex');
     }
 
     public function testUnknownFilterValueStillShowsThePage(): void

@@ -38,6 +38,9 @@ class PdfController extends AbstractController
         return new Response($dompdf->output(), 200, [
             'Content-Type' => 'application/pdf',
             'Content-Disposition' => 'attachment; filename="recette_josette.pdf"',
+            // The recipe already has its page (/recipes): keep the printable
+            // copy out of search results, where Google flagged it as a duplicate.
+            'X-Robots-Tag' => 'noindex',
         ]);
     }
 }
