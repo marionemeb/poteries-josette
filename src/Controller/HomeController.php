@@ -24,4 +24,12 @@ class HomeController extends AbstractController
             'next_event' => $nextEvent,
         ]);
     }
+
+    // The contact page was removed (the footer carries the same details), but
+    // Google still knows its URL: send it, and visitors, to the footer instead.
+    #[Route('/contact', name: 'contact')]
+    public function contact(): Response
+    {
+        return $this->redirect($this->generateUrl('home').'#contact', Response::HTTP_MOVED_PERMANENTLY);
+    }
 }
