@@ -90,6 +90,16 @@ class SeoTest extends DatabaseWebTestCase
         $this->assertSame('noindex', $crawler->filter('meta[name="robots"]')->attr('content'));
     }
 
+    public function testOldContactPageRedirectsToTheFooter(): void
+    {
+        $this->client->request('GET', '/contact');
+
+        $this->assertResponseStatusCodeSame(301);
+        $this->assertResponseRedirects('/#contact');
+        $this->client->request('GET', '/');
+        $this->assertSelectorExists('#contact');
+    }
+
     public function testPublicPagesAreIndexable(): void
     {
         $crawler = $this->client->request('GET', '/articles');
