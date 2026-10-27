@@ -139,6 +139,14 @@ try {
             @unlink($paths['prev']."/$self");
             @unlink("$www/$self");
             @unlink($paths['zip']);
+            // A run that died before this step left its script behind, and
+            // swap carries it over as a server-only file (seen on 2026-10-25
+            // for the failed run of 2026-10-14). Same naming as the workflow.
+            foreach (glob("$www/public/deploy-*.php") ?: [] as $leftover) {
+                if (preg_match('/^deploy-[0-9a-f]{24}\.php$/', basename($leftover))) {
+                    @unlink($leftover);
+                }
+            }
             save_state($paths['state'], ['status' => 'done', 'at' => date('c')]);
             $trash = glob("$home/{$name}_trash_*", GLOB_ONLYDIR) ?: [];
             respond(200, 'done', ['deleting_old_releases' => array_map('basename', $trash)], false);
